@@ -1,0 +1,7 @@
+{
+  "name": "JS",
+  "version": "1.0.0",
+  "devDependencies": {
+    "sha3": "^2.1.4"
+  }
+}

@@ -1,0 +1,16 @@
+D:\Itransition\Task3_RockPaperScissors\ConsoleApplication\bin\Debug\net5.0\ConsoleApplication.exe
+D:\Itransition\Task3_RockPaperScissors\ConsoleApplication\bin\Debug\net5.0\ConsoleApplication.deps.json
+D:\Itransition\Task3_RockPaperScissors\ConsoleApplication\bin\Debug\net5.0\ConsoleApplication.runtimeconfig.json
+D:\Itransition\Task3_RockPaperScissors\ConsoleApplication\bin\Debug\net5.0\ConsoleApplication.runtimeconfig.dev.json
+D:\Itransition\Task3_RockPaperScissors\ConsoleApplication\bin\Debug\net5.0\ConsoleApplication.dll
+D:\Itransition\Task3_RockPaperScissors\ConsoleApplication\bin\Debug\net5.0\ref\ConsoleApplication.dll
+D:\Itransition\Task3_RockPaperScissors\ConsoleApplication\bin\Debug\net5.0\ConsoleApplication.pdb
+D:\Itransition\Task3_RockPaperScissors\ConsoleApplication\obj\Debug\net5.0\ConsoleApplication.csprojAssemblyReference.cache
+D:\Itransition\Task3_RockPaperScissors\ConsoleApplication\obj\Debug\net5.0\ConsoleApplication.GeneratedMSBuildEditorConfig.editorconfig
+D:\Itransition\Task3_RockPaperScissors\ConsoleApplication\obj\Debug\net5.0\ConsoleApplication.AssemblyInfoInputs.cache
+D:\Itransition\Task3_RockPaperScissors\ConsoleApplication\obj\Debug\net5.0\ConsoleApplication.AssemblyInfo.cs
+D:\Itransition\Task3_RockPaperScissors\ConsoleApplication\obj\Debug\net5.0\ConsoleApplication.csproj.CoreCompileInputs.cache
+D:\Itransition\Task3_RockPaperScissors\ConsoleApplication\obj\Debug\net5.0\ConsoleApplication.dll
+D:\Itransition\Task3_RockPaperScissors\ConsoleApplication\obj\Debug\net5.0\ref\ConsoleApplication.dll
+D:\Itransition\Task3_RockPaperScissors\ConsoleApplication\obj\Debug\net5.0\ConsoleApplication.pdb
+D:\Itransition\Task3_RockPaperScissors\ConsoleApplication\obj\Debug\net5.0\ConsoleApplication.genruntimeconfig.cache

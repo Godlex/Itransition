@@ -1,0 +1,1 @@
+if(process.argv[2]==null){console.log("")}else{a=process.argv.slice(2);console.log(sub(a))};function sub(y){s=y.reduce((a,b)=>a.length<= b.length?a:b);L=s.length;if(y.length>0)for(n=L;n>=0;n--)for(m=0;m<= L-n;m++){g=s.substr(m,n);if(y.every(s=>~s.indexOf(g)))return g;}return "";}
