@@ -34,7 +34,6 @@
                 {
                     case "0":
                         isEnd = true;
-                        Console.WriteLine("HMAC key {0}", value); //ключ проверки и ход
                         break;
                     case "?":
                         PrintTable(args, argsLength);
@@ -42,6 +41,7 @@
                     //выводит таблицу с подсказкой кто кого побеждает
                     default:
                         PrintPlayerMoveResult(args, argsLength, answer, computerMove, computerMoveIndex);
+                        Console.WriteLine("HMAC key {0}", value); //ключ проверки и ход
                         break;
                 }
 
