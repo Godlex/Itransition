@@ -1,0 +1,12 @@
+D:\Itransition\Task4_UserAuthentication\UserAuthentication.BLL\bin\Debug\net5.0\UserAuthentication.BLL.deps.json
+D:\Itransition\Task4_UserAuthentication\UserAuthentication.BLL\bin\Debug\net5.0\UserAuthentication.BLL.dll
+D:\Itransition\Task4_UserAuthentication\UserAuthentication.BLL\bin\Debug\net5.0\ref\UserAuthentication.BLL.dll
+D:\Itransition\Task4_UserAuthentication\UserAuthentication.BLL\bin\Debug\net5.0\UserAuthentication.BLL.pdb
+D:\Itransition\Task4_UserAuthentication\UserAuthentication.BLL\obj\Debug\net5.0\UserAuthentication.BLL.csprojAssemblyReference.cache
+D:\Itransition\Task4_UserAuthentication\UserAuthentication.BLL\obj\Debug\net5.0\UserAuthentication.BLL.GeneratedMSBuildEditorConfig.editorconfig
+D:\Itransition\Task4_UserAuthentication\UserAuthentication.BLL\obj\Debug\net5.0\UserAuthentication.BLL.AssemblyInfoInputs.cache
+D:\Itransition\Task4_UserAuthentication\UserAuthentication.BLL\obj\Debug\net5.0\UserAuthentication.BLL.AssemblyInfo.cs
+D:\Itransition\Task4_UserAuthentication\UserAuthentication.BLL\obj\Debug\net5.0\UserAuthentication.BLL.csproj.CoreCompileInputs.cache
+D:\Itransition\Task4_UserAuthentication\UserAuthentication.BLL\obj\Debug\net5.0\UserAuthentication.BLL.dll
+D:\Itransition\Task4_UserAuthentication\UserAuthentication.BLL\obj\Debug\net5.0\ref\UserAuthentication.BLL.dll
+D:\Itransition\Task4_UserAuthentication\UserAuthentication.BLL\obj\Debug\net5.0\UserAuthentication.BLL.pdb
