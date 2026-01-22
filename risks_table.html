@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    /* Стили через ID контейнера */
+    #risks_table_container {
+      font-family: Arial, sans-serif;
+      background: #f6f7f9;
+    }
+
+    #risks_table_container .risks_table_wrapper {
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      overflow-x: auto;
+    }
+
+    #risks_table_container table.risks_table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+
+    #risks_table_container table.risks_table thead {
+      background: #f1f3f5;
+    }
+
+    #risks_table_container table.risks_table th,
+    #risks_table_container table.risks_table td {
+      padding: 12px 14px;
+      border: 1px solid #ddd;
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    #risks_table_container table.risks_table th {
+      text-align: center;
+      font-weight: 600;
+      color: #003366;
+      cursor: pointer;
+    }
+
+    #risks_table_container table.risks_table td {
+      text-align: center;
+    }
+
+    #risks_table_container table.risks_table td.description {
+      text-align: left;
+      max-width: 400px;
+    }
+
+    #risks_table_container .risks_table_edit-link {
+      color: #1a73e8;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    #risks_table_container .risks_table_edit-link:hover {
+      text-decoration: underline;
+    }
+
+    #risks_table_container .risks_table_badge {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #fff;
+      display: inline-block;
+    }
+
+    #risks_table_container .risks_table_high {
+      background: #d93025;
+    }
+
+    #risks_table_container .risks_table_medium {
+      background: #f9ab00;
+    }
+
+    #risks_table_container .risks_table_low {
+      background: #188038;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-container {
+      background: #fff;
+      width: 100%;
+      max-width: 560px;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      font-family: Arial, sans-serif;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .modal-close-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #999;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+
+    .modal-close-btn:hover {
+      color: #333;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-form-group {
+      margin-bottom: 20px;
+    }
+
+    .modal-form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .modal-form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .modal-form-group label .required {
+      color: #d93025;
+    }
+
+    .modal-form-group input[type="text"],
+    .modal-form-group textarea,
+    .modal-form-group select {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 14px;
+      border: 1px solid #d0d0d0;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background-color: #fff;
+    }
+
+    .modal-form-group input[type="text"]:focus,
+    .modal-form-group textarea:focus,
+    .modal-form-group select:focus {
+      outline: none;
+      border-color: #4a7cff;
+      box-shadow: 0 0 0 3px rgba(74, 124, 255, 0.1);
+    }
+
+    .modal-form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .modal-form-group select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      padding: 20px 24px;
+      border-top: 1px solid #e8e8e8;
+    }
+
+    .modal-btn {
+      padding: 10px 32px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .modal-btn-primary {
+      background: #4a7cff;
+      color: #fff;
+      border: 1px solid #4a7cff;
+    }
+
+    .modal-btn-primary:hover {
+      background: #3a6ce8;
+      border-color: #3a6ce8;
+    }
+
+    .modal-btn-secondary {
+      background: #fff;
+      color: #4a7cff;
+      border: 1px solid #4a7cff;
+    }
+
+    .modal-btn-secondary:hover {
+      background: #f5f8ff;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Modal -->
+<div id="editModal" class="modal-overlay">
+  <div class="modal-container">
+    <div class="modal-header">
+      <h3>Добавить данные</h3>
+      <button type="button" class="modal-close-btn" id="closeModalX">&times;</button>
+    </div>
+    
+    <div class="modal-body">
+      <div class="modal-form-group">
+        <label>Категория риска <span class="required">*</span></label>
+        <input type="text" id="modalCategory" placeholder="">
+      </div>
+
+      <div class="modal-form-group">
+        <label>Описание риска <span class="required">*</span></label>
+        <textarea id="modalDescription" rows="3" placeholder=""></textarea>
+      </div>
+
+      <div class="modal-form-group">
+        <label>Вероятность <span class="required">*</span></label>
+        <select id="modalProbability">
+          <option value="">-</option>
+          <option value="H1">H1</option>
+          <option value="H2">H2</option>
+          <option value="H3">H3</option>
+          <option value="H4">H4</option>
+          <option value="C5">C5</option>
+          <option value="C6">C6</option>
+          <option value="C7">C7</option>
+          <option value="C8">C8</option>
+          <option value="C9">C9</option>
+          <option value="C10">C10</option>
+          <option value="C11">C11</option>
+          <option value="C12">C12</option>
+          <option value="B15">B15</option>
+          <option value="B17">B17</option>
+          <option value="B18">B18</option>
+          <option value="B19">B19</option>
+          <option value="B20">B20</option>
+          <option value="B21">B21</option>
+        </select>
+      </div>
+
+      <div class="modal-form-group">
+        <label>Оценка риска <span class="required">*</span></label>
+        <select id="modalAssessment">
+          <option value="">-</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="modal-btn modal-btn-primary" id="saveModal">Добавить</button>
+      <button type="button" class="modal-btn modal-btn-secondary" id="closeModal">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<div id="risks_table_container">
+  <div class="risks_table_wrapper">
+    <table class="risks_table">
+      <thead>
+        <tr>
+          <th>№</th>
+          <th>Категория риска</th>
+          <th>Описание риска</th>
+          <th>Влияние</th>
+          <th>Вероятность</th>
+          <th>Оценка риска</th>
+          <th>Изменить</th>
+        </tr>
+      </thead>
+      <tbody id="risks_table_body"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    const columnMap = {
+      0: 'id',
+      1: 'category',
+      2: 'description',
+      3: 'impact',
+      4: 'probability',
+      5: 'assessment'
+    };
+
+    const impactOrder = {
+      'недопустимое': 3,
+      'допустимое': 2,
+      'приемлемое': 1
+    };
+
+    let sortState = {};
+    let sortStack = [];
+
+    function impactClass(value) {
+      value = value.toLowerCase();
+      if (value.includes('недопустимое')) return 'risks_table_high';
+      if (value.includes('допустимое')) return 'risks_table_medium';
+      return 'risks_table_low';
+    }
+
+    function parseProbability(value) {
+      const letter = value.charAt(0);
+      const number = parseInt(value.slice(1), 10);
+
+      let groupWeight = 0;
+      if (letter === 'H') groupWeight = 1;
+      if (letter === 'C') groupWeight = 2;
+      if (letter === 'B') groupWeight = 3;
+
+      return { groupWeight, number };
+    }
+
+    function compareByKey(a, b, key, asc) {
+      if (key === 'impact') {
+        const v1 = impactOrder[(a.impact || '').toLowerCase()] || 0;
+        const v2 = impactOrder[(b.impact || '').toLowerCase()] || 0;
+        return asc ? v1 - v2 : v2 - v1;
+      }
+
+      if (key === 'probability') {
+        const p1 = parseProbability(a.probability);
+        const p2 = parseProbability(b.probability);
+
+        if (p1.groupWeight !== p2.groupWeight) {
+          return asc ? p1.groupWeight - p2.groupWeight : p2.groupWeight - p1.groupWeight;
+        }
+
+        return asc ? p1.number - p2.number : p2.number - p1.number;
+      }
+
+      if (!isNaN(a[key]) && !isNaN(b[key])) {
+        return asc ? a[key] - b[key] : b[key] - a[key];
+      }
+
+      return asc ? String(a[key]).localeCompare(String(b[key]), 'ru') : String(b[key]).localeCompare(String(a[key]), 'ru');
+    }
+
+    function renderTable(data) {
+      const $tbody = $('#risks_table_body');
+      $tbody.empty();
+
+      $.each(data, function (index, item) {
+        const row = `
+        <tr>
+          <td>${item.id}</td>
+          <td>${item.category}</td>
+          <td class="description">${item.description}</td>
+          <td>
+            <span class="risks_table_badge ${impactClass(item.impact)}">
+              ${item.impact}
+            </span>
+          </td>
+          <td>${item.probability}</td>
+          <td>${item.assessment}</td>
+          <td>
+            <a href="#" class="risks_table_edit-link" data-index="${index}">
+              Редактировать
+            </a>
+          </td>
+        </tr>
+      `;
+        $tbody.append(row);
+      });
+    }
+
+    const data = [
+      {
+        id: 1,
+        category: "Ресурсы",
+        description: "Недостаток квалифицированных специалистов",
+        probability: "H1",
+        assessment: "1",
+        impact: "Приемлемое"
+      },
+      {
+        id: 2,
+        category: "Ресурсы",
+        description: "Перегрузка ключевых сотрудников",
+        probability: "H3",
+        assessment: "3",
+        impact: "Допустимое"
+      },
+      {
+        id: 3,
+        category: "Управление",
+        description: "Несогласованность решений между подразделениями",
+        probability: "C5",
+        assessment: "2",
+        impact: "Допустимое"
+      },
+      {
+        id: 4,
+        category: "Управление",
+        description: "Отсутствие ответственного владельца процесса",
+        probability: "C7",
+        assessment: "3",
+        impact: "Недопустимое"
+      },
+      {
+        id: 5,
+        category: "Сроки",
+        description: "Задержка согласования требований",
+        probability: "H4",
+        assessment: "2",
+        impact: "Приемлемое"
+      },
+      {
+        id: 6,
+        category: "Сроки",
+        description: "Срыв сроков поставки подрядчиком",
+        probability: "B15",
+        assessment: "1",
+        impact: "Допустимое"
+      },
+      {
+        id: 7,
+        category: "Сроки",
+        description: "Параллельные приоритетные проекты",
+        probability: "B17",
+        assessment: "2",
+        impact: "Недопустимое"
+      },
+      {
+        id: 8,
+        category: "ТЗ",
+        description: "Частые изменения требований",
+        probability: "C9",
+        assessment: "1",
+        impact: "Приемлемое"
+      },
+      {
+        id: 9,
+        category: "ТЗ",
+        description: "Неполнота функциональных требований",
+        probability: "C10",
+        assessment: "3",
+        impact: "Недопустимое"
+      },
+      {
+        id: 10,
+        category: "ТЗ",
+        description: "Ошибки в бизнес-логике",
+        probability: "B18",
+        assessment: "3",
+        impact: "Недопустимое"
+      },
+      {
+        id: 11,
+        category: "Технологии",
+        description: "Использование новой, не апробированной платформы",
+        probability: "C11",
+        assessment: "2",
+        impact: "Допустимое"
+      },
+      {
+        id: 12,
+        category: "Технологии",
+        description: "Отсутствие технической документации",
+        probability: "H2",
+        assessment: "3",
+        impact: "Допустимое"
+      },
+      {
+        id: 13,
+        category: "Интеграции",
+        description: "Нестабильность внешних API",
+        probability: "B19",
+        assessment: "1",
+        impact: "Допустимое"
+      },
+      {
+        id: 14,
+        category: "Интеграции",
+        description: "Несовместимость форматов данных",
+        probability: "C12",
+        assessment: "3",
+        impact: "Недопустимое"
+      },
+      {
+        id: 15,
+        category: "Качество",
+        description: "Недостаточное тестирование",
+        probability: "B20",
+        assessment: "2",
+        impact: "Недопустимое"
+      },
+      {
+        id: 16,
+        category: "Качество",
+        description: "Отсутствие автоматических тестов",
+        probability: "C8",
+        assessment: "1",
+        impact: "Приемлемое"
+      },
+      {
+        id: 17,
+        category: "Безопасность",
+        description: "Нарушение требований ИБ",
+        probability: "B21",
+        assessment: "3",
+        impact: "Недопустимое"
+      },
+      {
+        id: 18,
+        category: "Безопасность",
+        description: "Отсутствие резервного копирования",
+        probability: "C6",
+        assessment: "2",
+        impact: "Допустимое"
+      },
+      {
+        id: 19,
+        category: "Коммуникации",
+        description: "Потеря информации при передаче задач",
+        probability: "H3",
+        assessment: "1",
+        impact: "Приемлемое"
+      },
+      {
+        id: 20,
+        category: "Коммуникации",
+        description: "Отсутствие регулярных статус-встреч",
+        probability: "C5",
+        assessment: "3",
+        impact: "Недопустимое"
+      }
+    ];
+
+    let currentData = data;
+    let currentEditIndex = null;
+    
+    renderTable(currentData);
+
+    $('#risks_table_container th').on('click', function (e) {
+      const index = $(this).index();
+      const key = columnMap[index];
+      if (!key) return;
+
+      sortState[key] = !sortState[key];
+      const asc = sortState[key];
+
+      if (!e.ctrlKey) {
+        sortStack = [{ key, asc }];
+      } else {
+        const existing = sortStack.find(s => s.key === key);
+        if (existing) existing.asc = asc;
+        else sortStack.push({ key, asc });
+      }
+
+      currentData.sort((a, b) => {
+        for (const sort of sortStack) {
+          const result = compareByKey(a, b, sort.key, sort.asc);
+          if (result !== 0) return result;
+        }
+        return 0;
+      });
+
+      renderTable(currentData);
+    });
+
+    // Edit click handler (delegated)
+    $('#risks_table_body').on('click', '.risks_table_edit-link', function (e) {
+      e.preventDefault();
+
+      const index = $(this).data('index');
+      const item = currentData[index];
+      currentEditIndex = index;
+
+      // Fill modal fields
+      $('#modalCategory').val(item.category);
+      $('#modalDescription').val(item.description);
+      $('#modalProbability').val(item.probability);
+      $('#modalAssessment').val(item.assessment);
+
+      // Show modal
+      $('#editModal').addClass('active');
+    });
+
+    // Close modal handlers
+    function closeModal() {
+      $('#editModal').removeClass('active');
+      currentEditIndex = null;
+    }
+
+    $('#closeModal, #closeModalX').on('click', closeModal);
+
+    // Close on overlay click
+    $('#editModal').on('click', function (e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
+    // Close on Escape key
+    $(document).on('keydown', function (e) {
+      if (e.key === 'Escape' && $('#editModal').hasClass('active')) {
+        closeModal();
+      }
+    });
+
+    // Save handler
+    $('#saveModal').on('click', function () {
+      if (currentEditIndex !== null) {
+        currentData[currentEditIndex].category = $('#modalCategory').val();
+        currentData[currentEditIndex].description = $('#modalDescription').val();
+        currentData[currentEditIndex].probability = $('#modalProbability').val();
+        currentData[currentEditIndex].assessment = $('#modalAssessment').val();
+        
+        renderTable(currentData);
+      }
+      closeModal();
+    });
+  });
+</script>
+
+</body>
+
+</html>
