@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
-    /* Стили через ID контейнера */
+    /* ===== Table Styles ===== */
     #risks_table_container {
       font-family: Arial, sans-serif;
       background: #f6f7f9;
@@ -87,7 +87,6 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Modal content container */
     #editModal_content {
       background: #fff;
       width: 560px;
@@ -100,7 +99,6 @@
       overflow-y: auto;
     }
 
-    /* Modal header */
     #editModal_header {
       display: flex;
       justify-content: space-between;
@@ -131,7 +129,6 @@
       color: #333;
     }
 
-    /* Modal body */
     #editModal_body {
       padding: 24px;
     }
@@ -194,7 +191,6 @@
       cursor: pointer;
     }
 
-    /* Modal footer */
     #editModal_footer {
       display: flex;
       justify-content: center;
@@ -412,166 +408,26 @@
     }
 
     const data = [
-      {
-        id: 1,
-        category: "Ресурсы",
-        description: "Недостаток квалифицированных специалистов",
-        probability: "H1",
-        assessment: "1",
-        impact: "Приемлемое"
-      },
-      {
-        id: 2,
-        category: "Ресурсы",
-        description: "Перегрузка ключевых сотрудников",
-        probability: "H3",
-        assessment: "3",
-        impact: "Допустимое"
-      },
-      {
-        id: 3,
-        category: "Управление",
-        description: "Несогласованность решений между подразделениями",
-        probability: "C5",
-        assessment: "2",
-        impact: "Допустимое"
-      },
-      {
-        id: 4,
-        category: "Управление",
-        description: "Отсутствие ответственного владельца процесса",
-        probability: "C7",
-        assessment: "3",
-        impact: "Недопустимое"
-      },
-      {
-        id: 5,
-        category: "Сроки",
-        description: "Задержка согласования требований",
-        probability: "H4",
-        assessment: "2",
-        impact: "Приемлемое"
-      },
-      {
-        id: 6,
-        category: "Сроки",
-        description: "Срыв сроков поставки подрядчиком",
-        probability: "B15",
-        assessment: "1",
-        impact: "Допустимое"
-      },
-      {
-        id: 7,
-        category: "Сроки",
-        description: "Параллельные приоритетные проекты",
-        probability: "B17",
-        assessment: "2",
-        impact: "Недопустимое"
-      },
-      {
-        id: 8,
-        category: "ТЗ",
-        description: "Частые изменения требований",
-        probability: "C9",
-        assessment: "1",
-        impact: "Приемлемое"
-      },
-      {
-        id: 9,
-        category: "ТЗ",
-        description: "Неполнота функциональных требований",
-        probability: "C10",
-        assessment: "3",
-        impact: "Недопустимое"
-      },
-      {
-        id: 10,
-        category: "ТЗ",
-        description: "Ошибки в бизнес-логике",
-        probability: "B18",
-        assessment: "3",
-        impact: "Недопустимое"
-      },
-      {
-        id: 11,
-        category: "Технологии",
-        description: "Использование новой, не апробированной платформы",
-        probability: "C11",
-        assessment: "2",
-        impact: "Допустимое"
-      },
-      {
-        id: 12,
-        category: "Технологии",
-        description: "Отсутствие технической документации",
-        probability: "H2",
-        assessment: "3",
-        impact: "Допустимое"
-      },
-      {
-        id: 13,
-        category: "Интеграции",
-        description: "Нестабильность внешних API",
-        probability: "B19",
-        assessment: "1",
-        impact: "Допустимое"
-      },
-      {
-        id: 14,
-        category: "Интеграции",
-        description: "Несовместимость форматов данных",
-        probability: "C12",
-        assessment: "3",
-        impact: "Недопустимое"
-      },
-      {
-        id: 15,
-        category: "Качество",
-        description: "Недостаточное тестирование",
-        probability: "B20",
-        assessment: "2",
-        impact: "Недопустимое"
-      },
-      {
-        id: 16,
-        category: "Качество",
-        description: "Отсутствие автоматических тестов",
-        probability: "C8",
-        assessment: "1",
-        impact: "Приемлемое"
-      },
-      {
-        id: 17,
-        category: "Безопасность",
-        description: "Нарушение требований ИБ",
-        probability: "B21",
-        assessment: "3",
-        impact: "Недопустимое"
-      },
-      {
-        id: 18,
-        category: "Безопасность",
-        description: "Отсутствие резервного копирования",
-        probability: "C6",
-        assessment: "2",
-        impact: "Допустимое"
-      },
-      {
-        id: 19,
-        category: "Коммуникации",
-        description: "Потеря информации при передаче задач",
-        probability: "H3",
-        assessment: "1",
-        impact: "Приемлемое"
-      },
-      {
-        id: 20,
-        category: "Коммуникации",
-        description: "Отсутствие регулярных статус-встреч",
-        probability: "C5",
-        assessment: "3",
-        impact: "Недопустимое"
-      }
+      { id: 1, category: "Ресурсы", description: "Недостаток квалифицированных специалистов", probability: "H1", assessment: "1", impact: "Приемлемое" },
+      { id: 2, category: "Ресурсы", description: "Перегрузка ключевых сотрудников", probability: "H3", assessment: "3", impact: "Допустимое" },
+      { id: 3, category: "Управление", description: "Несогласованность решений между подразделениями", probability: "C5", assessment: "2", impact: "Допустимое" },
+      { id: 4, category: "Управление", description: "Отсутствие ответственного владельца процесса", probability: "C7", assessment: "3", impact: "Недопустимое" },
+      { id: 5, category: "Сроки", description: "Задержка согласования требований", probability: "H4", assessment: "2", impact: "Приемлемое" },
+      { id: 6, category: "Сроки", description: "Срыв сроков поставки подрядчиком", probability: "B15", assessment: "1", impact: "Допустимое" },
+      { id: 7, category: "Сроки", description: "Параллельные приоритетные проекты", probability: "B17", assessment: "2", impact: "Недопустимое" },
+      { id: 8, category: "ТЗ", description: "Частые изменения требований", probability: "C9", assessment: "1", impact: "Приемлемое" },
+      { id: 9, category: "ТЗ", description: "Неполнота функциональных требований", probability: "C10", assessment: "3", impact: "Недопустимое" },
+      { id: 10, category: "ТЗ", description: "Ошибки в бизнес-логике", probability: "B18", assessment: "3", impact: "Недопустимое" },
+      { id: 11, category: "Технологии", description: "Использование новой, не апробированной платформы", probability: "C11", assessment: "2", impact: "Допустимое" },
+      { id: 12, category: "Технологии", description: "Отсутствие технической документации", probability: "H2", assessment: "3", impact: "Допустимое" },
+      { id: 13, category: "Интеграции", description: "Нестабильность внешних API", probability: "B19", assessment: "1", impact: "Допустимое" },
+      { id: 14, category: "Интеграции", description: "Несовместимость форматов данных", probability: "C12", assessment: "3", impact: "Недопустимое" },
+      { id: 15, category: "Качество", description: "Недостаточное тестирование", probability: "B20", assessment: "2", impact: "Недопустимое" },
+      { id: 16, category: "Качество", description: "Отсутствие автоматических тестов", probability: "C8", assessment: "1", impact: "Приемлемое" },
+      { id: 17, category: "Безопасность", description: "Нарушение требований ИБ", probability: "B21", assessment: "3", impact: "Недопустимое" },
+      { id: 18, category: "Безопасность", description: "Отсутствие резервного копирования", probability: "C6", assessment: "2", impact: "Допустимое" },
+      { id: 19, category: "Коммуникации", description: "Потеря информации при передаче задач", probability: "H3", assessment: "1", impact: "Приемлемое" },
+      { id: 20, category: "Коммуникации", description: "Отсутствие регулярных статус-встреч", probability: "C5", assessment: "3", impact: "Недопустимое" }
     ];
 
     let currentData = data;
@@ -579,6 +435,7 @@
     
     renderTable(currentData);
 
+    // Table sorting
     $('#risks_table_container th').on('click', function (e) {
       const index = $(this).index();
       const key = columnMap[index];
@@ -606,25 +463,22 @@
       renderTable(currentData);
     });
 
-    // Edit click handler (delegated)
+    // Edit click handler
     $('#risks_table_body').on('click', '.risks_table_edit-link', function (e) {
       e.preventDefault();
-
       const index = $(this).data('index');
       const item = currentData[index];
       currentEditIndex = index;
 
-      // Fill modal fields
       $('#modalCategory').val(item.category);
       $('#modalDescription').val(item.description);
       $('#modalProbability').val(item.probability);
       $('#modalAssessment').val(item.assessment);
 
-      // Show modal
       $('#editModal').show();
     });
 
-    // Close modal handlers
+    // Close modal
     function closeModal() {
       $('#editModal').hide();
       currentEditIndex = null;
@@ -632,18 +486,12 @@
 
     $('#closeModal, #editModal_closeX').on('click', closeModal);
 
-    // Close on overlay click
     $('#editModal').on('click', function (e) {
-      if (e.target === this) {
-        closeModal();
-      }
+      if (e.target === this) closeModal();
     });
 
-    // Close on Escape key
     $(document).on('keydown', function (e) {
-      if (e.key === 'Escape' && $('#editModal').is(':visible')) {
-        closeModal();
-      }
+      if (e.key === 'Escape' && $('#editModal').is(':visible')) closeModal();
     });
 
     // Save handler
@@ -653,7 +501,6 @@
         currentData[currentEditIndex].description = $('#modalDescription').val();
         currentData[currentEditIndex].probability = $('#modalProbability').val();
         currentData[currentEditIndex].assessment = $('#modalAssessment').val();
-        
         renderTable(currentData);
       }
       closeModal();
@@ -662,5 +509,4 @@
 </script>
 
 </body>
-
 </html>
