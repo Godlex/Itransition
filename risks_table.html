@@ -103,8 +103,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 24px;
-      border-bottom: 1px solid #e8e8e8;
+      padding: 24px 24px 16px 24px;
     }
 
     #editModal_header h3 {
@@ -193,41 +192,41 @@
 
     #editModal_footer {
       display: flex;
-      justify-content: center;
-      gap: 12px;
-      padding: 20px 24px;
-      border-top: 1px solid #e8e8e8;
+      justify-content: flex-start;
+      gap: 16px;
+      padding: 24px;
     }
 
     #editModal_footer button {
-      padding: 10px 32px;
-      font-size: 14px;
+      padding: 12px 40px;
+      font-size: 15px;
       font-weight: 500;
-      border-radius: 4px;
+      border-radius: 6px;
       cursor: pointer;
       transition: all 0.2s;
       font-family: inherit;
+      min-width: 140px;
     }
 
     #saveModal {
       background: #4a7cff;
       color: #fff;
-      border: 1px solid #4a7cff;
+      border: none;
     }
 
     #saveModal:hover {
       background: #3a6ce8;
-      border-color: #3a6ce8;
     }
 
     #closeModal {
       background: #fff;
-      color: #4a7cff;
-      border: 1px solid #4a7cff;
+      color: #6c757d;
+      border: 1px solid #d0d0d0;
     }
 
     #closeModal:hover {
-      background: #f5f8ff;
+      background: #f8f9fa;
+      border-color: #adb5bd;
     }
   </style>
 </head>
@@ -238,7 +237,7 @@
 <div id="editModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:1000;">
   <div id="editModal_content">
     <div id="editModal_header">
-      <h3>Добавить данные</h3>
+      <h3>Редактировать данные</h3>
       <button type="button" id="editModal_closeX">&times;</button>
     </div>
     
