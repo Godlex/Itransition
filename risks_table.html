@@ -425,22 +425,27 @@
     let currentEditIndex = null;
 
     // Load data from server
-    $.ajax({
-      url: "custom_web_template.html?object_id=7597342040409919335",
-      data: "curObject_id=" + WTLP.sObjectId,
-      success: function (responseJSON) {
-        try {
-          currentData = responseJSON ? JSON.parse(responseJSON) : [];
-        } catch (e) {
+    function getData() {
+      $.ajax({
+        url: "custom_web_template.html?object_id=7597342040409919335",
+        data: "curObject_id=" + WTLP.sObjectId,
+        success: function (responseJSON) {
+          try {
+            currentData = responseJSON ? JSON.parse(responseJSON) : [];
+          } catch (e) {
+            currentData = [];
+          }
+          renderTable(currentData);
+        },
+        error: function () {
           currentData = [];
+          renderTable(currentData);
         }
-        renderTable(currentData);
-      },
-      error: function () {
-        currentData = [];
-        renderTable(currentData);
-      }
-    });
+      });
+    }
+
+    // Call getData on document ready
+    getData();
 
     // Table sorting
     $('#risks_table_container th').on('click', function (e) {
