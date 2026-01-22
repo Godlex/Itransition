@@ -385,6 +385,18 @@
       const $tbody = $('#risks_table_body');
       $tbody.empty();
 
+      if (!data || data.length === 0) {
+        const emptyRow = `
+        <tr>
+          <td colspan="7" style="text-align:center; padding:40px; color:#666; font-style:italic;">
+            Риски отсутствуют
+          </td>
+        </tr>
+        `;
+        $tbody.append(emptyRow);
+        return;
+      }
+
       $.each(data, function (index, item) {
         const row = `
         <tr>
@@ -417,7 +429,15 @@
       url: "custom_web_template.html?object_id=7597342040409919335",
       data: "curObject_id=" + WTLP.sObjectId,
       success: function (responseJSON) {
-        currentData = JSON.parse(responseJSON);
+        try {
+          currentData = responseJSON ? JSON.parse(responseJSON) : [];
+        } catch (e) {
+          currentData = [];
+        }
+        renderTable(currentData);
+      },
+      error: function () {
+        currentData = [];
         renderTable(currentData);
       }
     });
