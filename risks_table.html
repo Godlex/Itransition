@@ -82,24 +82,26 @@
       background: #188038;
     }
 
-    /* Modal Styles - targets #editModal with inline styles */
+    /* ===== Modal Styles ===== */
     #editModal {
       font-family: Arial, sans-serif;
     }
 
-    #editModal > div {
+    /* Modal content container */
+    #editModal_content {
       background: #fff;
-      width: 560px !important;
+      width: 560px;
       max-width: 95%;
-      margin: 5% auto !important;
-      padding: 0 !important;
-      border-radius: 8px !important;
+      margin: 5% auto;
+      padding: 0;
+      border-radius: 8px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
       max-height: 90vh;
       overflow-y: auto;
     }
 
-    #editModal .modal-header {
+    /* Modal header */
+    #editModal_header {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -107,14 +109,14 @@
       border-bottom: 1px solid #e8e8e8;
     }
 
-    #editModal .modal-header h3 {
+    #editModal_header h3 {
       margin: 0;
       font-size: 18px;
       font-weight: 600;
       color: #333;
     }
 
-    #editModal .modal-close-btn {
+    #editModal_closeX {
       background: none;
       border: none;
       font-size: 28px;
@@ -125,23 +127,24 @@
       transition: color 0.2s;
     }
 
-    #editModal .modal-close-btn:hover {
+    #editModal_closeX:hover {
       color: #333;
     }
 
-    #editModal .modal-body {
+    /* Modal body */
+    #editModal_body {
       padding: 24px;
     }
 
-    #editModal .modal-form-group {
+    #editModal_body > div {
       margin-bottom: 20px;
     }
 
-    #editModal .modal-form-group:last-child {
+    #editModal_body > div:last-child {
       margin-bottom: 0;
     }
 
-    #editModal .modal-form-group label {
+    #editModal_body label {
       display: block;
       margin-bottom: 8px;
       font-size: 14px;
@@ -149,13 +152,13 @@
       font-weight: normal;
     }
 
-    #editModal .modal-form-group label .required {
+    #editModal_body label .editModal_required {
       color: #d93025;
     }
 
-    #editModal .modal-form-group input[type="text"],
-    #editModal .modal-form-group textarea,
-    #editModal .modal-form-group select {
+    #editModal_body input[type="text"],
+    #editModal_body textarea,
+    #editModal_body select {
       width: 100%;
       padding: 10px 12px;
       font-size: 14px;
@@ -167,20 +170,20 @@
       background-color: #fff;
     }
 
-    #editModal .modal-form-group input[type="text"]:focus,
-    #editModal .modal-form-group textarea:focus,
-    #editModal .modal-form-group select:focus {
+    #editModal_body input[type="text"]:focus,
+    #editModal_body textarea:focus,
+    #editModal_body select:focus {
       outline: none;
       border-color: #4a7cff;
       box-shadow: 0 0 0 3px rgba(74, 124, 255, 0.1);
     }
 
-    #editModal .modal-form-group textarea {
+    #editModal_body textarea {
       resize: vertical;
       min-height: 80px;
     }
 
-    #editModal .modal-form-group select {
+    #editModal_body select {
       appearance: none;
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -191,7 +194,8 @@
       cursor: pointer;
     }
 
-    #editModal .modal-footer {
+    /* Modal footer */
+    #editModal_footer {
       display: flex;
       justify-content: center;
       gap: 12px;
@@ -199,7 +203,7 @@
       border-top: 1px solid #e8e8e8;
     }
 
-    #editModal .modal-btn {
+    #editModal_footer button {
       padding: 10px 32px;
       font-size: 14px;
       font-weight: 500;
@@ -209,24 +213,24 @@
       font-family: inherit;
     }
 
-    #editModal .modal-btn-primary {
+    #saveModal {
       background: #4a7cff;
       color: #fff;
       border: 1px solid #4a7cff;
     }
 
-    #editModal .modal-btn-primary:hover {
+    #saveModal:hover {
       background: #3a6ce8;
       border-color: #3a6ce8;
     }
 
-    #editModal .modal-btn-secondary {
+    #closeModal {
       background: #fff;
       color: #4a7cff;
       border: 1px solid #4a7cff;
     }
 
-    #editModal .modal-btn-secondary:hover {
+    #closeModal:hover {
       background: #f5f8ff;
     }
   </style>
@@ -236,25 +240,25 @@
 
 <!-- Modal -->
 <div id="editModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:1000;">
-  <div>
-    <div class="modal-header">
+  <div id="editModal_content">
+    <div id="editModal_header">
       <h3>Добавить данные</h3>
-      <button type="button" class="modal-close-btn" id="closeModalX">&times;</button>
+      <button type="button" id="editModal_closeX">&times;</button>
     </div>
     
-    <div class="modal-body">
-      <div class="modal-form-group">
-        <label>Категория риска <span class="required">*</span></label>
+    <div id="editModal_body">
+      <div>
+        <label>Категория риска <span class="editModal_required">*</span></label>
         <input type="text" id="modalCategory">
       </div>
 
-      <div class="modal-form-group">
-        <label>Описание риска <span class="required">*</span></label>
+      <div>
+        <label>Описание риска <span class="editModal_required">*</span></label>
         <textarea id="modalDescription" rows="3"></textarea>
       </div>
 
-      <div class="modal-form-group">
-        <label>Вероятность <span class="required">*</span></label>
+      <div>
+        <label>Вероятность <span class="editModal_required">*</span></label>
         <select id="modalProbability">
           <option value="">-</option>
           <option value="H1">H1</option>
@@ -278,8 +282,8 @@
         </select>
       </div>
 
-      <div class="modal-form-group">
-        <label>Оценка риска <span class="required">*</span></label>
+      <div>
+        <label>Оценка риска <span class="editModal_required">*</span></label>
         <select id="modalAssessment">
           <option value="">-</option>
           <option value="1">1</option>
@@ -289,9 +293,9 @@
       </div>
     </div>
 
-    <div class="modal-footer">
-      <button type="button" class="modal-btn modal-btn-primary" id="saveModal">Добавить</button>
-      <button type="button" class="modal-btn modal-btn-secondary" id="closeModal">Отмена</button>
+    <div id="editModal_footer">
+      <button type="button" id="saveModal">Добавить</button>
+      <button type="button" id="closeModal">Отмена</button>
     </div>
   </div>
 </div>
@@ -626,7 +630,7 @@
       currentEditIndex = null;
     }
 
-    $('#closeModal, #closeModalX').on('click', closeModal);
+    $('#closeModal, #editModal_closeX').on('click', closeModal);
 
     // Close on overlay click
     $('#editModal').on('click', function (e) {
