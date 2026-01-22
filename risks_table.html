@@ -426,9 +426,12 @@
 
     // Load data from server
     function getData() {
+      // Check if WTLP is available
+      var objectId = (typeof WTLP !== 'undefined' && WTLP.sObjectId) ? WTLP.sObjectId : '';
+      
       $.ajax({
         url: "custom_web_template.html?object_id=7597342040409919335",
-        data: "curObject_id=" + WTLP.sObjectId,
+        data: "curObject_id=" + objectId,
         success: function (responseJSON) {
           try {
             currentData = responseJSON ? JSON.parse(responseJSON) : [];
