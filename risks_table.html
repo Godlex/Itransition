@@ -84,6 +84,12 @@
     /* ===== Modal Styles ===== */
     #editModal {
       font-family: Arial, sans-serif;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #editModal[style*="block"] {
+      display: flex !important;
     }
 
     #editModal_content {
@@ -91,11 +97,10 @@
       width: 50%;
       min-width: 400px;
       max-width: 95%;
-      margin: 5% auto;
+      max-height: 90vh;
       padding: 0;
       border-radius: 8px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-      max-height: 90vh;
       overflow-y: auto;
     }
 
