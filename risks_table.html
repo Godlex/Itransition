@@ -242,6 +242,25 @@
     #deleteModal:hover {
       background: #c82333;
     }
+
+    /* Impact field highlighting */
+    #modalImpact.impact-high {
+      background-color: #d93025 !important;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    #modalImpact.impact-medium {
+      background-color: #f9ab00 !important;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    #modalImpact.impact-low {
+      background-color: #188038 !important;
+      color: #fff;
+      font-weight: 500;
+    }
   </style>
 </head>
 
@@ -530,6 +549,18 @@
       var assessment = $('#modalAssessment').val();
       var impact = calculateImpact(probability, assessment);
       $('#modalImpact').val(impact);
+      
+      // Apply color highlighting
+      var $input = $('#modalImpact');
+      $input.removeClass('impact-high impact-medium impact-low');
+      
+      if (impact === 'Недопустимое') {
+        $input.addClass('impact-high');
+      } else if (impact === 'Допустимое') {
+        $input.addClass('impact-medium');
+      } else if (impact === 'Приемлемое') {
+        $input.addClass('impact-low');
+      }
     }
 
     $('#modalProbability, #modalAssessment').on('change', updateImpact);
@@ -546,6 +577,17 @@
       $('#modalProbability').val(item.probability);
       $('#modalAssessment').val(item.assessment);
       $('#modalImpact').val(item.impact);
+
+      // Apply impact highlighting
+      var $input = $('#modalImpact');
+      $input.removeClass('impact-high impact-medium impact-low');
+      if (item.impact === 'Недопустимое') {
+        $input.addClass('impact-high');
+      } else if (item.impact === 'Допустимое') {
+        $input.addClass('impact-medium');
+      } else if (item.impact === 'Приемлемое') {
+        $input.addClass('impact-low');
+      }
 
       $('#editModal').show();
     });
