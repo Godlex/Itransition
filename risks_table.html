@@ -320,7 +320,7 @@
 <script type="module">
   $(document).ready(function () {
     const columnMap = {
-      0: 'id',
+      0: 'number',
       1: 'category',
       2: 'description',
       3: 'impact',
@@ -400,7 +400,7 @@
       $.each(data, function (index, item) {
         const row = `
         <tr>
-          <td>${item.id}</td>
+          <td>${item.number}</td>
           <td>${item.category}</td>
           <td class="description">${item.description}</td>
           <td>
@@ -428,7 +428,7 @@
     function getData() {
       $.ajax({
         url: "custom_web_template.html?object_id=7597342040409919335",
-        data: "curObject_id=" + WTLP.sObjectId,
+        data: "project_id=" + WTLP.sObjectId,
         success: function (responseJSON) {
           try {
             currentData = responseJSON ? JSON.parse(responseJSON) : [];
