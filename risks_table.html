@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    /* ===== Table Styles ===== */
+    #risks_table_container {
+      font-family: Arial, sans-serif;
+      background: #f6f7f9;
+    }
+
+    #risks_table_container .risks_table_wrapper {
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      overflow-x: auto;
+    }
+
+    #risks_table_container table.risks_table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+
+    #risks_table_container table.risks_table thead {
+      background: #f1f3f5;
+    }
+
+    #risks_table_container table.risks_table th,
+    #risks_table_container table.risks_table td {
+      padding: 12px 14px;
+      border: 1px solid #ddd;
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    #risks_table_container table.risks_table th {
+      text-align: center;
+      font-weight: 600;
+      color: #003366;
+      cursor: pointer;
+    }
+
+    #risks_table_container table.risks_table td {
+      text-align: center;
+    }
+
+    #risks_table_container table.risks_table td.description {
+      text-align: left;
+      max-width: 400px;
+    }
+
+    #risks_table_container .risks_table_edit-link {
+      color: #1a73e8;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    #risks_table_container .risks_table_edit-link:hover {
+      text-decoration: underline;
+    }
+
+    #risks_table_container .risks_table_badge {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #fff;
+      display: inline-block;
+    }
+
+    #risks_table_container .risks_table_high {
+      background: #d93025;
+    }
+
+    #risks_table_container .risks_table_medium {
+      background: #f9ab00;
+    }
+
+    #risks_table_container .risks_table_low {
+      background: #188038;
+    }
+
+    /* ===== Modal Styles ===== */
+    #editModal {
+      font-family: Arial, sans-serif;
+    }
+
+    #editModal_content {
+      background: #fff;
+      width: 50%;
+      min-width: 400px;
+      max-width: 95%;
+      max-height: 90vh;
+      padding: 0;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      overflow-y: auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #editModal_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 24px 16px 24px;
+    }
+
+    #editModal_header h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    #editModal_closeX {
+      background: none;
+      border: none;
+      font-size: 28px;
+      color: #999;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+
+    #editModal_closeX:hover {
+      color: #333;
+    }
+
+    #editModal_body {
+      padding: 24px;
+    }
+
+    #editModal_body > div {
+      margin-bottom: 20px;
+    }
+
+    #editModal_body > div:last-child {
+      margin-bottom: 0;
+    }
+
+    #editModal_body label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #333;
+      font-weight: normal;
+    }
+
+    #editModal_body label .editModal_required {
+      color: #d93025;
+    }
+
+    #editModal_body input[type="text"],
+    #editModal_body textarea,
+    #editModal_body select {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 14px;
+      border: 1px solid #d0d0d0;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background-color: #fff;
+    }
+
+    #editModal_body input[type="text"]:focus,
+    #editModal_body textarea:focus,
+    #editModal_body select:focus {
+      outline: none;
+      border-color: #4a7cff;
+      box-shadow: 0 0 0 3px rgba(74, 124, 255, 0.1);
+    }
+
+    #editModal_body textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    #editModal_body select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    #editModal_footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 16px;
+      padding: 24px;
+    }
+
+    #editModal_footer button {
+      padding: 12px 40px;
+      font-size: 15px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      min-width: 140px;
+    }
+
+    #saveModal {
+      background: #4a7cff;
+      color: #fff;
+      border: none;
+    }
+
+    #saveModal:hover {
+      background: #3a6ce8;
+    }
+
+    #closeModal {
+      background: #fff;
+      color: #6c757d;
+      border: 1px solid #d0d0d0;
+    }
+
+    #closeModal:hover {
+      background: #f8f9fa;
+      border-color: #adb5bd;
+    }
+
+    #deleteModal {
+      background: #dc3545;
+      color: #fff;
+      border: none;
+      margin-right: auto;
+    }
+
+    #deleteModal:hover {
+      background: #c82333;
+    }
+
+    /* Impact field highlighting */
+    #modalImpact.impact-high {
+      background-color: #d93025 !important;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    #modalImpact.impact-medium {
+      background-color: #f9ab00 !important;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    #modalImpact.impact-low {
+      background-color: #188038 !important;
+      color: #fff;
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Modal -->
+<div id="editModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:1000;">
+  <div id="editModal_content">
+    <div id="editModal_header">
+      <h3>Редактировать данные</h3>
+      <button type="button" id="editModal_closeX">&times;</button>
+    </div>
+    
+    <div id="editModal_body">
+      <div>
+        <label>Категория риска <span class="editModal_required">*</span></label>
+        <input type="text" id="modalCategory">
+      </div>
+
+      <div>
+        <label>Описание риска <span class="editModal_required">*</span></label>
+        <textarea id="modalDescription" rows="3"></textarea>
+      </div>
+
+      <div>
+        <label>Вероятность <span class="editModal_required">*</span></label>
+        <select id="modalProbability">
+          <option value="">-</option>
+          <option value="H1">H1</option>
+          <option value="H2">H2</option>
+          <option value="H3">H3</option>
+          <option value="H4">H4</option>
+          <option value="C5">C5</option>
+          <option value="C6">C6</option>
+          <option value="C7">C7</option>
+          <option value="C8">C8</option>
+          <option value="C9">C9</option>
+          <option value="C10">C10</option>
+          <option value="C11">C11</option>
+          <option value="C12">C12</option>
+          <option value="B15">B15</option>
+          <option value="B16">B16</option>
+          <option value="B17">B17</option>
+          <option value="B18">B18</option>
+          <option value="B19">B19</option>
+          <option value="B20">B20</option>
+          <option value="B21">B21</option>
+          <option value="B22">B22</option>
+          <option value="B23">B23</option>
+          <option value="B24">B24</option>
+          <option value="B25">B25</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Оценка риска <span class="editModal_required">*</span></label>
+        <select id="modalAssessment">
+          <option value="">-</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Влияние</label>
+        <input type="text" id="modalImpact" readonly style="background-color: #f5f5f5;">
+      </div>
+    </div>
+
+    <div id="editModal_footer">
+      <button type="button" id="deleteModal">Удалить</button>
+      <button type="button" id="saveModal">Изменить</button>
+      <button type="button" id="closeModal">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<div id="risks_table_container">
+  <div class="risks_table_wrapper">
+    <table class="risks_table">
+      <thead>
+        <tr>
+          <th>№</th>
+          <th>Категория риска</th>
+          <th>Описание риска</th>
+          <th>Влияние</th>
+          <th>Вероятность</th>
+          <th>Оценка риска</th>
+          <th>Изменить</th>
+        </tr>
+      </thead>
+      <tbody id="risks_table_body"></tbody>
+    </table>
+  </div>
+</div>
+
+<script type="module">
+  $(document).ready(function () {
+    const columnMap = {
+      0: 'number',
+      1: 'category',
+      2: 'description',
+      3: 'impact',
+      4: 'probability',
+      5: 'assessment'
+    };
+
+    const impactOrder = {
+      'недопустимое': 3,
+      'допустимое': 2,
+      'приемлемое': 1
+    };
+
+    let sortState = {};
+    let sortStack = [];
+
+    function impactClass(value) {
+      value = value.toLowerCase();
+      if (value.includes('недопустимое')) return 'risks_table_high';
+      if (value.includes('допустимое')) return 'risks_table_medium';
+      return 'risks_table_low';
+    }
+
+    function parseProbability(value) {
+      const letter = value.charAt(0);
+      const number = parseInt(value.slice(1), 10);
+
+      let groupWeight = 0;
+      if (letter === 'H') groupWeight = 1;
+      if (letter === 'C') groupWeight = 2;
+      if (letter === 'B') groupWeight = 3;
+
+      return { groupWeight, number };
+    }
+
+    function compareByKey(a, b, key, asc) {
+      if (key === 'impact') {
+        const v1 = impactOrder[(a.impact || '').toLowerCase()] || 0;
+        const v2 = impactOrder[(b.impact || '').toLowerCase()] || 0;
+        return asc ? v1 - v2 : v2 - v1;
+      }
+
+      if (key === 'probability') {
+        const p1 = parseProbability(a.probability);
+        const p2 = parseProbability(b.probability);
+
+        if (p1.groupWeight !== p2.groupWeight) {
+          return asc ? p1.groupWeight - p2.groupWeight : p2.groupWeight - p1.groupWeight;
+        }
+
+        return asc ? p1.number - p2.number : p2.number - p1.number;
+      }
+
+      if (!isNaN(a[key]) && !isNaN(b[key])) {
+        return asc ? a[key] - b[key] : b[key] - a[key];
+      }
+
+      return asc ? String(a[key]).localeCompare(String(b[key]), 'ru') : String(b[key]).localeCompare(String(a[key]), 'ru');
+    }
+
+    function renderTable(data) {
+      const $tbody = $('#risks_table_body');
+      $tbody.empty();
+
+      if (!data || data.length === 0) {
+        const emptyRow = `
+        <tr>
+          <td colspan="7" style="text-align:center; padding:40px; color:#666; font-style:italic;">
+            Риски отсутствуют
+          </td>
+        </tr>
+        `;
+        $tbody.append(emptyRow);
+        return;
+      }
+
+      $.each(data, function (index, item) {
+        const row = `
+        <tr>
+          <td>${item.number}</td>
+          <td>${item.category}</td>
+          <td class="description">${item.description}</td>
+          <td>
+            <span class="risks_table_badge ${impactClass(item.impact)}">
+              ${item.impact}
+            </span>
+          </td>
+          <td>${item.probability}</td>
+          <td>${item.assessment}</td>
+          <td>
+            <a href="#" class="risks_table_edit-link" data-index="${index}">
+              Редактировать
+            </a>
+          </td>
+        </tr>
+      `;
+        $tbody.append(row);
+      });
+    }
+
+    let currentData = [];
+    let currentEditIndex = null;
+
+    // Load data from server
+    function getData() {
+      $.ajax({
+        url: "custom_web_template.html?object_id=7597342040409919335",
+        data: "project_id=" + WTLP.sObjectId,
+        success: function (responseJSON) {
+          try {
+            currentData = responseJSON ? JSON.parse(responseJSON) : [];
+          } catch (e) {
+            currentData = [];
+          }
+          renderTable(currentData);
+        },
+        error: function () {
+          currentData = [];
+          renderTable(currentData);
+        }
+      });
+    }
+
+    // Call getData on document ready
+    getData();
+
+    // Table sorting
+    $('#risks_table_container th').on('click', function (e) {
+      const index = $(this).index();
+      const key = columnMap[index];
+      if (!key) return;
+
+      sortState[key] = !sortState[key];
+      const asc = sortState[key];
+
+      if (!e.ctrlKey) {
+        sortStack = [{ key, asc }];
+      } else {
+        const existing = sortStack.find(s => s.key === key);
+        if (existing) existing.asc = asc;
+        else sortStack.push({ key, asc });
+      }
+
+      currentData.sort((a, b) => {
+        for (const sort of sortStack) {
+          const result = compareByKey(a, b, sort.key, sort.asc);
+          if (result !== 0) return result;
+        }
+        return 0;
+      });
+
+      renderTable(currentData);
+    });
+
+    // Calculate Impact based on probability and assessment
+    // Matrix:
+    // H1-H4:   Оценка1=Приемлемое, Оценка2=Приемлемое, Оценка3=Допустимое
+    // C5-C12:  Оценка1=Приемлемое, Оценка2=Допустимое, Оценка3=Недопустимое
+    // B15-B25: Оценка1=Допустимое, Оценка2=Недопустимое, Оценка3=Недопустимое
+    function calculateImpact(probability, assessment) {
+      if (!probability || !assessment) return '';
+
+      var letter = probability.charAt(0);
+      var assessNum = parseInt(assessment, 10);
+
+      // H1-H4: Low risk
+      if (letter === 'H') {
+        if (assessNum === 1 || assessNum === 2) return 'Приемлемое';
+        if (assessNum === 3) return 'Допустимое';
+      }
+      
+      // C5-C12: Medium risk
+      if (letter === 'C') {
+        if (assessNum === 1) return 'Приемлемое';
+        if (assessNum === 2) return 'Допустимое';
+        if (assessNum === 3) return 'Недопустимое';
+      }
+      
+      // B15-B25: High risk
+      if (letter === 'B') {
+        if (assessNum === 1) return 'Допустимое';
+        if (assessNum === 2 || assessNum === 3) return 'Недопустимое';
+      }
+
+      return '';
+    }
+
+    // Update impact when probability or assessment changes
+    function updateImpact() {
+      var probability = $('#modalProbability').val();
+      var assessment = $('#modalAssessment').val();
+      var impact = calculateImpact(probability, assessment);
+      $('#modalImpact').val(impact);
+      
+      // Apply color highlighting
+      var $input = $('#modalImpact');
+      $input.removeClass('impact-high impact-medium impact-low');
+      
+      if (impact === 'Недопустимое') {
+        $input.addClass('impact-high');
+      } else if (impact === 'Допустимое') {
+        $input.addClass('impact-medium');
+      } else if (impact === 'Приемлемое') {
+        $input.addClass('impact-low');
+      }
+    }
+
+    $('#modalProbability, #modalAssessment').on('change', updateImpact);
+
+    // Edit click handler
+    $('#risks_table_body').on('click', '.risks_table_edit-link', function (e) {
+      e.preventDefault();
+      const index = $(this).data('index');
+      const item = currentData[index];
+      currentEditIndex = index;
+
+      $('#modalCategory').val(item.category);
+      $('#modalDescription').val(item.description);
+      $('#modalProbability').val(item.probability);
+      $('#modalAssessment').val(item.assessment);
+      $('#modalImpact').val(item.impact);
+
+      // Apply impact highlighting
+      var $input = $('#modalImpact');
+      $input.removeClass('impact-high impact-medium impact-low');
+      if (item.impact === 'Недопустимое') {
+        $input.addClass('impact-high');
+      } else if (item.impact === 'Допустимое') {
+        $input.addClass('impact-medium');
+      } else if (item.impact === 'Приемлемое') {
+        $input.addClass('impact-low');
+      }
+
+      $('#editModal').show();
+    });
+
+    // Close modal
+    function closeModal() {
+      $('#editModal').hide();
+      currentEditIndex = null;
+    }
+
+    $('#closeModal, #editModal_closeX').on('click', closeModal);
+
+    $('#editModal').on('click', function (e) {
+      if (e.target === this) closeModal();
+    });
+
+    $(document).on('keydown', function (e) {
+      if (e.key === 'Escape' && $('#editModal').is(':visible')) closeModal();
+    });
+
+    // Delete handler
+    $('#deleteModal').on('click', function () {
+      if (currentEditIndex !== null) {
+        var riskId = currentData[currentEditIndex].id;
+
+        if (confirm('Вы уверены, что хотите удалить этот риск?')) {
+          $.ajax({
+            url: "custom_web_template.html?object_id=7598439021244338147",
+            data: "project_id=" + WTLP.sObjectId + "&risk_id=" + riskId,
+            success: function (responseJSON) {
+              // Remove from local data
+              currentData.splice(currentEditIndex, 1);
+              renderTable(currentData);
+              closeModal();
+            },
+            error: function () {
+              alert('Ошибка удаления данных');
+            }
+          });
+        }
+      }
+    });
+
+    // Save handler
+    $('#saveModal').on('click', function () {
+      if (currentEditIndex !== null) {
+        var calculatedImpact = $('#modalImpact').val();
+        
+        var riskData = {
+          id: currentData[currentEditIndex].id,
+          category: $('#modalCategory').val(),
+          description: $('#modalDescription').val(),
+          probability: $('#modalProbability').val(),
+          assessment: $('#modalAssessment').val(),
+          impact: calculatedImpact,
+          number: currentData[currentEditIndex].number
+        };
+
+        // Save data to server
+        $.ajax({
+          url: "custom_web_template.html?object_id=7598437281967341635",
+          data: "project_id=" + WTLP.sObjectId + "&risk_data=" + encodeURIComponent(JSON.stringify(riskData)),
+          success: function (responseJSON) {
+            // Update local data
+            currentData[currentEditIndex].category = riskData.category;
+            currentData[currentEditIndex].description = riskData.description;
+            currentData[currentEditIndex].probability = riskData.probability;
+            currentData[currentEditIndex].assessment = riskData.assessment;
+            currentData[currentEditIndex].impact = riskData.impact;
+            renderTable(currentData);
+            closeModal();
+          },
+          error: function () {
+            alert('Ошибка сохранения данных');
+          }
+        });
+      } else {
+        closeModal();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
