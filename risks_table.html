@@ -517,30 +517,36 @@
     });
 
     // Calculate Impact based on probability and assessment
+    // Matrix:
+    // H1-H4:   Оценка1=Приемлемое, Оценка2=Приемлемое, Оценка3=Допустимое
+    // C5-C12:  Оценка1=Приемлемое, Оценка2=Допустимое, Оценка3=Недопустимое
+    // B15-B25: Оценка1=Допустимое, Оценка2=Недопустимое, Оценка3=Недопустимое
     function calculateImpact(probability, assessment) {
       if (!probability || !assessment) return '';
 
       var letter = probability.charAt(0);
-      var probNumber = parseInt(probability.slice(1), 10);
       var assessNum = parseInt(assessment, 10);
 
-      // Calculate risk score
-      // H = low probability (1-4), C = medium (5-14), B = high (15-25)
-      var probWeight = 0;
-      if (letter === 'H') probWeight = 1;
-      else if (letter === 'C') probWeight = 2;
-      else if (letter === 'B') probWeight = 3;
-
-      var riskScore = probWeight + assessNum;
-
-      // Determine impact
-      if (riskScore >= 5) {
-        return 'Недопустимое';
-      } else if (riskScore >= 3) {
-        return 'Допустимое';
-      } else {
-        return 'Приемлемое';
+      // H1-H4: Low risk
+      if (letter === 'H') {
+        if (assessNum === 1 || assessNum === 2) return 'Приемлемое';
+        if (assessNum === 3) return 'Допустимое';
       }
+      
+      // C5-C12: Medium risk
+      if (letter === 'C') {
+        if (assessNum === 1) return 'Приемлемое';
+        if (assessNum === 2) return 'Допустимое';
+        if (assessNum === 3) return 'Недопустимое';
+      }
+      
+      // B15-B25: High risk
+      if (letter === 'B') {
+        if (assessNum === 1) return 'Допустимое';
+        if (assessNum === 2 || assessNum === 3) return 'Недопустимое';
+      }
+
+      return '';
     }
 
     // Update impact when probability or assessment changes
