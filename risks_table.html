@@ -231,6 +231,17 @@
       background: #f8f9fa;
       border-color: #adb5bd;
     }
+
+    #deleteModal {
+      background: #dc3545;
+      color: #fff;
+      border: none;
+      margin-right: auto;
+    }
+
+    #deleteModal:hover {
+      background: #c82333;
+    }
   </style>
 </head>
 
@@ -297,6 +308,7 @@
     </div>
 
     <div id="editModal_footer">
+      <button type="button" id="deleteModal">Удалить</button>
       <button type="button" id="saveModal">Добавить</button>
       <button type="button" id="closeModal">Отмена</button>
     </div>
@@ -509,6 +521,29 @@
 
     $(document).on('keydown', function (e) {
       if (e.key === 'Escape' && $('#editModal').is(':visible')) closeModal();
+    });
+
+    // Delete handler
+    $('#deleteModal').on('click', function () {
+      if (currentEditIndex !== null) {
+        var riskId = currentData[currentEditIndex].id;
+
+        if (confirm('Вы уверены, что хотите удалить этот риск?')) {
+          $.ajax({
+            url: "custom_web_template.html?object_id=7598439021244338147",
+            data: "project_id=" + WTLP.sObjectId + "&risk_id=" + riskId,
+            success: function (responseJSON) {
+              // Remove from local data
+              currentData.splice(currentEditIndex, 1);
+              renderTable(currentData);
+              closeModal();
+            },
+            error: function () {
+              alert('Ошибка удаления данных');
+            }
+          });
+        }
+      }
     });
 
     // Save handler
