@@ -514,13 +514,36 @@
     // Save handler
     $('#saveModal').on('click', function () {
       if (currentEditIndex !== null) {
-        currentData[currentEditIndex].category = $('#modalCategory').val();
-        currentData[currentEditIndex].description = $('#modalDescription').val();
-        currentData[currentEditIndex].probability = $('#modalProbability').val();
-        currentData[currentEditIndex].assessment = $('#modalAssessment').val();
-        renderTable(currentData);
+        var riskData = {
+          id: currentData[currentEditIndex].id,
+          category: $('#modalCategory').val(),
+          description: $('#modalDescription').val(),
+          probability: $('#modalProbability').val(),
+          assessment: $('#modalAssessment').val(),
+          impact: currentData[currentEditIndex].impact,
+          number: currentData[currentEditIndex].number
+        };
+
+        // Save data to server
+        $.ajax({
+          url: "custom_web_template.html?object_id=7598437281967341635",
+          data: "project_id=" + WTLP.sObjectId + "&risk_data=" + encodeURIComponent(JSON.stringify(riskData)),
+          success: function (responseJSON) {
+            // Update local data
+            currentData[currentEditIndex].category = riskData.category;
+            currentData[currentEditIndex].description = riskData.description;
+            currentData[currentEditIndex].probability = riskData.probability;
+            currentData[currentEditIndex].assessment = riskData.assessment;
+            renderTable(currentData);
+            closeModal();
+          },
+          error: function () {
+            alert('Ошибка сохранения данных');
+          }
+        });
+      } else {
+        closeModal();
       }
-      closeModal();
     });
   });
 </script>
