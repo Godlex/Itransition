@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вакансии компании</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background-color: #1a2744;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav a:hover {
+            opacity: 0.8;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding: 8px 15px 8px 35px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 4px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            width: 200px;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .search-box::before {
+            content: "🔍";
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 20px 30px 10px;
+            font-size: 14px;
+        }
+
+        .breadcrumb a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: #666;
+        }
+
+        /* Main Content */
+        .container {
+            padding: 10px 30px 40px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 400;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .card-logo {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .card-name {
+            padding: 15px;
+            font-size: 14px;
+            color: #333;
+            border-top: 1px solid #eee;
+            background: white;
+        }
+
+        /* Color variations for cards */
+        .bg-blue { background-color: #607D8B; }
+        .bg-orange { background-color: #FF5722; }
+        .bg-purple { background-color: #5C4EE5; }
+        .bg-cream { background-color: #FFF8E1; color: #333; }
+        .bg-gray { background-color: #546E7A; }
+        .bg-teal { background-color: #26A69A; }
+        .bg-green { background-color: #4CAF50; }
+        .bg-white { background-color: #fff; color: #FF5722; border: 1px solid #eee; }
+        .bg-lightblue { background-color: #03A9F4; }
+        .bg-lightgreen { background-color: #F5F5F5; color: #4CAF50; }
+        .bg-red { background-color: #E53935; }
+        .bg-navy { background-color: #1a2744; }
+        .bg-yellow { background-color: #FFC107; color: #333; }
+        .bg-pink { background-color: #E91E63; }
+        .bg-indigo { background-color: #3F51B5; }
+        .bg-brown { background-color: #795548; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="#">ТЕМА ГК</a>
+            <a href="#">Команда</a>
+            <a href="#">Моя компания</a>
+            <a href="#">Задачи</a>
+            <a href="#">Helpdesk</a>
+        </nav>
+        <div class="search-box">
+            <input type="text" placeholder="Поиск">
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="#">Главная</a> / <a href="#">Сервисы</a> / <span>Вакансии всех компаний</span>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Вакансии компании</h1>
+        
+        <div class="cards-grid" id="cardsContainer">
+            <!-- Cards will be generated by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Company data
+        const companies = [
+            { id: 1, name: "W&S", shortName: "W&S", bgClass: "bg-blue" },
+            { id: 2, name: "Бургер Кінг", shortName: "BURGER KING", bgClass: "bg-orange" },
+            { id: 3, name: "ДК", shortName: "ДК", bgClass: "bg-purple" },
+            { id: 4, name: "ДОДО Беларусь", shortName: "ДОДО", bgClass: "bg-cream" },
+            { id: 5, name: "ДОДО Румыния", shortName: "ДОДО", bgClass: "bg-cream" },
+            { id: 6, name: "3OOбаар", shortName: "3OOбаар", bgClass: "bg-gray" },
+            { id: 7, name: "3OOбазар", shortName: "3OOбазар", bgClass: "bg-blue" },
+            { id: 8, name: "КЦ", shortName: "КЦ", bgClass: "bg-teal" },
+            { id: 9, name: "Панголин", shortName: "Панголин", bgClass: "bg-white" },
+            { id: 10, name: "ПКС", shortName: "ПКС", bgClass: "bg-lightblue" },
+            { id: 11, name: "Прилесье", shortName: "Прилесье", bgClass: "bg-lightgreen" },
+            { id: 12, name: "TTL", shortName: "TTL", bgClass: "bg-red" },
+            { id: 13, name: "Компания А", shortName: "КА", bgClass: "bg-navy" },
+            { id: 14, name: "Компания Б", shortName: "КБ", bgClass: "bg-yellow" },
+            { id: 15, name: "Компания В", shortName: "КВ", bgClass: "bg-pink" },
+            { id: 16, name: "Компания Г", shortName: "КГ", bgClass: "bg-indigo" }
+        ];
+
+        // Get current URL base
+        function getCurrentUrl() {
+            const url = window.location.href;
+            // Remove filename if present
+            const baseUrl = url.substring(0, url.lastIndexOf('/') + 1);
+            return baseUrl || url;
+        }
+
+        // Navigate to vacancy page
+        function navigateToVacancy(companyId) {
+            const baseUrl = getCurrentUrl();
+            const targetUrl = `${baseUrl}vacancies?companyid=${companyId}`;
+            window.location.href = targetUrl;
+        }
+
+        // Create card element
+        function createCard(company) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => navigateToVacancy(company.id);
+            
+            card.innerHTML = `
+                <div class="card-logo ${company.bgClass}">
+                    ${company.shortName}
+                </div>
+                <div class="card-name">${company.name}</div>
+            `;
+            
+            return card;
+        }
+
+        // Render all cards
+        function renderCards() {
+            const container = document.getElementById('cardsContainer');
+            container.innerHTML = '';
+            
+            companies.forEach(company => {
+                const card = createCard(company);
+                container.appendChild(card);
+            });
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', renderCards);
+    </script>
+</body>
+</html>
