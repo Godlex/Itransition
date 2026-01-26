@@ -16,8 +16,26 @@
 /* ===== CARDS GRID ===== */
 .vacancy_cards_grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(6, 1fr);
   gap: 20px;
+}
+
+@media (max-width: 1200px) {
+  .vacancy_cards_grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .vacancy_cards_grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .vacancy_cards_grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .vacancy_card {
@@ -54,6 +72,7 @@
 
 .vacancy_card_name {
   font-weight: 500;
+  font-size: 0.98em;
 }
 
 
