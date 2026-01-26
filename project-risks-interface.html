@@ -400,6 +400,112 @@ td.description {
 .history-risk.high { border-left-color:#d93025; }
 .history-risk.medium { border-left-color:#f9ab00; }
 .history-risk.low { border-left-color:#188038; }
+
+/* ===== FILTERS ===== */
+.filter-row td {
+  padding:8px 6px;
+  background:#f9fafb;
+}
+
+.filter-input {
+  width:100%;
+  padding:6px 10px;
+  font-size:13px;
+  border:1px solid #cbd5e1;
+  border-radius:4px;
+  box-sizing:border-box;
+}
+
+.filter-input:focus {
+  outline:none;
+  border-color:#1a73e8;
+}
+
+.filter-select {
+  width:100%;
+  padding:6px 10px;
+  font-size:13px;
+  border:1px solid #cbd5e1;
+  border-radius:4px;
+  box-sizing:border-box;
+  background:#fff;
+  cursor:pointer;
+}
+
+.filter-select:focus {
+  outline:none;
+  border-color:#1a73e8;
+}
+
+th.filter-active {
+  background:#e3f2fd;
+  position:relative;
+}
+
+th.filter-active::after {
+  content:'✓';
+  position:absolute;
+  top:4px;
+  right:4px;
+  font-size:10px;
+  color:#1a73e8;
+}
+
+.filter-bar {
+  padding:10px 14px;
+  background:#e8f4fd;
+  border-bottom:1px solid #ddd;
+  display:none;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.filter-bar.active {
+  display:flex;
+}
+
+.filter-tag {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:4px 10px;
+  background:#1a73e8;
+  color:#fff;
+  border-radius:4px;
+  font-size:12px;
+}
+
+.filter-tag-remove {
+  cursor:pointer;
+  font-weight:bold;
+  font-size:14px;
+}
+
+.filter-tag-remove:hover {
+  color:#ffcdd2;
+}
+
+.clear-all-filters {
+  padding:4px 10px;
+  background:#dc3545;
+  color:#fff;
+  border:none;
+  border-radius:4px;
+  font-size:12px;
+  cursor:pointer;
+  margin-left:auto;
+}
+
+.clear-all-filters:hover {
+  background:#c82333;
+}
+
+.filter-hint {
+  font-size:11px;
+  color:#666;
+  margin-left:10px;
+}
 </style>
 </head>
 
@@ -523,17 +629,46 @@ td.description {
 
 <!-- ===== TABLE ===== -->
 <div id="risks_table_container">
+  <div class="filter-bar" id="filterBar">
+    <span>Фильтры:</span>
+    <div id="filterTags"></div>
+    <span class="filter-hint">(Ctrl+Click для добавления фильтра)</span>
+    <button class="clear-all-filters" id="clearAllFilters">Очистить все</button>
+  </div>
   <div class="risks_table_wrapper">
     <table class="risks_table">
       <thead>
         <tr>
-          <th>№</th>
-          <th>Категория</th>
-          <th>Описание</th>
-          <th>Влияние</th>
-          <th>Вероятность</th>
-          <th>Оценка</th>
+          <th data-field="number">№</th>
+          <th data-field="category">Категория</th>
+          <th data-field="description">Описание</th>
+          <th data-field="impact">Влияние</th>
+          <th data-field="probability">Вероятность</th>
+          <th data-field="assessment">Оценка</th>
           <th></th>
+        </tr>
+        <tr class="filter-row" id="filterRow" style="display:none;">
+          <td><input type="text" class="filter-input" data-field="number" placeholder="№"></td>
+          <td><input type="text" class="filter-input" data-field="category" placeholder="Категория"></td>
+          <td><input type="text" class="filter-input" data-field="description" placeholder="Описание"></td>
+          <td>
+            <select class="filter-select" data-field="impact">
+              <option value="">Все</option>
+              <option value="Приемлемое">Приемлемое</option>
+              <option value="Допустимое">Допустимое</option>
+              <option value="Недопустимое">Недопустимое</option>
+            </select>
+          </td>
+          <td><input type="text" class="filter-input" data-field="probability" placeholder="Вероятность"></td>
+          <td>
+            <select class="filter-select" data-field="assessment">
+              <option value="">Все</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </td>
+          <td></td>
         </tr>
       </thead>
       <tbody id="risks_table_body"></tbody>
@@ -550,7 +685,9 @@ td.description {
 $(document).ready(function(){
 
 let currentData = [];
+let filteredData = [];
 let currentEditIndex = null;
+let activeFilters = {};
 
 /* ===== IMPACT ===== */
 function calcImpact(p,a){
@@ -586,9 +723,59 @@ function impactClass(v){
   return 'risks_table_low';
 }
 
+function applyFilters(){
+  filteredData = currentData.filter(r => {
+    for(let field in activeFilters){
+      const filterValue = activeFilters[field].toLowerCase();
+      const itemValue = String(r[field] || '').toLowerCase();
+      if(!itemValue.includes(filterValue)){
+        return false;
+      }
+    }
+    return true;
+  });
+  renderTable();
+  updateFilterBar();
+}
+
+function updateFilterBar(){
+  const bar = $('#filterBar');
+  const tags = $('#filterTags').empty();
+  const fieldNames = {
+    number: '№',
+    category: 'Категория',
+    description: 'Описание',
+    impact: 'Влияние',
+    probability: 'Вероятность',
+    assessment: 'Оценка'
+  };
+  
+  if(Object.keys(activeFilters).length > 0){
+    bar.addClass('active');
+    for(let field in activeFilters){
+      tags.append(`
+        <span class="filter-tag">
+          ${fieldNames[field]}: "${activeFilters[field]}"
+          <span class="filter-tag-remove" data-field="${field}">×</span>
+        </span>
+      `);
+    }
+  } else {
+    bar.removeClass('active');
+  }
+  
+  // Update header highlighting
+  $('th[data-field]').removeClass('filter-active');
+  for(let field in activeFilters){
+    $('th[data-field="' + field + '"]').addClass('filter-active');
+  }
+}
+
 function renderTable(){
   const tb=$('#risks_table_body').empty();
-  currentData.forEach((r,i)=>{
+  const dataToRender = Object.keys(activeFilters).length > 0 ? filteredData : currentData;
+  dataToRender.forEach((r,i)=>{
+    const originalIndex = currentData.findIndex(item => item.id === r.id || (item.number === r.number && item.category === r.category));
     tb.append(`
       <tr>
         <td>${r.number}</td>
@@ -597,7 +784,7 @@ function renderTable(){
         <td><span class="risks_table_badge ${impactClass(r.impact)}">${r.impact}</span></td>
         <td>${r.probability}</td>
         <td>${r.assessment}</td>
-        <td><a class="risks_table_edit-link" data-index="${i}">Редактировать</a></td>
+        <td><a class="risks_table_edit-link" data-index="${originalIndex}">Редактировать</a></td>
       </tr>
     `);
   });
@@ -787,6 +974,104 @@ function setDropdownValue(inputId, value){
   }
   $('#' + inputId).val(value);
 }
+
+/* ===== FILTERS ===== */
+let visibleFilterFields = [];
+
+$('.risks_table thead').on('click', 'th[data-field]', function(e){
+  const field = $(this).data('field');
+  if(!field) return;
+  
+  if(e.ctrlKey || e.metaKey){
+    // Add to visible filters
+    if(!visibleFilterFields.includes(field)){
+      visibleFilterFields.push(field);
+    }
+  } else {
+    // Single filter mode - show only this field
+    visibleFilterFields = [field];
+  }
+  
+  showFilterRow();
+});
+
+function showFilterRow(){
+  const filterRow = $('#filterRow');
+  
+  if(visibleFilterFields.length > 0){
+    filterRow.show();
+    // Show/hide individual filter cells
+    filterRow.find('td').each(function(index){
+      const input = $(this).find('.filter-input, .filter-select');
+      if(input.length){
+        const field = input.data('field');
+        if(visibleFilterFields.includes(field)){
+          $(this).css('visibility', 'visible');
+          input.prop('disabled', false);
+        } else {
+          $(this).css('visibility', 'hidden');
+          input.prop('disabled', true);
+        }
+      }
+    });
+  } else {
+    filterRow.hide();
+  }
+}
+
+// Filter input handlers
+$('#filterRow').on('input', '.filter-input', function(){
+  const field = $(this).data('field');
+  const value = $(this).val().trim();
+  
+  if(value){
+    activeFilters[field] = value;
+  } else {
+    delete activeFilters[field];
+  }
+  applyFilters();
+});
+
+$('#filterRow').on('change', '.filter-select', function(){
+  const field = $(this).data('field');
+  const value = $(this).val();
+  
+  if(value){
+    activeFilters[field] = value;
+  } else {
+    delete activeFilters[field];
+  }
+  applyFilters();
+});
+
+// Remove single filter
+$('#filterTags').on('click', '.filter-tag-remove', function(){
+  const field = $(this).data('field');
+  delete activeFilters[field];
+  
+  // Clear the input/select
+  const input = $('#filterRow').find('[data-field="' + field + '"]');
+  if(input.is('select')){
+    input.val('');
+  } else {
+    input.val('');
+  }
+  
+  // Remove from visible fields
+  visibleFilterFields = visibleFilterFields.filter(f => f !== field);
+  showFilterRow();
+  applyFilters();
+});
+
+// Clear all filters
+$('#clearAllFilters').on('click', function(){
+  activeFilters = {};
+  visibleFilterFields = [];
+  $('#filterRow').find('.filter-input').val('');
+  $('#filterRow').find('.filter-select').val('');
+  showFilterRow();
+  applyFilters();
+});
 
 /* ===== LOAD ===== */
 $.ajax({
