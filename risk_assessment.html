@@ -131,20 +131,19 @@ td.description {
   border-radius:6px;
   box-sizing:border-box;
   background:#fff;
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 12px center;
+  cursor:pointer;
 }
 
-#editModal_body select[size] {
-  height:auto;
-  overflow-y:auto;
-}
-
-#editModal_body select[size] option {
-  padding:8px 12px;
-}
-
-#editModal_body select[size] option:checked {
-  background:#1a73e8;
-  color:#fff;
+#editModal_body input,
+#editModal_body textarea {
+  background-image:none;
+  cursor:text;
 }
 
 #editModal_body textarea {
@@ -282,7 +281,7 @@ td.description {
 
       <div class="editModal_field">
         <label for="modalProbability">Вероятность *</label>
-        <select id="modalProbability" size="6">
+        <select id="modalProbability">
           <option value="" disabled selected>-</option>
           <option value="H1">Н1</option>
           <option value="H2">Н2</option>
