@@ -120,8 +120,7 @@ td.description {
 }
 
 #editModal_body input,
-#editModal_body textarea,
-#editModal_body select {
+#editModal_body textarea {
   width:100%;
   height:44px;
   padding:9px 12px;
@@ -131,19 +130,74 @@ td.description {
   border-radius:6px;
   box-sizing:border-box;
   background:#fff;
-  appearance:none;
-  -webkit-appearance:none;
-  -moz-appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;
-  background-position:right 12px center;
-  cursor:pointer;
 }
 
-#editModal_body input,
-#editModal_body textarea {
-  background-image:none;
-  cursor:text;
+
+/* Custom dropdown */
+.custom-dropdown {
+  position:relative;
+  width:100%;
+}
+
+.custom-dropdown-selected {
+  width:100%;
+  height:44px;
+  padding:9px 12px;
+  font-size:14px;
+  color:#111827;
+  border:1px solid #cbd5e1;
+  border-radius:6px;
+  box-sizing:border-box;
+  background:#fff;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.custom-dropdown-selected::after {
+  content:"▼";
+  font-size:10px;
+  color:#666;
+}
+
+.custom-dropdown-options {
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  right:0;
+  max-height:264px;
+  overflow-y:auto;
+  background:#fff;
+  border:1px solid #cbd5e1;
+  border-top:none;
+  border-radius:0 0 6px 6px;
+  z-index:100;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
+
+.custom-dropdown.open .custom-dropdown-options {
+  display:block;
+}
+
+.custom-dropdown.open .custom-dropdown-selected {
+  border-radius:6px 6px 0 0;
+}
+
+.custom-dropdown-option {
+  padding:10px 12px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.custom-dropdown-option:hover {
+  background:#f1f3f5;
+}
+
+.custom-dropdown-option.selected {
+  background:#1a73e8;
+  color:#fff;
 }
 
 #editModal_body textarea {
@@ -281,42 +335,50 @@ td.description {
 
       <div class="editModal_field">
         <label for="modalProbability">Вероятность *</label>
-        <select id="modalProbability">
-          <option value="" disabled selected>-</option>
-          <option value="H1">Н1</option>
-          <option value="H2">Н2</option>
-          <option value="H3">Н3</option>
-          <option value="H4">Н4</option>
-          <option value="C5">С5</option>
-          <option value="C6">С6</option>
-          <option value="C7">С7</option>
-          <option value="C8">С8</option>
-          <option value="C9">С9</option>
-          <option value="C10">С10</option>
-          <option value="C11">С11</option>
-          <option value="C12">С12</option>
-          <option value="B15">B15</option>
-          <option value="B16">B16</option>
-          <option value="B17">B17</option>
-          <option value="B18">B18</option>
-          <option value="B19">B19</option>
-          <option value="B20">B20</option>
-          <option value="B21">B21</option>
-          <option value="B22">B22</option>
-          <option value="B23">B23</option>
-          <option value="B24">B24</option>
-          <option value="B25">B25</option>
-        </select>
+        <div class="custom-dropdown" data-for="modalProbability">
+          <div class="custom-dropdown-selected">-</div>
+          <div class="custom-dropdown-options">
+            <div class="custom-dropdown-option" data-value="">-</div>
+            <div class="custom-dropdown-option" data-value="H1">Н1</div>
+            <div class="custom-dropdown-option" data-value="H2">Н2</div>
+            <div class="custom-dropdown-option" data-value="H3">Н3</div>
+            <div class="custom-dropdown-option" data-value="H4">Н4</div>
+            <div class="custom-dropdown-option" data-value="C5">С5</div>
+            <div class="custom-dropdown-option" data-value="C6">С6</div>
+            <div class="custom-dropdown-option" data-value="C7">С7</div>
+            <div class="custom-dropdown-option" data-value="C8">С8</div>
+            <div class="custom-dropdown-option" data-value="C9">С9</div>
+            <div class="custom-dropdown-option" data-value="C10">С10</div>
+            <div class="custom-dropdown-option" data-value="C11">С11</div>
+            <div class="custom-dropdown-option" data-value="C12">С12</div>
+            <div class="custom-dropdown-option" data-value="B15">B15</div>
+            <div class="custom-dropdown-option" data-value="B16">B16</div>
+            <div class="custom-dropdown-option" data-value="B17">B17</div>
+            <div class="custom-dropdown-option" data-value="B18">B18</div>
+            <div class="custom-dropdown-option" data-value="B19">B19</div>
+            <div class="custom-dropdown-option" data-value="B20">B20</div>
+            <div class="custom-dropdown-option" data-value="B21">B21</div>
+            <div class="custom-dropdown-option" data-value="B22">B22</div>
+            <div class="custom-dropdown-option" data-value="B23">B23</div>
+            <div class="custom-dropdown-option" data-value="B24">B24</div>
+            <div class="custom-dropdown-option" data-value="B25">B25</div>
+          </div>
+        </div>
+        <input type="hidden" id="modalProbability">
       </div>
 
       <div class="editModal_field">
         <label for="modalAssessment">Оценка риска *</label>
-        <select id="modalAssessment">
-          <option value="" disabled selected>-</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
+        <div class="custom-dropdown" data-for="modalAssessment">
+          <div class="custom-dropdown-selected">-</div>
+          <div class="custom-dropdown-options">
+            <div class="custom-dropdown-option" data-value="">-</div>
+            <div class="custom-dropdown-option" data-value="1">1</div>
+            <div class="custom-dropdown-option" data-value="2">2</div>
+            <div class="custom-dropdown-option" data-value="3">3</div>
+          </div>
+        </div>
+        <input type="hidden" id="modalAssessment">
       </div>
 
       <div class="editModal_field">
@@ -460,8 +522,8 @@ $('#risks_table_body').on('click','.risks_table_edit-link',function(){
   const r=currentData[currentEditIndex];
   $('#modalCategory').val(r.category);
   $('#modalDescription').val(r.description);
-  $('#modalProbability').val(r.probability);
-  $('#modalAssessment').val(r.assessment);
+  setDropdownValue('modalProbability', r.probability);
+  setDropdownValue('modalAssessment', r.assessment);
   setImpactField(r.impact);
   $('#editModal').show();
 });
@@ -500,6 +562,45 @@ $('#deleteModal').on('click',function(){
 });
 
 $('#closeModal,#editModal_closeX').on('click',()=>$('#editModal').hide());
+
+/* ===== CUSTOM DROPDOWN ===== */
+$('.custom-dropdown-selected').on('click', function(e){
+  e.stopPropagation();
+  const dropdown = $(this).closest('.custom-dropdown');
+  $('.custom-dropdown').not(dropdown).removeClass('open');
+  dropdown.toggleClass('open');
+});
+
+$('.custom-dropdown-option').on('click', function(){
+  const dropdown = $(this).closest('.custom-dropdown');
+  const value = $(this).data('value');
+  const text = $(this).text();
+  const inputId = dropdown.data('for');
+  
+  dropdown.find('.custom-dropdown-selected').text(text);
+  dropdown.find('.custom-dropdown-option').removeClass('selected');
+  $(this).addClass('selected');
+  $('#' + inputId).val(value).trigger('change');
+  dropdown.removeClass('open');
+});
+
+$(document).on('click', function(){
+  $('.custom-dropdown').removeClass('open');
+});
+
+function setDropdownValue(inputId, value){
+  const dropdown = $('[data-for="' + inputId + '"]');
+  const option = dropdown.find('[data-value="' + value + '"]');
+  if(option.length){
+    dropdown.find('.custom-dropdown-selected').text(option.text());
+    dropdown.find('.custom-dropdown-option').removeClass('selected');
+    option.addClass('selected');
+  } else {
+    dropdown.find('.custom-dropdown-selected').text('-');
+    dropdown.find('.custom-dropdown-option').removeClass('selected');
+  }
+  $('#' + inputId).val(value);
+}
 
 /* ===== LOAD ===== */
 $.ajax({
