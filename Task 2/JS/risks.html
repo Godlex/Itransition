@@ -139,6 +139,16 @@ td.description {
   resize:vertical;
 }
 
+#modalProbability.is-open {
+  height:auto;
+  max-height:240px;
+  overflow-y:auto;
+}
+
+#modalProbability.is-open option {
+  padding:6px 12px;
+}
+
 /* READONLY IMPACT */
 #modalImpact {
   font-weight:600;
@@ -456,6 +466,21 @@ $('#risks_table_body').on('click','.risks_table_edit-link',function(){
 $('#modalProbability,#modalAssessment').on('change',function(){
   const impact=calcImpact($('#modalProbability').val(),$('#modalAssessment').val());
   setImpactField(impact);
+});
+
+const probabilityVisibleItems = 6;
+$('#modalProbability').on('mousedown',function(e){
+  if(this.size === 1){
+    e.preventDefault();
+    this.size = probabilityVisibleItems;
+    $(this).addClass('is-open');
+    this.focus();
+  }
+});
+
+$('#modalProbability').on('blur change',function(){
+  this.size = 1;
+  $(this).removeClass('is-open');
 });
 
 $('#saveModal').on('click',function(){
