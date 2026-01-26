@@ -873,6 +873,16 @@ function setDropdownValue(inputId, value){
 }
 
 /* ===== SORTING ===== */
+// Reset sort when clicking on table body
+$('#risks_table_body').on('click', function(e){
+  if(!$(e.target).hasClass('risks_table_edit-link')){
+    if(activeSorts.length > 0){
+      activeSorts = [];
+      applySorts();
+    }
+  }
+});
+
 $('.risks_table thead').on('click', 'th[data-field]', function(e){
   const field = $(this).data('field');
   if(!field) return;
