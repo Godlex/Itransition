@@ -401,57 +401,41 @@ td.description {
 .history-risk.medium { border-left-color:#f9ab00; }
 .history-risk.low { border-left-color:#188038; }
 
-/* ===== FILTERS ===== */
-.filter-row td {
-  padding:8px 6px;
-  background:#f9fafb;
-}
-
-.filter-input {
-  width:100%;
-  padding:6px 10px;
-  font-size:13px;
-  border:1px solid #cbd5e1;
-  border-radius:4px;
-  box-sizing:border-box;
-}
-
-.filter-input:focus {
-  outline:none;
-  border-color:#1a73e8;
-}
-
-.filter-select {
-  width:100%;
-  padding:6px 10px;
-  font-size:13px;
-  border:1px solid #cbd5e1;
-  border-radius:4px;
-  box-sizing:border-box;
-  background:#fff;
-  cursor:pointer;
-}
-
-.filter-select:focus {
-  outline:none;
-  border-color:#1a73e8;
-}
-
-th.filter-active {
-  background:#e3f2fd;
+/* ===== SORTING ===== */
+th[data-field] {
   position:relative;
+  padding-right:24px;
+  user-select:none;
 }
 
-th.filter-active::after {
-  content:'✓';
+th[data-field]:hover {
+  background:#e8eaed;
+}
+
+th .sort-icon {
   position:absolute;
-  top:4px;
-  right:4px;
+  right:8px;
+  top:50%;
+  transform:translateY(-50%);
   font-size:10px;
+  color:#999;
+}
+
+th.sort-asc .sort-icon::after {
+  content:'▲';
   color:#1a73e8;
 }
 
-.filter-bar {
+th.sort-desc .sort-icon::after {
+  content:'▼';
+  color:#1a73e8;
+}
+
+th.sort-asc, th.sort-desc {
+  background:#e3f2fd;
+}
+
+.sort-bar {
   padding:10px 14px;
   background:#e8f4fd;
   border-bottom:1px solid #ddd;
@@ -461,11 +445,11 @@ th.filter-active::after {
   flex-wrap:wrap;
 }
 
-.filter-bar.active {
+.sort-bar.active {
   display:flex;
 }
 
-.filter-tag {
+.sort-tag {
   display:inline-flex;
   align-items:center;
   gap:6px;
@@ -476,17 +460,17 @@ th.filter-active::after {
   font-size:12px;
 }
 
-.filter-tag-remove {
+.sort-tag-remove {
   cursor:pointer;
   font-weight:bold;
   font-size:14px;
 }
 
-.filter-tag-remove:hover {
+.sort-tag-remove:hover {
   color:#ffcdd2;
 }
 
-.clear-all-filters {
+.clear-all-sorts {
   padding:4px 10px;
   background:#dc3545;
   color:#fff;
@@ -497,11 +481,11 @@ th.filter-active::after {
   margin-left:auto;
 }
 
-.clear-all-filters:hover {
+.clear-all-sorts:hover {
   background:#c82333;
 }
 
-.filter-hint {
+.sort-hint {
   font-size:11px;
   color:#666;
   margin-left:10px;
@@ -629,46 +613,23 @@ th.filter-active::after {
 
 <!-- ===== TABLE ===== -->
 <div id="risks_table_container">
-  <div class="filter-bar" id="filterBar">
-    <span>Фильтры:</span>
-    <div id="filterTags"></div>
-    <span class="filter-hint">(Ctrl+Click для добавления фильтра)</span>
-    <button class="clear-all-filters" id="clearAllFilters">Очистить все</button>
+  <div class="sort-bar" id="sortBar">
+    <span>Сортировка:</span>
+    <div id="sortTags"></div>
+    <span class="sort-hint">(Ctrl+Click для добавления сортировки)</span>
+    <button class="clear-all-sorts" id="clearAllSorts">Сбросить</button>
   </div>
   <div class="risks_table_wrapper">
     <table class="risks_table">
       <thead>
         <tr>
-          <th data-field="number">№</th>
-          <th data-field="category">Категория</th>
-          <th data-field="description">Описание</th>
-          <th data-field="impact">Влияние</th>
-          <th data-field="probability">Вероятность</th>
-          <th data-field="assessment">Оценка</th>
+          <th data-field="number">№<span class="sort-icon"></span></th>
+          <th data-field="category">Категория<span class="sort-icon"></span></th>
+          <th data-field="description">Описание<span class="sort-icon"></span></th>
+          <th data-field="impact">Влияние<span class="sort-icon"></span></th>
+          <th data-field="probability">Вероятность<span class="sort-icon"></span></th>
+          <th data-field="assessment">Оценка<span class="sort-icon"></span></th>
           <th></th>
-        </tr>
-        <tr class="filter-row" id="filterRow" style="display:none;">
-          <td><input type="text" class="filter-input" data-field="number" placeholder="№"></td>
-          <td><input type="text" class="filter-input" data-field="category" placeholder="Категория"></td>
-          <td><input type="text" class="filter-input" data-field="description" placeholder="Описание"></td>
-          <td>
-            <select class="filter-select" data-field="impact">
-              <option value="">Все</option>
-              <option value="Приемлемое">Приемлемое</option>
-              <option value="Допустимое">Допустимое</option>
-              <option value="Недопустимое">Недопустимое</option>
-            </select>
-          </td>
-          <td><input type="text" class="filter-input" data-field="probability" placeholder="Вероятность"></td>
-          <td>
-            <select class="filter-select" data-field="assessment">
-              <option value="">Все</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-            </select>
-          </td>
-          <td></td>
         </tr>
       </thead>
       <tbody id="risks_table_body"></tbody>
@@ -685,9 +646,9 @@ th.filter-active::after {
 $(document).ready(function(){
 
 let currentData = [];
-let filteredData = [];
+let sortedData = [];
 let currentEditIndex = null;
-let activeFilters = {};
+let activeSorts = []; // Array of {field, direction} objects
 
 /* ===== IMPACT ===== */
 function calcImpact(p,a){
@@ -723,24 +684,46 @@ function impactClass(v){
   return 'risks_table_low';
 }
 
-function applyFilters(){
-  filteredData = currentData.filter(r => {
-    for(let field in activeFilters){
-      const filterValue = activeFilters[field].toLowerCase();
-      const itemValue = String(r[field] || '').toLowerCase();
-      if(!itemValue.includes(filterValue)){
-        return false;
+function applySorts(){
+  sortedData = [...currentData];
+  
+  if(activeSorts.length > 0){
+    sortedData.sort((a, b) => {
+      for(let sort of activeSorts){
+        const field = sort.field;
+        const dir = sort.direction === 'asc' ? 1 : -1;
+        
+        let valA = a[field];
+        let valB = b[field];
+        
+        // Handle numeric fields
+        if(field === 'number' || field === 'assessment'){
+          valA = parseInt(valA) || 0;
+          valB = parseInt(valB) || 0;
+        } else if(field === 'impact'){
+          // Custom order for impact
+          const impactOrder = {'Приемлемое': 1, 'Допустимое': 2, 'Недопустимое': 3};
+          valA = impactOrder[valA] || 0;
+          valB = impactOrder[valB] || 0;
+        } else {
+          valA = String(valA || '').toLowerCase();
+          valB = String(valB || '').toLowerCase();
+        }
+        
+        if(valA < valB) return -1 * dir;
+        if(valA > valB) return 1 * dir;
       }
-    }
-    return true;
-  });
+      return 0;
+    });
+  }
+  
   renderTable();
-  updateFilterBar();
+  updateSortBar();
 }
 
-function updateFilterBar(){
-  const bar = $('#filterBar');
-  const tags = $('#filterTags').empty();
+function updateSortBar(){
+  const bar = $('#sortBar');
+  const tags = $('#sortTags').empty();
   const fieldNames = {
     number: '№',
     category: 'Категория',
@@ -750,30 +733,31 @@ function updateFilterBar(){
     assessment: 'Оценка'
   };
   
-  if(Object.keys(activeFilters).length > 0){
+  if(activeSorts.length > 0){
     bar.addClass('active');
-    for(let field in activeFilters){
+    activeSorts.forEach((sort, index) => {
+      const arrow = sort.direction === 'asc' ? '▲' : '▼';
       tags.append(`
-        <span class="filter-tag">
-          ${fieldNames[field]}: "${activeFilters[field]}"
-          <span class="filter-tag-remove" data-field="${field}">×</span>
+        <span class="sort-tag">
+          ${index + 1}. ${fieldNames[sort.field]} ${arrow}
+          <span class="sort-tag-remove" data-field="${sort.field}">×</span>
         </span>
       `);
-    }
+    });
   } else {
     bar.removeClass('active');
   }
   
   // Update header highlighting
-  $('th[data-field]').removeClass('filter-active');
-  for(let field in activeFilters){
-    $('th[data-field="' + field + '"]').addClass('filter-active');
-  }
+  $('th[data-field]').removeClass('sort-asc sort-desc');
+  activeSorts.forEach(sort => {
+    $('th[data-field="' + sort.field + '"]').addClass('sort-' + sort.direction);
+  });
 }
 
 function renderTable(){
   const tb=$('#risks_table_body').empty();
-  const dataToRender = Object.keys(activeFilters).length > 0 ? filteredData : currentData;
+  const dataToRender = activeSorts.length > 0 ? sortedData : currentData;
   dataToRender.forEach((r,i)=>{
     const originalIndex = currentData.findIndex(item => item.id === r.id || (item.number === r.number && item.category === r.category));
     tb.append(`
@@ -975,102 +959,56 @@ function setDropdownValue(inputId, value){
   $('#' + inputId).val(value);
 }
 
-/* ===== FILTERS ===== */
-let visibleFilterFields = [];
-
+/* ===== SORTING ===== */
 $('.risks_table thead').on('click', 'th[data-field]', function(e){
   const field = $(this).data('field');
   if(!field) return;
   
+  // Find if this field is already being sorted
+  const existingIndex = activeSorts.findIndex(s => s.field === field);
+  
   if(e.ctrlKey || e.metaKey){
-    // Add to visible filters
-    if(!visibleFilterFields.includes(field)){
-      visibleFilterFields.push(field);
+    // Multi-sort mode: add or toggle this field
+    if(existingIndex >= 0){
+      // Toggle direction or remove
+      if(activeSorts[existingIndex].direction === 'asc'){
+        activeSorts[existingIndex].direction = 'desc';
+      } else {
+        activeSorts.splice(existingIndex, 1);
+      }
+    } else {
+      // Add new sort field
+      activeSorts.push({field: field, direction: 'asc'});
     }
   } else {
-    // Single filter mode - show only this field
-    visibleFilterFields = [field];
-  }
-  
-  showFilterRow();
-});
-
-function showFilterRow(){
-  const filterRow = $('#filterRow');
-  
-  if(visibleFilterFields.length > 0){
-    filterRow.show();
-    // Show/hide individual filter cells
-    filterRow.find('td').each(function(index){
-      const input = $(this).find('.filter-input, .filter-select');
-      if(input.length){
-        const field = input.data('field');
-        if(visibleFilterFields.includes(field)){
-          $(this).css('visibility', 'visible');
-          input.prop('disabled', false);
-        } else {
-          $(this).css('visibility', 'hidden');
-          input.prop('disabled', true);
-        }
+    // Single sort mode
+    if(existingIndex >= 0 && activeSorts.length === 1){
+      // Toggle direction or remove
+      if(activeSorts[0].direction === 'asc'){
+        activeSorts[0].direction = 'desc';
+      } else {
+        activeSorts = [];
       }
-    });
-  } else {
-    filterRow.hide();
+    } else {
+      // Replace with single sort
+      activeSorts = [{field: field, direction: 'asc'}];
+    }
   }
-}
-
-// Filter input handlers
-$('#filterRow').on('input', '.filter-input', function(){
-  const field = $(this).data('field');
-  const value = $(this).val().trim();
   
-  if(value){
-    activeFilters[field] = value;
-  } else {
-    delete activeFilters[field];
-  }
-  applyFilters();
+  applySorts();
 });
 
-$('#filterRow').on('change', '.filter-select', function(){
+// Remove single sort
+$('#sortTags').on('click', '.sort-tag-remove', function(){
   const field = $(this).data('field');
-  const value = $(this).val();
-  
-  if(value){
-    activeFilters[field] = value;
-  } else {
-    delete activeFilters[field];
-  }
-  applyFilters();
+  activeSorts = activeSorts.filter(s => s.field !== field);
+  applySorts();
 });
 
-// Remove single filter
-$('#filterTags').on('click', '.filter-tag-remove', function(){
-  const field = $(this).data('field');
-  delete activeFilters[field];
-  
-  // Clear the input/select
-  const input = $('#filterRow').find('[data-field="' + field + '"]');
-  if(input.is('select')){
-    input.val('');
-  } else {
-    input.val('');
-  }
-  
-  // Remove from visible fields
-  visibleFilterFields = visibleFilterFields.filter(f => f !== field);
-  showFilterRow();
-  applyFilters();
-});
-
-// Clear all filters
-$('#clearAllFilters').on('click', function(){
-  activeFilters = {};
-  visibleFilterFields = [];
-  $('#filterRow').find('.filter-input').val('');
-  $('#filterRow').find('.filter-select').val('');
-  showFilterRow();
-  applyFilters();
+// Clear all sorts
+$('#clearAllSorts').on('click', function(){
+  activeSorts = [];
+  applySorts();
 });
 
 /* ===== LOAD ===== */
