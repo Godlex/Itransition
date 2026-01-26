@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+
+<style>
+/* ===== CONTAINER ===== */
+#vacancy_cards_container {
+  font-family: Arial, sans-serif;
+}
+
+.custom_vacancy_grid{
+  display: block;
+}
+
+/* ===== CARDS GRID ===== */
+.vacancy_cards_grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1200px) {
+  .vacancy_cards_grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .vacancy_cards_grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .vacancy_cards_grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.vacancy_card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  text-align: left;
+  background: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  font-size: 14px;
+  color: #333;
+  border: 2px solid transparent;
+  background: linear-gradient(#FFFFFF, #FFFFFF) padding-box, linear-gradient(90deg, #F26522 0%, #FFDE17 50%, #F26522 100%) border-box;
+  background-clip: padding-box, border-box;
+  aspect-ratio: 1 / 1;
+  min-height: 150px;
+}
+
+.vacancy_card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.vacancy_card_image {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.vacancy_card_name {
+  font-weight: 500;
+  font-size: 0.98em;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<!-- ===== CARDS ===== -->
+<div id="vacancy_cards_container">
+  <div class="vacancy_cards_grid" id="vacancy_cards_grid"></div>
+</div>
+
+<script>
+(function(){
+
+/* ===== DATA ===== */
+var defaultImage = 'WebSoft\WebSoftServer\wt\web\design\custommg\images\vacancies.png';
+
+var companies = [
+  { id: 1, name: "W&S", image: defaultImage },
+  { id: 2, name: "Бургер Кинг", image: defaultImage },
+  { id: 3, name: "ДК", image: defaultImage },
+  { id: 4, name: "ДОДО Беларусь", image: defaultImage },
+  { id: 5, name: "ДОДО Румыния", image: defaultImage },
+  { id: 6, name: "3OOбазар", image: defaultImage },
+  { id: 7, name: "КЦ", image: defaultImage },
+  { id: 8, name: "Панголин", image: defaultImage },
+  { id: 9, name: "ПКС", image: defaultImage },
+  { id: 10, name: "Прилесье", image: defaultImage },
+  { id: 11, name: "ТТЛ", image: defaultImage }
+];
+
+/* ===== NAVIGATION ===== */
+function getCurrentUrl(){
+  var url = window.location.href;
+  var baseUrl = url.substring(0, url.lastIndexOf('/') + 1);
+  return baseUrl || url;
+}
+
+function navigateToVacancy(companyId){
+  var baseUrl = getCurrentUrl();
+  var targetUrl = baseUrl + 'vacancies?companyid=' + companyId;
+  window.location.href = targetUrl;
+}
+
+/* ===== RENDER CARDS ===== */
+function renderCards(){
+  var container = document.getElementById('vacancy_cards_grid');
+  container.innerHTML = '';
+
+  companies.forEach(function(company){
+    var card = document.createElement('div');
+    card.className = 'vacancy_card';
+    card.onclick = function(){ navigateToVacancy(company.id); };
+    card.innerHTML =
+      '<div class="vacancy_card_name">' + company.name + '</div>' +
+      '<img class="vacancy_card_image" src="/design/custommg/images/vacancies.png" alt="' + company.name + '">';
+    container.appendChild(card);
+  });
+}
+
+/* ===== INIT ===== */
+document.addEventListener('DOMContentLoaded', renderCards);
+
+})();
+</script>
+
+</body>
+</html>
