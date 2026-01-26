@@ -890,7 +890,7 @@ $('.risks_table thead').on('click', 'th[data-field]', function(e){
   // Find if this field is already being sorted
   const existingIndex = activeSorts.findIndex(s => s.field === field);
   
-  if(e.ctrlKey || e.metaKey){
+  if(e.shiftKey){
     // Multi-sort mode: add or toggle this field
     if(existingIndex >= 0){
       // Toggle direction or remove
