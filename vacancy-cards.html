@@ -21,7 +21,11 @@
 }
 
 .vacancy_card {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  text-align: left;
   background: #fff;
   border-radius: 8px;
   padding: 15px;
@@ -33,6 +37,8 @@
   border: 2px solid transparent;
   background: linear-gradient(#FFFFFF, #FFFFFF) padding-box, linear-gradient(90deg, #F26522 0%, #FFDE17 50%, #F26522 100%) border-box;
   background-clip: padding-box, border-box;
+  aspect-ratio: 1 / 1;
+  min-height: 150px;
 }
 
 .vacancy_card:hover {
@@ -41,9 +47,8 @@
 }
 
 .vacancy_card_image {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 10px;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
 }
 
