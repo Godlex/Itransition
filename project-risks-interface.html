@@ -247,8 +247,99 @@ td.description {
 /* READONLY IMPACT */
 #modalImpact {
   font-weight: 600;
-  cursor: default;
+  cursor: help;
   background: #f3f4f6;
+}
+
+/* ===== IMPACT TOOLTIP ===== */
+.impact-field-wrapper {
+  position: relative;
+}
+
+.impact-tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.15);
+  padding: 16px;
+  z-index: 200;
+  width: 480px;
+  max-width: 90vw;
+}
+
+.impact-field-wrapper:hover .impact-tooltip {
+  display: block;
+}
+
+.impact-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 10px solid transparent;
+  border-top-color: #fff;
+}
+
+.impact-tooltip::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 11px solid transparent;
+  border-top-color: #ddd;
+}
+
+.impact-tooltip-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.impact-tooltip table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.impact-tooltip th,
+.impact-tooltip td {
+  border: 1px solid #333;
+  padding: 8px 6px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.impact-tooltip th {
+  background: #f5f5f5;
+  font-weight: 600;
+  color: #333;
+}
+
+.impact-tooltip .cell-green {
+  background: #4caf50;
+  color: #fff;
+  font-weight: 600;
+}
+
+.impact-tooltip .cell-yellow {
+  background: #ffeb3b;
+  color: #333;
+  font-weight: 600;
+}
+
+.impact-tooltip .cell-red {
+  background: #f44336;
+  color: #fff;
+  font-weight: 600;
 }
 
 /* impact colors */
@@ -432,7 +523,42 @@ td.description {
 
       <div class="editModal_field">
         <label for="modalImpact">Влияние</label>
-        <input id="modalImpact" readonly>
+        <div class="impact-field-wrapper">
+          <input id="modalImpact" readonly>
+          <div class="impact-tooltip">
+            <div class="impact-tooltip-title">Статус мер (итоговая оценка мер управления)</div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Степень и величина риска</th>
+                  <th>Оценка 1<br><small>(Меры управления рисками внедрены)</small></th>
+                  <th>Оценка 2<br><small>(Риск распознан, но контролируется)</small></th>
+                  <th>Оценка 3<br><small>(Контрольные меры отсутствуют)</small></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Риск низкий<br>Н1 ÷ Н4</th>
+                  <td class="cell-green">Приемлемый</td>
+                  <td class="cell-green">Приемлемый</td>
+                  <td class="cell-yellow">Допустимый</td>
+                </tr>
+                <tr>
+                  <th>Риск средний<br>С5 ÷ С12</th>
+                  <td class="cell-green">Приемлемый</td>
+                  <td class="cell-yellow">Допустимый</td>
+                  <td class="cell-red">Недопустимый</td>
+                </tr>
+                <tr>
+                  <th>Риск высокий<br>B15 ÷ B25</th>
+                  <td class="cell-yellow">Допустимый</td>
+                  <td class="cell-red">Недопустимый</td>
+                  <td class="cell-red">Недопустимый</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
 
