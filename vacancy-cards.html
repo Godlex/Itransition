@@ -40,6 +40,17 @@
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
+.vacancy_card_image {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 10px;
+  object-fit: contain;
+}
+
+.vacancy_card_name {
+  font-weight: 500;
+}
+
 
 </style>
 </head>
@@ -55,18 +66,20 @@
 (function(){
 
 /* ===== DATA ===== */
+var defaultImage = "https://cdn-icons-png.flaticon.com/512/3135/3135692.png";
+
 var companies = [
-  { id: 1, name: "W&S" },
-  { id: 2, name: "Бургер Кинг" },
-  { id: 3, name: "ДК" },
-  { id: 4, name: "ДОДО Беларусь" },
-  { id: 5, name: "ДОДО Румыния" },
-  { id: 6, name: "3OOбазар" },
-  { id: 7, name: "КЦ" },
-  { id: 8, name: "Панголин" },
-  { id: 9, name: "ПКС" },
-  { id: 10, name: "Прилесье" },
-  { id: 11, name: "ТТЛ" }
+  { id: 1, name: "W&S", image: defaultImage },
+  { id: 2, name: "Бургер Кинг", image: defaultImage },
+  { id: 3, name: "ДК", image: defaultImage },
+  { id: 4, name: "ДОДО Беларусь", image: defaultImage },
+  { id: 5, name: "ДОДО Румыния", image: defaultImage },
+  { id: 6, name: "3OOбазар", image: defaultImage },
+  { id: 7, name: "КЦ", image: defaultImage },
+  { id: 8, name: "Панголин", image: defaultImage },
+  { id: 9, name: "ПКС", image: defaultImage },
+  { id: 10, name: "Прилесье", image: defaultImage },
+  { id: 11, name: "ТТЛ", image: defaultImage }
 ];
 
 /* ===== NAVIGATION ===== */
@@ -91,7 +104,9 @@ function renderCards(){
     var card = document.createElement('div');
     card.className = 'vacancy_card';
     card.onclick = function(){ navigateToVacancy(company.id); };
-    card.textContent = company.name;
+    card.innerHTML = 
+      '<img class="vacancy_card_image" src="' + company.image + '" alt="' + company.name + '">' +
+      '<div class="vacancy_card_name">' + company.name + '</div>';
     container.appendChild(card);
   });
 }
