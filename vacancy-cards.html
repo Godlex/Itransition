@@ -4,93 +4,11 @@
 <meta charset="UTF-8">
 
 <style>
-/* ===== GENERAL ===== */
+/* ===== CONTAINER ===== */
 #vacancy_cards_container {
   font-family: Arial, sans-serif;
   background: #f6f7f9;
-  min-height: 100vh;
-}
-
-/* ===== HEADER ===== */
-#vacancy_cards_header {
-  background-color: #1a2744;
-  padding: 15px 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.vacancy_cards_nav {
-  display: flex;
-  gap: 30px;
-}
-
-.vacancy_cards_nav a {
-  color: white;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.vacancy_cards_nav a:hover {
-  opacity: 0.8;
-}
-
-.vacancy_cards_search {
-  position: relative;
-}
-
-.vacancy_cards_search input {
-  padding: 8px 15px 8px 35px;
-  border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 4px;
-  background: rgba(255,255,255,0.1);
-  color: white;
-  width: 200px;
-}
-
-.vacancy_cards_search input::placeholder {
-  color: rgba(255,255,255,0.6);
-}
-
-.vacancy_cards_search::before {
-  content: "🔍";
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 12px;
-}
-
-/* ===== BREADCRUMB ===== */
-.vacancy_cards_breadcrumb {
-  padding: 20px 30px 10px;
-  font-size: 14px;
-}
-
-.vacancy_cards_breadcrumb a {
-  color: #2196F3;
-  text-decoration: none;
-}
-
-.vacancy_cards_breadcrumb a:hover {
-  text-decoration: underline;
-}
-
-.vacancy_cards_breadcrumb span {
-  color: #666;
-}
-
-/* ===== CONTENT ===== */
-.vacancy_cards_content {
-  padding: 10px 30px 40px;
-}
-
-.vacancy_cards_title {
-  font-size: 28px;
-  font-weight: 400;
-  color: #333;
-  margin-bottom: 30px;
+  padding: 20px;
 }
 
 /* ===== CARDS GRID ===== */
@@ -103,85 +21,26 @@
 .vacancy_card {
   background: #fff;
   border-radius: 8px;
-  overflow: hidden;
+  padding: 15px;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  font-size: 14px;
+  color: #333;
 }
 
 .vacancy_card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
-
-.vacancy_card_logo {
-  height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  font-weight: bold;
-  color: white;
-}
-
-.vacancy_card_name {
-  padding: 15px;
-  font-size: 14px;
-  color: #333;
-  border-top: 1px solid #eee;
-  background: #fff;
-}
-
-/* ===== COLOR VARIATIONS ===== */
-.vacancy_card_bg-blue { background-color: #607D8B; }
-.vacancy_card_bg-orange { background-color: #FF5722; }
-.vacancy_card_bg-purple { background-color: #5C4EE5; }
-.vacancy_card_bg-cream { background-color: #FFF8E1; color: #333; }
-.vacancy_card_bg-gray { background-color: #546E7A; }
-.vacancy_card_bg-teal { background-color: #26A69A; }
-.vacancy_card_bg-green { background-color: #4CAF50; }
-.vacancy_card_bg-white { background-color: #fff; color: #FF5722; border: 1px solid #eee; }
-.vacancy_card_bg-lightblue { background-color: #03A9F4; }
-.vacancy_card_bg-lightgreen { background-color: #F5F5F5; color: #4CAF50; }
-.vacancy_card_bg-red { background-color: #E53935; }
-.vacancy_card_bg-navy { background-color: #1a2744; }
-.vacancy_card_bg-yellow { background-color: #FFC107; color: #333; }
-.vacancy_card_bg-pink { background-color: #E91E63; }
-.vacancy_card_bg-indigo { background-color: #3F51B5; }
-.vacancy_card_bg-brown { background-color: #795548; }
 </style>
 </head>
 
 <body>
 
-<!-- ===== MAIN CONTAINER ===== -->
+<!-- ===== CARDS ===== -->
 <div id="vacancy_cards_container">
-
-  <!-- ===== HEADER ===== -->
-  <header id="vacancy_cards_header">
-    <nav class="vacancy_cards_nav">
-      <a href="#">ТЕМА ГК</a>
-      <a href="#">Команда</a>
-      <a href="#">Моя компания</a>
-      <a href="#">Задачи</a>
-      <a href="#">Helpdesk</a>
-    </nav>
-    <div class="vacancy_cards_search">
-      <input type="text" placeholder="Поиск">
-    </div>
-  </header>
-
-  <!-- ===== BREADCRUMB ===== -->
-  <div class="vacancy_cards_breadcrumb">
-    <a href="#">Главная</a> / <a href="#">Сервисы</a> / <span>Вакансии всех компаний</span>
-  </div>
-
-  <!-- ===== CONTENT ===== -->
-  <div class="vacancy_cards_content">
-    <h1 class="vacancy_cards_title">Вакансии компании</h1>
-    <div class="vacancy_cards_grid" id="vacancy_cards_grid"></div>
-  </div>
-
+  <div class="vacancy_cards_grid" id="vacancy_cards_grid"></div>
 </div>
 
 <script>
@@ -189,22 +48,22 @@
 
 /* ===== DATA ===== */
 var companies = [
-  { id: 1, name: "W&S", shortName: "W&S", bgClass: "vacancy_card_bg-blue" },
-  { id: 2, name: "Бургер Кінг", shortName: "BURGER KING", bgClass: "vacancy_card_bg-orange" },
-  { id: 3, name: "ДК", shortName: "ДК", bgClass: "vacancy_card_bg-purple" },
-  { id: 4, name: "ДОДО Беларусь", shortName: "ДОДО", bgClass: "vacancy_card_bg-cream" },
-  { id: 5, name: "ДОДО Румыния", shortName: "ДОДО", bgClass: "vacancy_card_bg-cream" },
-  { id: 6, name: "3OOбаар", shortName: "3OOбаар", bgClass: "vacancy_card_bg-gray" },
-  { id: 7, name: "3OOбазар", shortName: "3OOбазар", bgClass: "vacancy_card_bg-blue" },
-  { id: 8, name: "КЦ", shortName: "КЦ", bgClass: "vacancy_card_bg-teal" },
-  { id: 9, name: "Панголин", shortName: "Панголин", bgClass: "vacancy_card_bg-white" },
-  { id: 10, name: "ПКС", shortName: "ПКС", bgClass: "vacancy_card_bg-lightblue" },
-  { id: 11, name: "Прилесье", shortName: "Прилесье", bgClass: "vacancy_card_bg-lightgreen" },
-  { id: 12, name: "TTL", shortName: "TTL", bgClass: "vacancy_card_bg-red" },
-  { id: 13, name: "Компания А", shortName: "КА", bgClass: "vacancy_card_bg-navy" },
-  { id: 14, name: "Компания Б", shortName: "КБ", bgClass: "vacancy_card_bg-yellow" },
-  { id: 15, name: "Компания В", shortName: "КВ", bgClass: "vacancy_card_bg-pink" },
-  { id: 16, name: "Компания Г", shortName: "КГ", bgClass: "vacancy_card_bg-indigo" }
+  { id: 1, name: "W&S" },
+  { id: 2, name: "Бургер Кінг" },
+  { id: 3, name: "ДК" },
+  { id: 4, name: "ДОДО Беларусь" },
+  { id: 5, name: "ДОДО Румыния" },
+  { id: 6, name: "3OOбаар" },
+  { id: 7, name: "3OOбазар" },
+  { id: 8, name: "КЦ" },
+  { id: 9, name: "Панголин" },
+  { id: 10, name: "ПКС" },
+  { id: 11, name: "Прилесье" },
+  { id: 12, name: "TTL" },
+  { id: 13, name: "Компания А" },
+  { id: 14, name: "Компания Б" },
+  { id: 15, name: "Компания В" },
+  { id: 16, name: "Компания Г" }
 ];
 
 /* ===== NAVIGATION ===== */
@@ -229,13 +88,7 @@ function renderCards(){
     var card = document.createElement('div');
     card.className = 'vacancy_card';
     card.onclick = function(){ navigateToVacancy(company.id); };
-
-    card.innerHTML = 
-      '<div class="vacancy_card_logo ' + company.bgClass + '">' +
-        company.shortName +
-      '</div>' +
-      '<div class="vacancy_card_name">' + company.name + '</div>';
-
+    card.textContent = company.name;
     container.appendChild(card);
   });
 }
