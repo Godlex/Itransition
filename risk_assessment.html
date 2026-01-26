@@ -133,6 +133,20 @@ td.description {
   background:#fff;
 }
 
+#editModal_body select[size] {
+  height:auto;
+  overflow-y:auto;
+}
+
+#editModal_body select[size] option {
+  padding:8px 12px;
+}
+
+#editModal_body select[size] option:checked {
+  background:#1a73e8;
+  color:#fff;
+}
+
 #editModal_body textarea {
   height:96px;
   resize:vertical;
@@ -268,7 +282,7 @@ td.description {
 
       <div class="editModal_field">
         <label for="modalProbability">Вероятность *</label>
-        <select id="modalProbability">
+        <select id="modalProbability" size="6">
           <option value="" disabled selected>-</option>
           <option value="H1">Н1</option>
           <option value="H2">Н2</option>
