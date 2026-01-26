@@ -67,17 +67,17 @@ td.description {
 
 #editModal_content {
   background:#fff;
-  width:600px;
-  max-width:90%;
-  border-radius:8px;
-  margin:6% auto;
-  box-shadow:0 10px 30px rgba(0,0,0,.2);
+  width:760px;
+  max-width:92%;
+  border-radius:10px;
+  margin:5% auto;
+  box-shadow:0 12px 32px rgba(0,0,0,.18);
   overflow:hidden;
 }
 
 /* HEADER */
 #editModal_header {
-  padding:16px 20px;
+  padding:22px 24px;
   border-bottom:1px solid #e5e7eb;
   display:flex;
   justify-content:space-between;
@@ -86,42 +86,54 @@ td.description {
 
 #editModal_header h3 {
   margin:0;
-  font-size:18px;
-  color:#003366;
+  font-size:20px;
+  color:#1f2a44;
+  font-weight:600;
 }
 
 #editModal_closeX {
-  background:#fff;
-  border:1px solid #d1d5db;
-  border-radius:4px;
-  width:32px;
-  height:32px;
-  font-size:18px;
+  background:transparent;
+  border:none;
+  border-radius:6px;
+  width:36px;
+  height:36px;
+  font-size:22px;
+  line-height:1;
+  color:#1f2937;
   cursor:pointer;
 }
 
 /* BODY */
 #editModal_body {
-  padding:20px;
+  padding:24px;
   display:grid;
   grid-template-columns:1fr;
-  row-gap:14px;
+  row-gap:16px;
+}
+
+.editModal_field label {
+  display:block;
+  margin-bottom:6px;
+  font-size:13px;
+  color:#6b7280;
 }
 
 #editModal_body input,
 #editModal_body textarea,
 #editModal_body select {
   width:100%;
-  height:40px;
-  padding:8px 10px;
+  height:44px;
+  padding:9px 12px;
   font-size:14px;
-  border:1px solid #d1d5db;
-  border-radius:4px;
+  color:#111827;
+  border:1px solid #cbd5e1;
+  border-radius:6px;
   box-sizing:border-box;
+  background:#fff;
 }
 
 #editModal_body textarea {
-  height:90px;
+  height:96px;
   resize:vertical;
 }
 
@@ -129,6 +141,7 @@ td.description {
 #modalImpact {
   font-weight:600;
   cursor:default;
+  background:#f3f4f6;
 }
 
 /* impact colors */
@@ -152,20 +165,21 @@ td.description {
 
 /* FOOTER */
 #editModal_footer {
-  padding:16px 20px;
+  padding:20px 24px;
   border-top:1px solid #e5e7eb;
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:12px;
 }
 
 #editModal_footer button {
-  min-width:110px;
-  height:40px;
-  border-radius:4px;
+  min-width:120px;
+  height:42px;
+  border-radius:6px;
   font-size:14px;
   cursor:pointer;
-  border:none;
+  border:1px solid transparent;
 }
 
 /* buttons */
@@ -180,8 +194,15 @@ td.description {
 }
 
 #closeModal {
-  background:#f1f3f5;
-  color:#333;
+  background:#fff;
+  color:#4a7cff;
+  border-color:#4a7cff;
+}
+
+.editModal_actions {
+  display:flex;
+  gap:12px;
+  margin-left:auto;
 }
 
 
@@ -232,30 +253,48 @@ td.description {
     </div>
 
     <div id="editModal_body">
-      <input id="modalCategory" placeholder="Категория">
-      <textarea id="modalDescription" placeholder="Описание"></textarea>
+      <div class="editModal_field">
+        <label for="modalCategory">Категория риска *</label>
+        <input id="modalCategory" type="text">
+      </div>
 
-      <select id="modalProbability">
-        <option value="">Вероятность</option>
-        <option>H1</option><option>H2</option><option>H3</option>
-        <option>C5</option><option>C6</option>
-        <option>B15</option><option>B16</option>
-      </select>
+      <div class="editModal_field">
+        <label for="modalDescription">Описание риска *</label>
+        <textarea id="modalDescription"></textarea>
+      </div>
 
-      <select id="modalAssessment">
-        <option value="">Оценка</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select>
+      <div class="editModal_field">
+        <label for="modalProbability">Вероятность *</label>
+        <select id="modalProbability">
+          <option value="">-</option>
+          <option>H1</option><option>H2</option><option>H3</option>
+          <option>C5</option><option>C6</option>
+          <option>B15</option><option>B16</option>
+        </select>
+      </div>
 
-      <input id="modalImpact" readonly>
+      <div class="editModal_field">
+        <label for="modalAssessment">Оценка риска *</label>
+        <select id="modalAssessment">
+          <option value="">-</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </div>
+
+      <div class="editModal_field">
+        <label for="modalImpact">Влияние</label>
+        <input id="modalImpact" readonly>
+      </div>
     </div>
 
     <div id="editModal_footer">
       <button id="deleteModal">Удалить</button>
-      <button id="saveModal">Изменить</button>
-      <button id="closeModal">Отмена</button>
+      <div class="editModal_actions">
+        <button id="saveModal">Изменить</button>
+        <button id="closeModal">Отмена</button>
+      </div>
     </div>
   </div>
 </div>
