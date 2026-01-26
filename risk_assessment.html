@@ -483,6 +483,7 @@ function renderTable(){
 function renderHistory(){
   const map={};
   currentData.forEach(r=>{
+    if(!r.date) return;
     const d=r.date.split('T')[0];
     map[d]=map[d]||[];
     map[d].push(r);
