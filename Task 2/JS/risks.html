@@ -139,14 +139,84 @@ td.description {
   resize:vertical;
 }
 
-#modalProbability.is-open {
-  height:auto;
-  max-height:240px;
+.custom-select {
+  position:relative;
+}
+
+.custom-select__toggle {
+  width:100%;
+  height:44px;
+  padding:9px 36px 9px 12px;
+  font-size:14px;
+  color:#111827;
+  background:#fff;
+  border:1px solid #cbd5e1;
+  border-radius:6px;
+  text-align:left;
+  cursor:pointer;
+  position:relative;
+}
+
+.custom-select__toggle::after {
+  content:"";
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-45%);
+  border-left:5px solid transparent;
+  border-right:5px solid transparent;
+  border-top:6px solid #6b7280;
+}
+
+.custom-select__list {
+  display:none;
+  position:absolute;
+  left:0;
+  right:0;
+  top:calc(100% + 6px);
+  z-index:20;
+  margin:0;
+  padding:6px 0;
+  list-style:none;
+  background:#fff;
+  border:1px solid #cbd5e1;
+  border-radius:6px;
+  box-shadow:0 8px 20px rgba(15,23,42,.12);
+  max-height:216px;
   overflow-y:auto;
 }
 
-#modalProbability.is-open option {
-  padding:6px 12px;
+.custom-select__option {
+  padding:8px 12px;
+  font-size:14px;
+  line-height:20px;
+  cursor:pointer;
+}
+
+.custom-select__option:hover {
+  background:#f1f5f9;
+}
+
+.custom-select__option.is-selected {
+  background:#1a73e8;
+  color:#fff;
+}
+
+.custom-select__native {
+  display:none;
+}
+
+.custom-select.is-open .custom-select__list {
+  display:block;
+}
+
+.custom-select.is-open .custom-select__toggle {
+  border-color:#4a7cff;
+  box-shadow:0 0 0 3px rgba(74,124,255,.15);
+}
+
+.custom-select.is-open .custom-select__toggle::after {
+  transform:translateY(-55%) rotate(180deg);
 }
 
 /* READONLY IMPACT */
@@ -277,8 +347,37 @@ td.description {
       </div>
 
       <div class="editModal_field">
-        <label for="modalProbability">Вероятность *</label>
-        <select id="modalProbability">
+        <label for="modalProbabilityToggle">Вероятность *</label>
+        <div class="custom-select" id="modalProbabilitySelect">
+          <button type="button" id="modalProbabilityToggle" class="custom-select__toggle" aria-haspopup="listbox" aria-expanded="false">-</button>
+          <ul class="custom-select__list" role="listbox" aria-labelledby="modalProbabilityToggle">
+            <li class="custom-select__option is-selected" data-value="">-</li>
+            <li class="custom-select__option" data-value="H1">Н1</li>
+            <li class="custom-select__option" data-value="H2">Н2</li>
+            <li class="custom-select__option" data-value="H3">Н3</li>
+            <li class="custom-select__option" data-value="H4">Н4</li>
+            <li class="custom-select__option" data-value="C5">С5</li>
+            <li class="custom-select__option" data-value="C6">С6</li>
+            <li class="custom-select__option" data-value="C7">С7</li>
+            <li class="custom-select__option" data-value="C8">С8</li>
+            <li class="custom-select__option" data-value="C9">С9</li>
+            <li class="custom-select__option" data-value="C10">С10</li>
+            <li class="custom-select__option" data-value="C11">С11</li>
+            <li class="custom-select__option" data-value="C12">С12</li>
+            <li class="custom-select__option" data-value="B15">B15</li>
+            <li class="custom-select__option" data-value="B16">B16</li>
+            <li class="custom-select__option" data-value="B17">B17</li>
+            <li class="custom-select__option" data-value="B18">B18</li>
+            <li class="custom-select__option" data-value="B19">B19</li>
+            <li class="custom-select__option" data-value="B20">B20</li>
+            <li class="custom-select__option" data-value="B21">B21</li>
+            <li class="custom-select__option" data-value="B22">B22</li>
+            <li class="custom-select__option" data-value="B23">B23</li>
+            <li class="custom-select__option" data-value="B24">B24</li>
+            <li class="custom-select__option" data-value="B25">B25</li>
+          </ul>
+        </div>
+        <select id="modalProbability" class="custom-select__native">
           <option value="">-</option>
           <option value="H1">Н1</option>
           <option value="H2">Н2</option>
@@ -390,6 +489,36 @@ function setImpactField(value){
   }
 }
 
+function setProbabilitySelect(value){
+  const $root = $('#modalProbabilitySelect');
+  const $native = $('#modalProbability');
+  const $toggle = $('#modalProbabilityToggle');
+  const $options = $root.find('.custom-select__option');
+
+  $native.val(value);
+  $options.removeClass('is-selected');
+  const $selected = $options.filter(`[data-value="${value}"]`);
+  const label = $selected.length ? $selected.text() : '-';
+  $selected.addClass('is-selected');
+  $toggle.text(label);
+}
+
+function closeProbabilitySelect(){
+  const $root = $('#modalProbabilitySelect');
+  if($root.hasClass('is-open')){
+    $root.removeClass('is-open');
+    $('#modalProbabilityToggle').attr('aria-expanded','false');
+  }
+}
+
+function openProbabilitySelect(){
+  const $root = $('#modalProbabilitySelect');
+  if(!$root.hasClass('is-open')){
+    $root.addClass('is-open');
+    $('#modalProbabilityToggle').attr('aria-expanded','true');
+  }
+}
+
 /* ===== TABLE ===== */
 function impactClass(v){
   if(v==='Недопустимое')return 'risks_table_high';
@@ -457,7 +586,7 @@ $('#risks_table_body').on('click','.risks_table_edit-link',function(){
   const r=currentData[currentEditIndex];
   $('#modalCategory').val(r.category);
   $('#modalDescription').val(r.description);
-  $('#modalProbability').val(r.probability);
+  setProbabilitySelect(r.probability || '');
   $('#modalAssessment').val(r.assessment);
   setImpactField(r.impact);
   $('#editModal').show();
@@ -468,19 +597,35 @@ $('#modalProbability,#modalAssessment').on('change',function(){
   setImpactField(impact);
 });
 
-const probabilityVisibleItems = 6;
-$('#modalProbability').on('mousedown',function(e){
-  if(this.size === 1){
-    e.preventDefault();
-    this.size = probabilityVisibleItems;
-    $(this).addClass('is-open');
-    this.focus();
+setProbabilitySelect($('#modalProbability').val());
+
+$('#modalProbabilityToggle').on('click',function(e){
+  e.stopPropagation();
+  if($('#modalProbabilitySelect').hasClass('is-open')){
+    closeProbabilitySelect();
+    return;
   }
+  $('.custom-select').removeClass('is-open');
+  $('.custom-select__toggle').attr('aria-expanded','false');
+  openProbabilitySelect();
 });
 
-$('#modalProbability').on('blur change',function(){
-  this.size = 1;
-  $(this).removeClass('is-open');
+$('#modalProbabilitySelect').on('click','.custom-select__option',function(e){
+  e.stopPropagation();
+  const value = $(this).data('value');
+  setProbabilitySelect(value);
+  $('#modalProbability').trigger('change');
+  closeProbabilitySelect();
+});
+
+$(document).on('click',function(){
+  closeProbabilitySelect();
+});
+
+$(document).on('keydown',function(e){
+  if(e.key === 'Escape'){
+    closeProbabilitySelect();
+  }
 });
 
 $('#saveModal').on('click',function(){
@@ -511,7 +656,10 @@ $('#deleteModal').on('click',function(){
   $('#editModal').hide();
 });
 
-$('#closeModal,#editModal_closeX').on('click',()=>$('#editModal').hide());
+$('#closeModal,#editModal_closeX').on('click',()=>{
+  closeProbabilitySelect();
+  $('#editModal').hide();
+});
 
 /* ===== LOAD ===== */
 $.ajax({
