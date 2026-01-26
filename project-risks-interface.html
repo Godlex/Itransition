@@ -2,23 +2,9 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Риски проекта</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <style>
-/* ===== GENERAL ===== */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  background: #f6f7f9;
-}
-
 /* ===== TABLE ===== */
 #risks_table_container {
   font-family: Arial, sans-serif;
@@ -26,429 +12,394 @@ body {
 }
 
 .risks_table_wrapper {
-  background: #fff;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,.08);
-  overflow-x: auto;
+  background:#fff;
+  border-radius:6px;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
+  overflow-x:auto;
 }
 
 table.risks_table {
-  width: 100%;
-  min-width: 900px;
-  border-collapse: collapse;
+  width:100%;
+  min-width:900px;
+  border-collapse:collapse;
 }
 
 th, td {
-  padding: 12px 14px;
-  border: 1px solid #ddd;
-  font-size: 14px;
-  text-align: center;
+  padding:12px 14px;
+  border:1px solid #ddd;
+  font-size:14px;
+  text-align:center;
 }
 
 th {
-  background: #f1f3f5;
-  color: #003366;
-  cursor: pointer;
+  background:#f1f3f5;
+  color:#003366;
+  cursor:pointer;
 }
 
 td.description {
-  text-align: left;
+  text-align:left;
 }
 
 .risks_table_badge {
-  padding: 4px 8px;
-  border-radius: 4px;
-  color: #fff;
-  font-size: 12px;
-  display: inline-block;
+  padding:4px 8px;
+  border-radius:4px;
+  color:#fff;
+  font-size:12px;
 }
 
-.risks_table_high { background: #d93025; }
-.risks_table_medium { background: #f9ab00; }
-.risks_table_low { background: #188038; }
+.risks_table_high { background:#d93025; }
+.risks_table_medium { background:#f9ab00; }
+.risks_table_low { background:#188038; }
 
 .risks_table_edit-link {
-  color: #1a73e8;
-  cursor: pointer;
-  text-decoration: none;
+  color:#1a73e8;
+  cursor:pointer;
 }
-
-.risks_table_edit-link:hover {
-  text-decoration: underline;
-}
-
-/* ===== MODAL ===== */
+/* ===== MODAL FIX ===== */
 #editModal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.45);
-  z-index: 1000;
-  font-family: Arial, sans-serif;
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:1000;
+  font-family:Arial,sans-serif;
 }
 
 #editModal_content {
-  background: #fff;
-  width: 760px;
-  max-width: 92%;
-  border-radius: 10px;
-  margin: 5% auto;
-  box-shadow: 0 12px 32px rgba(0,0,0,.18);
-  overflow: hidden;
+  background:#fff;
+  width:760px;
+  max-width:92%;
+  border-radius:10px;
+  margin:5% auto;
+  box-shadow:0 12px 32px rgba(0,0,0,.18);
+  overflow:hidden;
 }
 
 /* HEADER */
 #editModal_header {
-  padding: 22px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #fff;
+  padding:22px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#fff;
 }
 
 #editModal_header h3 {
-  margin: 0;
-  font-size: 20px;
-  color: #1f2a44;
-  font-weight: 600;
+  margin:0;
+  font-size:20px;
+  color:#1f2a44;
+  font-weight:600;
 }
 
 #editModal_closeX {
-  background: transparent;
-  border: none;
-  border-radius: 6px;
-  width: 36px;
-  height: 36px;
-  font-size: 22px;
-  line-height: 1;
-  color: #1f2937;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-#editModal_closeX:hover {
-  background: #f1f3f5;
+  background:transparent;
+  border:none;
+  border-radius:6px;
+  width:36px;
+  height:36px;
+  font-size:22px;
+  line-height:1;
+  color:#1f2937;
+  cursor:pointer;
 }
 
 /* BODY */
 #editModal_body {
-  padding: 24px;
-  display: grid;
-  grid-template-columns: 1fr;
-  row-gap: 16px;
-  background: #fff;
+  padding:24px;
+  display:grid;
+  grid-template-columns:1fr;
+  row-gap:16px;
+  background:#fff;
 }
 
 .editModal_field label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 13px;
-  color: #6b7280;
+  display:block;
+  margin-bottom:6px;
+  font-size:13px;
+  color:#6b7280;
 }
 
 #editModal_body input,
 #editModal_body textarea {
-  width: 100%;
-  height: 44px;
-  padding: 9px 12px;
-  font-size: 14px;
-  color: #111827;
-  border: 2px solid #cbd5e1;
-  border-radius: 6px;
-  box-sizing: border-box;
-  background: #fff;
-  transition: border-color 0.2s;
+  width:100%;
+  height:44px;
+  padding:9px 12px;
+  font-size:14px;
+  color:#111827;
+  border:2px solid #cbd5e1;
+  border-radius:6px;
+  box-sizing:border-box;
+  background:#fff;
 }
 
-#editModal_body input:focus,
-#editModal_body textarea:focus {
-  outline: none;
-  border-color: #1a73e8;
-}
-
-#editModal_body textarea {
-  height: 96px;
-  resize: vertical;
-}
 
 /* Custom dropdown */
 .custom-dropdown {
-  position: relative;
-  width: 100%;
+  position:relative;
+  width:100%;
 }
 
 .custom-dropdown-selected {
-  width: 100%;
-  height: 44px;
-  padding: 9px 12px;
-  font-size: 14px;
-  color: #111827;
-  border: 2px solid #cbd5e1;
-  border-radius: 6px;
-  box-sizing: border-box;
-  background: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: border-color 0.2s;
-}
-
-.custom-dropdown-selected:hover {
-  border-color: #1a73e8;
+  width:100%;
+  height:44px;
+  padding:9px 12px;
+  font-size:14px;
+  color:#111827;
+  border:2px solid #cbd5e1;
+  border-radius:6px;
+  box-sizing:border-box;
+  background:#fff;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 
 .custom-dropdown-selected::after {
-  content: "▼";
-  font-size: 10px;
-  color: #666;
+  content:"▼";
+  font-size:10px;
+  color:#666;
 }
 
 .custom-dropdown-options {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  max-height: 264px;
-  overflow-y: auto;
-  background: #fff;
-  border: 2px solid #cbd5e1;
-  border-top: none;
-  border-radius: 0 0 6px 6px;
-  z-index: 100;
-  box-shadow: 0 4px 12px rgba(0,0,0,.1);
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  right:0;
+  max-height:264px;
+  overflow-y:auto;
+  background:#fff;
+  border:2px solid #cbd5e1;
+  border-top:none;
+  border-radius:0 0 6px 6px;
+  z-index:100;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
 }
 
 .custom-dropdown.open .custom-dropdown-options {
-  display: block;
+  display:block;
 }
 
 .custom-dropdown.open .custom-dropdown-selected {
-  border-radius: 6px 6px 0 0;
-  border-color: #1a73e8;
+  border-radius:6px 6px 0 0;
 }
 
 .custom-dropdown-option {
-  padding: 10px 12px;
-  cursor: pointer;
-  font-size: 14px;
+  padding:10px 12px;
+  cursor:pointer;
+  font-size:14px;
 }
 
 .custom-dropdown-option:hover {
-  background: #f1f3f5;
+  background:#f1f3f5;
 }
 
 .custom-dropdown-option.selected {
-  background: #1a73e8;
-  color: #fff;
+  background:#1a73e8;
+  color:#fff;
+}
+
+#editModal_body textarea {
+  height:96px;
+  resize:vertical;
 }
 
 /* READONLY IMPACT */
 #modalImpact {
-  font-weight: 600;
-  cursor: help;
-  background: #f3f4f6;
-}
-
-/* ===== IMPACT TOOLTIP ===== */
-.impact-field-wrapper {
-  position: relative;
-}
-
-.impact-tooltip {
-  display: none;
-  position: absolute;
-  bottom: calc(100% + 10px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0,0,0,.15);
-  padding: 16px;
-  z-index: 200;
-  width: 480px;
-  max-width: 90vw;
-}
-
-.impact-field-wrapper:hover .impact-tooltip {
-  display: block;
-}
-
-.impact-tooltip::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 10px solid transparent;
-  border-top-color: #fff;
-}
-
-.impact-tooltip::before {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 11px solid transparent;
-  border-top-color: #ddd;
-}
-
-.impact-tooltip-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 12px;
-  text-align: center;
-}
-
-.impact-tooltip table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 12px;
-}
-
-.impact-tooltip th,
-.impact-tooltip td {
-  border: 1px solid #333;
-  padding: 8px 6px;
-  text-align: center;
-  font-size: 12px;
-}
-
-.impact-tooltip th {
-  background: #f5f5f5;
-  font-weight: 600;
-  color: #333;
-}
-
-.impact-tooltip .cell-green {
-  background: #4caf50;
-  color: #fff;
-  font-weight: 600;
-}
-
-.impact-tooltip .cell-yellow {
-  background: #ffeb3b;
-  color: #333;
-  font-weight: 600;
-}
-
-.impact-tooltip .cell-red {
-  background: #f44336;
-  color: #fff;
-  font-weight: 600;
+  font-weight:600;
+  cursor:help;
+  background:#f3f4f6;
 }
 
 /* impact colors */
 #modalImpact.impact-high {
-  background: #d93025;
-  color: #fff;
-  border-color: #d93025;
+  background:#d93025;
+  color:#fff;
+  border-color:#d93025;
 }
 
 #modalImpact.impact-medium {
-  background: #f9ab00;
-  color: #fff;
-  border-color: #f9ab00;
+  background:#f9ab00;
+  color:#fff;
+  border-color:#f9ab00;
 }
 
 #modalImpact.impact-low {
-  background: #188038;
-  color: #fff;
-  border-color: #188038;
+  background:#188038;
+  color:#fff;
+  border-color:#188038;
+}
+
+/* ===== IMPACT TOOLTIP ===== */
+.impact-field-wrapper {
+  position:relative;
+}
+
+.impact-tooltip {
+  display:none;
+  position:absolute;
+  bottom:calc(100% + 12px);
+  left:50%;
+  transform:translateX(-50%);
+  background:#fff;
+  border:1px solid #ccc;
+  border-radius:8px;
+  box-shadow:0 8px 24px rgba(0,0,0,.18);
+  padding:16px;
+  z-index:200;
+  width:520px;
+}
+
+.impact-field-wrapper:hover .impact-tooltip {
+  display:block;
+}
+
+.impact-tooltip::after {
+  content:'';
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%);
+  border:10px solid transparent;
+  border-top-color:#fff;
+}
+
+.impact-tooltip::before {
+  content:'';
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%);
+  border:11px solid transparent;
+  border-top-color:#ccc;
+}
+
+.impact-tooltip-title {
+  font-size:13px;
+  font-weight:600;
+  color:#333;
+  margin-bottom:12px;
+  text-align:center;
+}
+
+.impact-tooltip table {
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+
+.impact-tooltip th,
+.impact-tooltip td {
+  border:1px solid #333;
+  padding:10px 8px;
+  text-align:center;
+  font-size:12px;
+}
+
+.impact-tooltip th {
+  background:#f5f5f5;
+  font-weight:600;
+  color:#333;
+}
+
+.impact-tooltip .cell-green {
+  background:#4caf50;
+  color:#fff;
+  font-weight:600;
+}
+
+.impact-tooltip .cell-yellow {
+  background:#ffeb3b;
+  color:#333;
+  font-weight:600;
+}
+
+.impact-tooltip .cell-red {
+  background:#f44336;
+  color:#fff;
+  font-weight:600;
 }
 
 /* FOOTER */
 #editModal_footer {
-  padding: 20px 24px;
-  border-top: 1px solid #e5e7eb;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  background: #fff;
+  padding:20px 24px;
+  border-top:1px solid #e5e7eb;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  background:#fff;
 }
 
 #editModal_footer button {
-  min-width: 120px;
-  height: 42px;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: opacity 0.2s;
-}
-
-#editModal_footer button:hover {
-  opacity: 0.9;
+  min-width:120px;
+  height:42px;
+  border-radius:6px;
+  font-size:14px;
+  cursor:pointer;
+  border:1px solid transparent;
 }
 
 /* buttons */
 #deleteModal {
-  background: #dc3545;
-  color: #fff;
+  background:#dc3545;
+  color:#fff;
 }
 
 #saveModal {
-  background: #4a7cff;
-  color: #fff;
+  background:#4a7cff;
+  color:#fff;
 }
 
 #closeModal {
-  background: #f6f6f6;
-  color: #4a7cff;
+  background:#f6f6f6;
+  color:#4a7cff;
   border-radius: 0.4rem !important;
   border: 1px solid #4176ea !important;
 }
 
 .editModal_actions {
-  display: flex;
-  gap: 12px;
-  margin-left: auto;
+  display:flex;
+  gap:12px;
+  margin-left:auto;
 }
+
 
 /* ===== HISTORY ===== */
 #risks_history_container {
-  margin-top: 30px;
-  font-family: Arial, sans-serif;
+  margin-top:30px;
+  font-family:Arial,sans-serif;
 }
 
 .history-date {
-  background: #f1f3f5;
-  padding: 12px 16px;
-  border-radius: 6px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  transition: background 0.2s;
-}
-
-.history-date:hover {
-  background: #e5e7eb;
+  background:#f1f3f5;
+  padding:12px 16px;
+  border-radius:6px;
+  margin-bottom:10px;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
 }
 
 .history-risks {
-  display: none;
-  margin: 10px 0 20px 20px;
+  display:none;
+  margin:10px 0 20px 20px;
 }
 
 .history-risk {
-  background: #f9fafb;
-  padding: 10px 12px;
-  margin-bottom: 8px;
-  border-left: 4px solid transparent;
-  border-radius: 4px;
-  font-size: 13px;
-  line-height: 1.5;
+  background:#f1f3f5;
+  padding:10px 12px;
+  margin-bottom:8px;
+  border-left:4px solid transparent;
+  border-radius:4px;
+  font-size:13px;
 }
 
-.history-risk.high { border-left-color: #d93025; }
-.history-risk.medium { border-left-color: #f9ab00; }
-.history-risk.low { border-left-color: #188038; }
+.history-risk.high { border-left-color:#d93025; }
+.history-risk.medium { border-left-color:#f9ab00; }
+.history-risk.low { border-left-color:#188038; }
 </style>
 </head>
 
@@ -530,10 +481,10 @@ td.description {
             <table>
               <thead>
                 <tr>
-                  <th>Степень и величина риска</th>
-                  <th>Оценка 1<br><small>(Меры управления рисками внедрены)</small></th>
-                  <th>Оценка 2<br><small>(Риск распознан, но контролируется)</small></th>
-                  <th>Оценка 3<br><small>(Контрольные меры отсутствуют)</small></th>
+                  <th>Степень и величина<br>риска</th>
+                  <th>Оценка 1<br><small>(Меры управления<br>рисками внедрены)</small></th>
+                  <th>Оценка 2<br><small>(Риск распознан,<br>но контролируется)</small></th>
+                  <th>Оценка 3<br><small>(Контрольные меры<br>отсутствуют)</small></th>
                 </tr>
               </thead>
               <tbody>
@@ -597,103 +548,49 @@ td.description {
   <div id="risks_history_list"></div>
 </div>
 
-<script>
+<script type="module">
 $(document).ready(function(){
 
-// Sample data for demonstration
-let currentData = [
-  {
-    id: 1,
-    number: 1,
-    category: "Технические риски",
-    description: "Недостаточная производительность системы при высокой нагрузке",
-    probability: "C7",
-    assessment: "2",
-    impact: "Допустимое",
-    date: "2026-01-26T10:00:00"
-  },
-  {
-    id: 2,
-    number: 2,
-    category: "Организационные риски",
-    description: "Задержка поставки оборудования от поставщиков",
-    probability: "H2",
-    assessment: "1",
-    impact: "Приемлемое",
-    date: "2026-01-26T11:00:00"
-  },
-  {
-    id: 3,
-    number: 3,
-    category: "Финансовые риски",
-    description: "Превышение бюджета проекта более чем на 20%",
-    probability: "B17",
-    assessment: "3",
-    impact: "Недопустимое",
-    date: "2026-01-25T09:00:00"
-  },
-  {
-    id: 4,
-    number: 4,
-    category: "Кадровые риски",
-    description: "Уход ключевых специалистов в процессе реализации проекта",
-    probability: "C9",
-    assessment: "3",
-    impact: "Недопустимое",
-    date: "2026-01-25T14:00:00"
-  },
-  {
-    id: 5,
-    number: 5,
-    category: "Внешние риски",
-    description: "Изменение законодательства, влияющее на проект",
-    probability: "H3",
-    assessment: "2",
-    impact: "Приемлемое",
-    date: "2026-01-24T16:00:00"
-  }
-];
-
+let currentData = [];
 let currentEditIndex = null;
 
-/* ===== IMPACT CALCULATION ===== */
-function calcImpact(p, a) {
-  if (!p || !a) return '';
-  if (p[0] === 'H') return a < 3 ? 'Приемлемое' : 'Допустимое';
-  if (p[0] === 'C') return a == 1 ? 'Приемлемое' : a == 2 ? 'Допустимое' : 'Недопустимое';
-  if (p[0] === 'B') return a == 1 ? 'Допустимое' : 'Недопустимое';
-  return '';
+/* ===== IMPACT ===== */
+function calcImpact(p,a){
+  if(!p||!a) return '';
+  if(p[0]==='H') return a<3?'Приемлемое':'Допустимое';
+  if(p[0]==='C') return a==1?'Приемлемое':a==2?'Допустимое':'Недопустимое';
+  if(p[0]==='B') return a==1?'Допустимое':'Недопустимое';
 }
 
-function setImpactField(value) {
+function setImpactField(value){
   const field = $('#modalImpact');
   field
     .val(value)
     .removeClass('impact-high impact-medium impact-low');
 
-  if (value === 'Недопустимое') {
+  if(value === 'Недопустимое'){
     field.addClass('impact-high');
     return;
   }
-  if (value === 'Допустимое') {
+  if(value === 'Допустимое'){
     field.addClass('impact-medium');
     return;
   }
-  if (value === 'Приемлемое') {
+  if(value === 'Приемлемое'){
     field.addClass('impact-low');
   }
 }
 
-/* ===== TABLE RENDERING ===== */
-function impactClass(v) {
-  if (v === 'Недопустимое') return 'risks_table_high';
-  if (v === 'Допустимое') return 'risks_table_medium';
+/* ===== TABLE ===== */
+function impactClass(v){
+  if(v==='Недопустимое')return 'risks_table_high';
+  if(v==='Допустимое')return 'risks_table_medium';
   return 'risks_table_low';
 }
 
-function renderTable() {
-  const tb = $('#risks_table_body').empty();
-  currentData.forEach((r, i) => {
+function renderTable(){
+  const tb=$('#risks_table_body').empty();
+  currentData.forEach((r,i)=>{
     tb.append(`
       <tr>
         <td>${r.number}</td>
@@ -708,25 +605,25 @@ function renderTable() {
   });
 }
 
-/* ===== HISTORY RENDERING ===== */
-function renderHistory() {
-  const map = {};
-  currentData.forEach(r => {
-    const d = r.date.split('T')[0];
-    map[d] = map[d] || [];
+/* ===== HISTORY ===== */
+function renderHistory(){
+  const map={};
+  currentData.forEach(r=>{
+    const d=r.date.split('T')[0];
+    map[d]=map[d]||[];
     map[d].push(r);
   });
 
-  const c = $('#risks_history_list').empty();
-  Object.keys(map).sort().reverse().forEach((d, i) => {
+  const c=$('#risks_history_list').empty();
+  Object.keys(map).forEach((d,i)=>{
     c.append(`
       <div class="history-date" data-target="h${i}">
         <div>${d}</div>
         <div>${map[d].length} рисков добавлено</div>
       </div>
       <div class="history-risks" id="h${i}">
-        ${map[d].map(r => {
-          let cls = r.impact === 'Недопустимое' ? 'high' : r.impact === 'Допустимое' ? 'medium' : 'low';
+        ${map[d].map(r=>{
+          let cls=r.impact==='Недопустимое'?'high':r.impact==='Допустимое'?'medium':'low';
           return `
             <div class="history-risk ${cls}">
               <b>${r.category}</b><br>
@@ -741,12 +638,12 @@ function renderHistory() {
   });
 }
 
-$('#risks_history_container').on('click', '.history-date', function() {
-  $('#' + $(this).data('target')).slideToggle();
+$('#risks_history_container').on('click','.history-date',function(){
+  $('#'+$(this).data('target')).slideToggle();
 });
 
-/* ===== EDIT MODAL ===== */
-$('#risks_table_body').on('click', '.risks_table_edit-link', function(e) {
+/* ===== EDIT ===== */
+$('#risks_table_body').on('click', '.risks_table_edit-link', function(e){
   e.preventDefault();
   const index = $(this).data('index');
   const item = currentData[index];
@@ -772,8 +669,8 @@ $('#risks_table_body').on('click', '.risks_table_edit-link', function(e) {
   $('#editModal').show();
 });
 
-$('#modalProbability, #modalAssessment').on('change', function() {
-  const impact = calcImpact($('#modalProbability').val(), $('#modalAssessment').val());
+$('#modalProbability,#modalAssessment').on('change',function(){
+  const impact=calcImpact($('#modalProbability').val(),$('#modalAssessment').val());
   setImpactField(impact);
 });
 
@@ -785,81 +682,84 @@ function closeModal() {
 
 $('#closeModal, #editModal_closeX').on('click', closeModal);
 
-$('#editModal').on('click', function(e) {
+$('#editModal').on('click', function(e){
   if (e.target === this) closeModal();
 });
 
-$(document).on('keydown', function(e) {
+$(document).on('keydown', function(e){
   if (e.key === 'Escape' && $('#editModal').is(':visible')) closeModal();
 });
 
 /* ===== DELETE ===== */
-$('#deleteModal').on('click', function() {
+$('#deleteModal').on('click', function(){
   if (currentEditIndex !== null) {
+    var riskId = currentData[currentEditIndex].id;
+
     if (confirm('Вы уверены, что хотите удалить этот риск?')) {
-      currentData.splice(currentEditIndex, 1);
-      // Renumber remaining items
-      currentData.forEach((item, idx) => {
-        item.number = idx + 1;
+      $.ajax({
+        url: "custom_web_template.html?object_id=7598439021244338147",
+        data: "project_id=" + WTLP.sObjectId + "&risk_id=" + riskId,
+        success: function(responseJSON){
+          currentData.splice(currentEditIndex, 1);
+          renderTable();
+          renderHistory();
+          closeModal();
+        },
+        error: function(){
+          alert('Ошибка удаления риска проекта! ' + riskId);
+        }
       });
-      renderTable();
-      renderHistory();
-      closeModal();
     }
   }
 });
 
 /* ===== SAVE ===== */
-$('#saveModal').on('click', function() {
+$('#saveModal').on('click', function(){
   if (currentEditIndex !== null) {
     var calculatedImpact = $('#modalImpact').val();
 
-    // Validation
-    var category = $('#modalCategory').val().trim();
-    var description = $('#modalDescription').val().trim();
-    var probability = $('#modalProbability').val();
-    var assessment = $('#modalAssessment').val();
+    var riskData = {
+      id: currentData[currentEditIndex].id,
+      category: $('#modalCategory').val(),
+      description: $('#modalDescription').val(),
+      probability: $('#modalProbability').val(),
+      assessment: $('#modalAssessment').val(),
+      impact: calculatedImpact,
+      number: currentData[currentEditIndex].number,
+      date: currentData[currentEditIndex].date
+    };
 
-    if (!category) {
-      alert('Пожалуйста, введите категорию риска');
-      return;
-    }
-    if (!description) {
-      alert('Пожалуйста, введите описание риска');
-      return;
-    }
-    if (!probability) {
-      alert('Пожалуйста, выберите вероятность');
-      return;
-    }
-    if (!assessment) {
-      alert('Пожалуйста, выберите оценку риска');
-      return;
-    }
-
-    currentData[currentEditIndex].category = category;
-    currentData[currentEditIndex].description = description;
-    currentData[currentEditIndex].probability = probability;
-    currentData[currentEditIndex].assessment = assessment;
-    currentData[currentEditIndex].impact = calculatedImpact;
-    
-    renderTable();
-    renderHistory();
-    closeModal();
+    $.ajax({
+      url: "custom_web_template.html?object_id=7598442433240118266",
+      data: "project_id=" + WTLP.sObjectId + "&risk_data=" + encodeURIComponent(JSON.stringify(riskData)),
+      success: function(responseJSON){
+        currentData[currentEditIndex].category = riskData.category;
+        currentData[currentEditIndex].description = riskData.description;
+        currentData[currentEditIndex].probability = riskData.probability;
+        currentData[currentEditIndex].assessment = riskData.assessment;
+        currentData[currentEditIndex].impact = riskData.impact;
+        renderTable();
+        renderHistory();
+        closeModal();
+      },
+      error: function(){
+        alert('Ошибка сохранения риска проекта!');
+      }
+    });
   } else {
     closeModal();
   }
 });
 
 /* ===== CUSTOM DROPDOWN ===== */
-$('.custom-dropdown-selected').on('click', function(e) {
+$('.custom-dropdown-selected').on('click', function(e){
   e.stopPropagation();
   const dropdown = $(this).closest('.custom-dropdown');
   $('.custom-dropdown').not(dropdown).removeClass('open');
   dropdown.toggleClass('open');
 });
 
-$('.custom-dropdown-option').on('click', function() {
+$('.custom-dropdown-option').on('click', function(){
   const dropdown = $(this).closest('.custom-dropdown');
   const value = $(this).data('value');
   const text = $(this).text();
@@ -872,14 +772,14 @@ $('.custom-dropdown-option').on('click', function() {
   dropdown.removeClass('open');
 });
 
-$(document).on('click', function() {
+$(document).on('click', function(){
   $('.custom-dropdown').removeClass('open');
 });
 
-function setDropdownValue(inputId, value) {
+function setDropdownValue(inputId, value){
   const dropdown = $('[data-for="' + inputId + '"]');
   const option = dropdown.find('[data-value="' + value + '"]');
-  if (option.length) {
+  if(option.length){
     dropdown.find('.custom-dropdown-selected').text(option.text());
     dropdown.find('.custom-dropdown-option').removeClass('selected');
     option.addClass('selected');
@@ -890,9 +790,16 @@ function setDropdownValue(inputId, value) {
   $('#' + inputId).val(value);
 }
 
-/* ===== INITIAL RENDER ===== */
-renderTable();
-renderHistory();
+/* ===== LOAD ===== */
+$.ajax({
+  url:"custom_web_template.html?object_id=7597342040409919335",
+  data:"project_id="+WTLP.sObjectId,
+  success:r=>{
+    currentData=JSON.parse(r||'[]');
+    renderTable();
+    renderHistory();
+  }
+});
 
 });
 </script>
