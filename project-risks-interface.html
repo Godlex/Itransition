@@ -435,61 +435,6 @@ th.sort-asc, th.sort-desc {
   background:#e3f2fd;
 }
 
-.sort-bar {
-  padding:10px 14px;
-  background:#e8f4fd;
-  border-bottom:1px solid #ddd;
-  display:none;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.sort-bar.active {
-  display:flex;
-}
-
-.sort-tag {
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding:4px 10px;
-  background:#1a73e8;
-  color:#fff;
-  border-radius:4px;
-  font-size:12px;
-}
-
-.sort-tag-remove {
-  cursor:pointer;
-  font-weight:bold;
-  font-size:14px;
-}
-
-.sort-tag-remove:hover {
-  color:#ffcdd2;
-}
-
-.clear-all-sorts {
-  padding:4px 10px;
-  background:#dc3545;
-  color:#fff;
-  border:none;
-  border-radius:4px;
-  font-size:12px;
-  cursor:pointer;
-  margin-left:auto;
-}
-
-.clear-all-sorts:hover {
-  background:#c82333;
-}
-
-.sort-hint {
-  font-size:11px;
-  color:#666;
-  margin-left:10px;
-}
 </style>
 </head>
 
@@ -613,12 +558,6 @@ th.sort-asc, th.sort-desc {
 
 <!-- ===== TABLE ===== -->
 <div id="risks_table_container">
-  <div class="sort-bar" id="sortBar">
-    <span>Сортировка:</span>
-    <div id="sortTags"></div>
-    <span class="sort-hint">(Ctrl+Click для добавления сортировки)</span>
-    <button class="clear-all-sorts" id="clearAllSorts">Сбросить</button>
-  </div>
   <div class="risks_table_wrapper">
     <table class="risks_table">
       <thead>
@@ -722,32 +661,6 @@ function applySorts(){
 }
 
 function updateSortBar(){
-  const bar = $('#sortBar');
-  const tags = $('#sortTags').empty();
-  const fieldNames = {
-    number: '№',
-    category: 'Категория',
-    description: 'Описание',
-    impact: 'Влияние',
-    probability: 'Вероятность',
-    assessment: 'Оценка'
-  };
-  
-  if(activeSorts.length > 0){
-    bar.addClass('active');
-    activeSorts.forEach((sort, index) => {
-      const arrow = sort.direction === 'asc' ? '▲' : '▼';
-      tags.append(`
-        <span class="sort-tag">
-          ${index + 1}. ${fieldNames[sort.field]} ${arrow}
-          <span class="sort-tag-remove" data-field="${sort.field}">×</span>
-        </span>
-      `);
-    });
-  } else {
-    bar.removeClass('active');
-  }
-  
   // Update header highlighting
   $('th[data-field]').removeClass('sort-asc sort-desc');
   activeSorts.forEach(sort => {
@@ -998,18 +911,6 @@ $('.risks_table thead').on('click', 'th[data-field]', function(e){
   applySorts();
 });
 
-// Remove single sort
-$('#sortTags').on('click', '.sort-tag-remove', function(){
-  const field = $(this).data('field');
-  activeSorts = activeSorts.filter(s => s.field !== field);
-  applySorts();
-});
-
-// Clear all sorts
-$('#clearAllSorts').on('click', function(){
-  activeSorts = [];
-  applySorts();
-});
 
 /* ===== LOAD ===== */
 $.ajax({
