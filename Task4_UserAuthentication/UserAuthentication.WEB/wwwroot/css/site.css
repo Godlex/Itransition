@@ -79,7 +79,7 @@ body {
 
 /* Remove system background arrows and extra padding */
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item {
-  margin-bottom: 24px !important;
+  margin-bottom: 0 !important;
   padding-bottom: 0 !important;
   background-image: none !important;
   background-size: auto !important;
@@ -89,6 +89,12 @@ body {
 
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item:last-child {
   margin-bottom: 0 !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-list {
+  display: flex !important;
+  flex-direction: column !important;
+  row-gap: 24px !important;
 }
 
 /* Flat row layout */
@@ -254,6 +260,9 @@ body {
   padding: 12px 0 0 18px !important;
   position: relative !important;
   background-image: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  row-gap: 16px !important;
 }
 
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-children-list::before {
