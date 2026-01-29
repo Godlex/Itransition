@@ -79,7 +79,7 @@ body {
 
 /* Remove system background arrows and extra padding */
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item {
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   padding-bottom: 0 !important;
   background-image: none !important;
   background-size: auto !important;
