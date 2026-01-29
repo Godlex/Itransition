@@ -1,4 +1,4 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
@@ -68,4 +68,135 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+
+/* ====== Epic accordion overrides ====== */
+.wt-lp-tab-page-item.wt-lp-has-bg.wt-lp-is-rounded {
+  --fc-daygrid-event-dot-width: 8px;
+  --fc-list-event-dot-width: 10px;
+  --fc-list-event-hover-bg-color: #f5f5f5;
+  color: #313a4a;
+  font-size: 16px;
+  font-family: Inter, Arial, sans-serif;
+  list-style: none;
+  border-radius: 0.8rem;
+  position: relative;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow-y: hidden;
+  display: flex;
+  padding: 2em !important;
+  background-color: #ffffff !important;
+}
+
+/* Accordion base */
+.epic_accordion {
+  background: transparent !important;
+}
+
+/* Epic/subtask cards */
+.epic_accordion .wt-lp-datatree-item-container {
+  background: #ffffff !important;
+  border: 1px solid #e2e3e4 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  padding: 24px !important;
+  position: relative;
+}
+
+/* Avatar placeholder */
+.epic_accordion .wt-lp-datatree-item-img-wrapper {
+  width: 56px !important;
+  height: 56px;
+  border-radius: 10px !important;
+  background: linear-gradient(180deg, #045ec0 0%, #000f49 100%);
+  flex-shrink: 0;
+}
+
+/* Headings */
+.epic_accordion .wt-lp-datatree-preheader {
+  font-size: 13px !important;
+  font-weight: 500;
+  color: #8c8c8c !important;
+}
+
+.epic_accordion .wt-lp-datatree-item-header {
+  font-size: 18px !important;
+  font-weight: 700;
+  color: #045ec0 !important;
+  line-height: 1.3;
+}
+
+/* Dates */
+.epic_accordion .wt-lp-datatree-item-subheader1,
+.epic_accordion .wt-lp-datatree-item-subheader2 {
+  font-size: 13px !important;
+  color: #9aa0a6 !important;
+}
+
+/* "Open" button */
+.epic_accordion .wt-lp-datatree-item-btn {
+  background: linear-gradient(90deg, #ffa320 0%, #e26900 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 8px 18px !important;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.epic_accordion .wt-lp-datatree-item-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* "Subtasks" toggle */
+.epic_accordion .wt-lp-datatree-toggle-children {
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+/* Status pill */
+.epic_accordion .wt-lp-datatree-floater {
+  position: absolute !important;
+  top: 16px;
+  right: 16px;
+  margin: 0 !important;
+  background: linear-gradient(180deg, #045ec0 0%, #000f49 100%) !important;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 4px 12px !important;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Epic list spacing */
+.epic_accordion .wt-lp-datatree-item {
+  margin-bottom: 16px;
+}
+
+/* Subtasks tree */
+.epic_accordion .wt-lp-datatree-children-list {
+  margin-left: 32px;
+  padding-left: 24px !important;
+  position: relative;
+  background-image: none !important;
+}
+
+.epic_accordion .wt-lp-datatree-children-list::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, #045ec0 0%, #000f49 100%);
+  opacity: 0.2;
 }
