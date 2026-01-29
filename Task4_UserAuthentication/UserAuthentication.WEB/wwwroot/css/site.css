@@ -122,7 +122,7 @@ body {
 
 /* "Open" button */
 .epic_accordion .wt-lp-datatree-item-btn {
-  background: #f28b1c !important;
+  background: linear-gradient(90deg, #ffa320 0%, #e26900 100%) !important;
   color: #ffffff !important;
   border: none !important;
   border-radius: 6px !important;
@@ -139,8 +139,8 @@ body {
 /* "Subtasks" toggle */
 .epic_accordion .wt-lp-datatree-toggle-children {
   position: absolute;
-  left: 12px;
-  top: 18px;
+  left: 4px;
+  top: 20px;
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -186,7 +186,7 @@ body {
   position: static !important;
   margin: 6px 0 0 0 !important;
   background: none !important;
-  color: #2563eb;
+  color: #1d4ed8 !important;
   border-radius: 0;
   padding: 0 !important;
   font-size: 12px;
@@ -198,7 +198,7 @@ body {
 
 /* Epic list spacing */
 .epic_accordion .wt-lp-datatree-item {
-  margin-bottom: 0;
+  margin-bottom: 12px;
   position: relative;
 }
 
