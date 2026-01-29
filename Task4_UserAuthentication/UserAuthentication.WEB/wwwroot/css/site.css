@@ -73,22 +73,22 @@ body {
 /* ====== Epic accordion overrides ====== */
 #WT_0x649811ACEBD5FD4C.epic_accordion {
   background: #f5f5f5 !important;
-  border-radius: 12px;
+  border-radius: 12px !important;
   padding: 16px 24px !important;
 }
 
 /* Remove system background arrows and extra padding */
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item {
-  margin-bottom: 24px;
+  margin-bottom: 24px !important;
   padding-bottom: 0 !important;
   background-image: none !important;
   background-size: auto !important;
   background-position: 0 0 !important;
-  position: relative;
+  position: relative !important;
 }
 
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item:last-child {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
 
 /* Flat row layout */
@@ -99,13 +99,13 @@ body {
   border-radius: 0 !important;
   box-shadow: none !important;
   padding: 16px 140px 16px 52px !important;
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: auto auto;
-  column-gap: 16px;
-  align-items: start;
-  overflow: visible;
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  grid-template-rows: auto auto !important;
+  column-gap: 16px !important;
+  align-items: start !important;
+  overflow: visible !important;
 }
 
 #WT_0x649811ACEBD5FD4C.epic_accordion
@@ -129,15 +129,15 @@ body {
 /* Headings */
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-preheader {
   font-size: 12px !important;
-  font-weight: 400;
+  font-weight: 400 !important;
   color: #6b7280 !important;
 }
 
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item-header {
   font-size: 16px !important;
-  font-weight: 600;
+  font-weight: 600 !important;
   color: #1d4ed8 !important;
-  line-height: 1.3;
+  line-height: 1.3 !important;
 }
 
 /* Dates */
@@ -148,9 +148,9 @@ body {
 }
 
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item-subheaders-row {
-  display: flex;
-  gap: 24px;
-  justify-content: space-between;
+  display: flex !important;
+  gap: 24px !important;
+  justify-content: space-between !important;
 }
 
 /* "Open" button */
@@ -160,39 +160,39 @@ body {
   border: none !important;
   border-radius: 6px !important;
   padding: 8px 16px !important;
-  font-weight: 600;
-  cursor: pointer;
+  font-weight: 600 !important;
+  cursor: pointer !important;
 }
 
 #WT_0x649811ACEBD5FD4C.epic_accordion
   .wt-lp-datatree-item-btn:not([disabled]):hover {
   background: linear-gradient(90deg, #ffa320 0%, #e26900 100%) !important;
-  filter: brightness(1.05);
-  box-shadow: 0 4px 16px rgba(255, 152, 0, 0.33);
+  filter: brightness(1.05) !important;
+  box-shadow: 0 4px 16px rgba(255, 152, 0, 0.33) !important;
 }
 
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item-btn:disabled {
-  opacity: 0.5;
-  cursor: default;
+  opacity: 0.5 !important;
+  cursor: default !important;
 }
 
 /* "+/-" toggle moved to the left */
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-toggle-children {
   position: absolute !important;
-  left: 24px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #f28b1c;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
+  left: 24px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+  background: #f28b1c !important;
+  border: none !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 2 !important;
 }
 
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-toggle-children .wt-lp-toggle-icon,
@@ -203,26 +203,26 @@ body {
 
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-toggle-children::before,
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-toggle-children::after {
-  content: '';
-  position: absolute;
-  background: #ffffff;
-  border-radius: 1px;
+  content: '' !important;
+  position: absolute !important;
+  background: #ffffff !important;
+  border-radius: 1px !important;
 }
 
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-toggle-children::before {
-  width: 10px;
-  height: 2px;
+  width: 10px !important;
+  height: 2px !important;
 }
 
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-toggle-children::after {
-  width: 2px;
-  height: 10px;
+  width: 2px !important;
+  height: 10px !important;
 }
 
 #WT_0x649811ACEBD5FD4C.epic_accordion
   .wt-lp-datatree-item[wt-state="expanded"]
   .wt-lp-datatree-toggle-children::after {
-  display: none;
+  display: none !important;
 }
 
 /* Status text color */
@@ -231,15 +231,15 @@ body {
   margin: 6px 0 0 0 !important;
   background: none !important;
   color: #1d4ed8 !important;
-  border-radius: 0;
+  border-radius: 0 !important;
   padding: 0 !important;
-  font-size: 12px;
-  font-weight: 500;
-  white-space: nowrap;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
   width: auto !important;
   text-align: left !important;
-  grid-column: 1;
-  grid-row: 2;
+  grid-column: 1 !important;
+  grid-row: 2 !important;
 }
 
 #WT_0x649811ACEBD5FD4C.epic_accordion
@@ -250,45 +250,45 @@ body {
 
 /* Subtasks tree */
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-children-list {
-  margin-left: 18px;
+  margin-left: 18px !important;
   padding: 12px 0 0 18px !important;
-  position: relative;
+  position: relative !important;
   background-image: none !important;
 }
 
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-children-list::before {
-  content: '';
-  position: absolute;
-  left: 6px;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: #d1d5db;
+  content: '' !important;
+  position: absolute !important;
+  left: 6px !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 2px !important;
+  background: #d1d5db !important;
 }
 
 #WT_0x649811ACEBD5FD4C.epic_accordion
   .wt-lp-datatree-children-list > .wt-lp-datatree-item::before {
-  content: '';
-  position: absolute;
-  left: 6px;
-  top: 28px;
-  width: 12px;
-  height: 1px;
-  background: #d1d5db;
+  content: '' !important;
+  position: absolute !important;
+  left: 6px !important;
+  top: 28px !important;
+  width: 12px !important;
+  height: 1px !important;
+  background: #d1d5db !important;
 }
 
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item-body {
-  grid-column: 1;
-  grid-row: 1;
+  grid-column: 1 !important;
+  grid-row: 1 !important;
 }
 
 #WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item-btns {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  justify-self: end;
-  align-self: center;
+  grid-column: 2 !important;
+  grid-row: 1 / span 2 !important;
+  justify-self: end !important;
+  align-self: center !important;
   position: static !important;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
 }
