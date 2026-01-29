@@ -1,4 +1,4 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
@@ -68,4 +68,246 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+
+/* ====== Epic accordion overrides ====== */
+#WT_0x649811ACEBD5FD4C.epic_accordion {
+  background: #f5f5f5 !important;
+  border-radius: 12px !important;
+  padding: 16px 24px !important;
+}
+
+/* Remove system background arrows and extra padding */
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  background-image: none !important;
+  background-size: auto !important;
+  background-position: 0 0 !important;
+  position: relative !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item:last-child {
+  margin-bottom: 0 !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-list > .wt-lp-datatree-item {
+  margin-bottom: 24px !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion
+  .wt-lp-datatree-list > .wt-lp-datatree-item:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Flat row layout */
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item-container {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 16px 140px 16px 52px !important;
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  grid-template-rows: auto auto !important;
+  column-gap: 16px !important;
+  align-items: start !important;
+  overflow: visible !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion
+  .wt-lp-datatree-item:last-child
+  .wt-lp-datatree-item-container {
+  border-bottom: none !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion
+  .wt-lp-datatree-item:hover
+  .wt-lp-datatree-item-container {
+  background: transparent !important;
+  border-color: #e5e7eb !important;
+}
+
+/* Hide avatar */
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item-img-wrapper {
+  display: none !important;
+}
+
+/* Headings */
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-preheader {
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  color: #6b7280 !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item-header {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: #1d4ed8 !important;
+  line-height: 1.3 !important;
+}
+
+/* Dates */
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item-subheader1,
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item-subheader2 {
+  font-size: 12px !important;
+  color: #6b7280 !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item-subheaders-row {
+  display: flex !important;
+  gap: 24px !important;
+  justify-content: space-between !important;
+}
+
+/* "Open" button */
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item-btn {
+  background: linear-gradient(90deg, #ffa320 0%, #e26900 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 8px 16px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion
+  .wt-lp-datatree-item-btn:not([disabled]):hover {
+  background: linear-gradient(90deg, #ffa320 0%, #e26900 100%) !important;
+  filter: brightness(1.05) !important;
+  box-shadow: 0 4px 16px rgba(255, 152, 0, 0.33) !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item-btn:disabled {
+  opacity: 0.5 !important;
+  cursor: default !important;
+}
+
+/* "+/-" toggle moved to the left */
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-toggle-children {
+  position: absolute !important;
+  left: 24px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+  background: #f28b1c !important;
+  border: none !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 2 !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-toggle-children .wt-lp-toggle-icon,
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-toggle-children [wt-role="switch-text"],
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-toggle-children [wt-role="task-qty"] {
+  display: none !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-toggle-children::before,
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-toggle-children::after {
+  content: '' !important;
+  position: absolute !important;
+  background: #ffffff !important;
+  border-radius: 1px !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-toggle-children::before {
+  width: 10px !important;
+  height: 2px !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-toggle-children::after {
+  width: 2px !important;
+  height: 10px !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion
+  .wt-lp-datatree-item[wt-state="expanded"]
+  .wt-lp-datatree-toggle-children::after {
+  display: none !important;
+}
+
+/* Status text color */
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-floater {
+  position: static !important;
+  margin: 6px 0 0 0 !important;
+  background: none !important;
+  color: #1d4ed8 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  width: auto !important;
+  text-align: left !important;
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion
+  .wt-lp-datatree-floater
+  [wt-role="floater-text"] {
+  color: #1d4ed8 !important;
+}
+
+/* Subtasks tree */
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-children-list {
+  margin-left: 18px !important;
+  padding: 12px 0 0 18px !important;
+  position: relative !important;
+  background-image: none !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion
+  .wt-lp-datatree-children-list > .wt-lp-datatree-item {
+  margin-bottom: 16px !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion
+  .wt-lp-datatree-children-list > .wt-lp-datatree-item:last-child {
+  margin-bottom: 0 !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-children-list::before {
+  content: '' !important;
+  position: absolute !important;
+  left: 6px !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 2px !important;
+  background: #d1d5db !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion
+  .wt-lp-datatree-children-list > .wt-lp-datatree-item::before {
+  content: '' !important;
+  position: absolute !important;
+  left: 6px !important;
+  top: 28px !important;
+  width: 12px !important;
+  height: 1px !important;
+  background: #d1d5db !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item-body {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+}
+
+#WT_0x649811ACEBD5FD4C.epic_accordion .wt-lp-datatree-item-btns {
+  grid-column: 2 !important;
+  grid-row: 1 / span 2 !important;
+  justify-self: end !important;
+  align-self: center !important;
+  position: static !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
 }
