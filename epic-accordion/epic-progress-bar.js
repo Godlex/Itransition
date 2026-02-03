@@ -91,8 +91,8 @@ $(document).ready(function() {
                 .empty()
                 .append(`
                     <div class="wt-progress-text">${percent}%</div>
-                    <div class="wt-progress-bar-container">
-                        <div class="wt-progress-bar" style="width: ${barWidth}% !important;"></div>
+                    <div class="wt-progress-bar-container" style="display: block; position: relative; width: 200px; height: 8px; background: #E8E8E8; border-radius: 4px; overflow: hidden;">
+                        <div class="wt-progress-bar" style="display: block; position: absolute; left: 0; top: 0; height: 100%; width: ${barWidth}%; background: linear-gradient(90deg, #FFA726 0%, #FF9800 50%, #F57C00 100%); border-radius: 4px;"></div>
                     </div>
                 `);
         });
