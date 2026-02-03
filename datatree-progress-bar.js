@@ -29,10 +29,9 @@ $(document).ready(function() {
         $('li.wt-lp-datatree-item[wt-level="0"]').each(function () {
             let $item = $(this);
             let $subheader2 = $item.find('.wt-lp-datatree-item-subheader2');
-            let $text = $item.find('.wt-lp-datatree-item-text');
 
             // Skip if already initialized
-            if ($text.data('progress-initialized')) return;
+            if ($subheader2.data('progress-initialized')) return;
 
             // Parse progress value from subheader2
             let value = parseFloat($subheader2.text().trim());
@@ -40,22 +39,18 @@ $(document).ready(function() {
 
             // If value > 1 (more than 100%), hide progress bar but keep Epic item
             if (value > 1) {
-                $text.data('progress-initialized', true).hide();
-                $subheader2.hide();
+                $subheader2.data('progress-initialized', true).hide();
                 return;
             }
 
             // Calculate percentage
             let percent = Math.round(value * 100);
 
-            // Hide subheader2 since we're using its value for progress bar
-            $subheader2.hide();
-
             // Clear any existing inline styles that might interfere
-            $text.attr('style', '');
+            $subheader2.attr('style', '');
             
-            // Mark as initialized and update HTML with horizontal inline layout
-            $text
+            // Mark as initialized and replace subheader2 content with progress bar
+            $subheader2
                 .data('progress-initialized', true)
                 .css({
                     'display': 'inline-flex',
@@ -67,6 +62,7 @@ $(document).ready(function() {
                     'background': 'transparent',
                     'padding': '0',
                     'padding-bottom': '0',
+                    'padding-left': '1em',
                     'margin': '0',
                     'font-family': 'Roboto, Arial, sans-serif',
                     'text-align': 'left',
@@ -82,7 +78,7 @@ $(document).ready(function() {
 
             // Set progress bar width (cap at 100%)
             let barWidth = Math.min(percent, 100);
-            $text.find('.wt-progress-bar').css('width', barWidth + '%');
+            $subheader2.find('.wt-progress-bar').css('width', barWidth + '%');
         });
     }
 
