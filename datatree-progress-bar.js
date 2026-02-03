@@ -16,13 +16,18 @@ $(document).ready(function() {
     }
      
     /**
-     * Hide progress value (subheader2) in subtasks
+     * Hide subheader2 in subtasks and if text equals "2"
      */
-    function hideSubheader2InSubtasks() {
-        // Hide subheader2 in subtasks (level 1+) - CSS already handles this
+    function hideSubheader2() {
+        // Hide subheader2 in subtasks (level 1+)
         $('li.wt-lp-datatree-item[wt-level="1"] .wt-lp-datatree-item-subheader2').hide();
-        $('li.wt-lp-datatree-item[wt-level="2"] .wt-lp-datatree-item-subheader2').hide();
-        $('li.wt-lp-datatree-item[wt-level="3"] .wt-lp-datatree-item-subheader2').hide();
+        
+        // Hide subheader2 if text content equals "2"
+        $('li.wt-lp-datatree-item .wt-lp-datatree-item-subheader2').each(function() {
+            if ($(this).text().trim() === "2") {
+                $(this).hide();
+            }
+        });
     }
 
     /**
@@ -33,18 +38,13 @@ $(document).ready(function() {
             let $item = $(this);
             let $subheader2 = $item.find('.wt-lp-datatree-item-subheader2');
 
-            // Skip if already initialized
+            // Skip if already initialized or already hidden
             if ($subheader2.data('progress-initialized')) return;
+            if (!$subheader2.is(':visible')) return;
 
             // Parse progress value from subheader2
             let value = parseFloat($subheader2.text().trim());
             if (isNaN(value)) return;
-
-            // If value >= 2 (200% or more), hide progress bar but keep Epic item
-            if (value >= 2) {
-                $subheader2.data('progress-initialized', true).hide();
-                return;
-            }
 
             // Calculate percentage
             let percent = Math.round(value * 100);
@@ -89,7 +89,7 @@ $(document).ready(function() {
      */
     function initializeAll() {
         removeButton();
-        hideSubheader2InSubtasks();
+        hideSubheader2();
         createProgressBar();
     }
 
