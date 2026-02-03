@@ -44,11 +44,29 @@ $(document).ready(function() {
             let $item = $(this);
             let $subheader2 = $item.find('.wt-lp-datatree-item-subheader2');
 
+            // Check if progress bar structure already exists (from server-side rendering)
+            let $existingBar = $subheader2.find('.wt-progress-bar');
+            if ($existingBar.length > 0) {
+                // Apply inline styles to existing progress bar elements
+                $subheader2.find('.wt-progress-bar-container').attr('style', 
+                    'display: block; position: relative; width: 200px; height: 8px; background: #E8E8E8; border-radius: 4px; overflow: hidden;'
+                );
+                $existingBar.each(function() {
+                    let $bar = $(this);
+                    // Get current width from existing style or default to 0
+                    let currentWidth = $bar.css('width') || $bar.attr('style')?.match(/width:\s*(\d+)%/)?.[1] + '%' || '0%';
+                    // Extract just the number
+                    let widthValue = parseInt(currentWidth) || 0;
+                    $bar.attr('style', 
+                        'display: block; position: absolute; left: 0; top: 0; height: 100%; width: ' + widthValue + '%; background: linear-gradient(90deg, #FFA726 0%, #FF9800 50%, #F57C00 100%); border-radius: 4px;'
+                    );
+                });
+                $subheader2.data('progress-initialized', true);
+                return;
+            }
+
             // Skip if already initialized
             if ($subheader2.data('progress-initialized')) return;
-            
-            // Check if subheader2 contains wt-progress-text (already transformed)
-            if ($subheader2.find('.wt-progress-text').length > 0) return;
 
             // Parse progress value from subheader2 ORIGINAL text
             let originalText = $subheader2.text().trim();
