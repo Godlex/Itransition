@@ -10,10 +10,12 @@ This solution provides custom CSS and JavaScript to display progress bars on Epi
 ## Features
 - ✨ Progress bars displayed only at Epic level (wt-level="0")
 - 🎨 Orange gradient progress bar (#FFA320 → #E26900)
-- 📊 Percentage display above progress bar
+- 📊 Horizontal progress bar layout (percentage + bar side by side)
 - 🔄 Automatic initialization via MutationObserver
-- 🗑️ Removes "Изменить" button from Epic items
+- 🔘 Changes "Изменить" button to "Подробнее" with orange styling
+- 📋 Keeps "Подзадачи" (Task list) dropdown unchanged
 - 👁️ Hides progress bars in subtasks (level 1+)
+- 💳 Enhanced Epic card styling with shadows and borders
 
 ## Integration Steps
 
@@ -56,8 +58,17 @@ After initialization, it becomes:
 ```html
 <div class="wt-lp-datatree-item-text" wt-role="item-text">
     <div class="wt-progress-text">50%</div>
-    <div class="wt-progress-bar" style="width: 50%;"></div>
+    <div class="wt-progress-bar-container">
+        <div class="wt-progress-bar" style="width: 50%;"></div>
+    </div>
 </div>
+```
+
+The "Изменить" button is automatically changed to:
+```html
+<button class="wt-lp-datatree-item-btn wt-lp-has-bg wt-details-btn" wt-role="item-btn">
+    Подробнее
+</button>
 ```
 
 ## Customization
@@ -75,18 +86,41 @@ Edit `datatree-progress-bar.css`:
 Edit `datatree-progress-bar.css`:
 
 ```css
-.wt-lp-datatree-item-text {
-    width: 200px;  /* Change width */
-    height: 16px;  /* Change height */
+.wt-progress-bar-container {
+    width: 240px;  /* Change width */
+    height: 8px;   /* Change height */
 }
 ```
 
-### Disable Button Removal
+### Change Button Color
+Edit `datatree-progress-bar.css`:
+
+```css
+li.wt-lp-datatree-item[wt-level="0"] button[wt-role="item-btn"].wt-details-btn {
+    background: #YOUR_COLOR !important;
+}
+
+li.wt-lp-datatree-item[wt-level="0"] button[wt-role="item-btn"].wt-details-btn:hover {
+    background: #YOUR_HOVER_COLOR !important;
+}
+```
+
+### Change Button Text
+Edit `datatree-progress-bar.js`:
+
+```javascript
+function updateButton() {
+    // ... existing code ...
+    $button.addClass('wt-details-btn').text('Your Custom Text');
+}
+```
+
+### Disable Button Modification
 Comment out the function call in `datatree-progress-bar.js`:
 
 ```javascript
 function initializeAll() {
-    // removeButton();  // <-- Comment this out
+    // updateButton();  // <-- Comment this out
     hideItemText();
     createProgressBar();
 }
@@ -138,9 +172,9 @@ The script expects this structure:
 - `.wt-progress-text` - Percentage label
 
 ### Key Functions
-- `removeButton()` - Removes edit buttons from Epic items
+- `updateButton()` - Changes "Изменить" to "Подробнее" button for Epic items
 - `hideItemText()` - Hides progress in subtasks
-- `createProgressBar()` - Initializes progress bars
+- `createProgressBar()` - Initializes horizontal progress bars
 - `initializeAll()` - Runs all initialization functions
 
 ## License
