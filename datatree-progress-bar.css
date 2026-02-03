@@ -54,11 +54,18 @@
     transition: width 0.3s ease !important;
 }
 
-/* Hide progress bar in subtasks (level 1 and deeper) */
-li.wt-lp-datatree-item[wt-level="1"] .wt-lp-datatree-item-text,
-li.wt-lp-datatree-item[wt-level="2"] .wt-lp-datatree-item-text,
-li.wt-lp-datatree-item[wt-level="3"] .wt-lp-datatree-item-text {
+/* Hide dates/text in subtasks (level 1 and deeper) but keep buttons */
+.epic_accordion li.wt-lp-datatree-item[wt-level="1"] .wt-lp-datatree-item-text,
+.epic_accordion li.wt-lp-datatree-item[wt-level="2"] .wt-lp-datatree-item-text,
+.epic_accordion li.wt-lp-datatree-item[wt-level="3"] .wt-lp-datatree-item-text {
     display: none !important;
+}
+
+/* Ensure subtask buttons remain visible */
+.epic_accordion li.wt-lp-datatree-item[wt-level="1"] button[wt-role="item-btn"],
+.epic_accordion li.wt-lp-datatree-item[wt-level="2"] button[wt-role="item-btn"],
+.epic_accordion li.wt-lp-datatree-item[wt-level="3"] button[wt-role="item-btn"] {
+    display: inline-block !important;
 }
 
 /* Hide button for Epic items only (level 0) */
