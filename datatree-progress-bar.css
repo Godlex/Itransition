@@ -62,11 +62,35 @@
     display: none !important;
 }
 
+/* Hide progress bar (subheader2) in subtasks - only show in Epic items */
+.epic_accordion li.wt-lp-datatree-item[wt-level="1"] .wt-lp-datatree-item-subheader2,
+.epic_accordion li.wt-lp-datatree-item[wt-level="2"] .wt-lp-datatree-item-subheader2,
+.epic_accordion li.wt-lp-datatree-item[wt-level="3"] .wt-lp-datatree-item-subheader2 {
+    display: none !important;
+}
+
 /* Ensure subtask buttons are always visible */
 .epic_accordion li.wt-lp-datatree-item[wt-level="1"] button[wt-role="item-btn"],
 .epic_accordion li.wt-lp-datatree-item[wt-level="2"] button[wt-role="item-btn"],
 .epic_accordion li.wt-lp-datatree-item[wt-level="3"] button[wt-role="item-btn"] {
     display: inline-block !important;
+}
+
+/* Subtask containers need position relative for button positioning */
+.epic_accordion li.wt-lp-datatree-item[wt-level="1"] .wt-lp-datatree-item-container,
+.epic_accordion li.wt-lp-datatree-item[wt-level="2"] .wt-lp-datatree-item-container,
+.epic_accordion li.wt-lp-datatree-item[wt-level="3"] .wt-lp-datatree-item-container {
+    position: relative !important;
+}
+
+/* Center buttons vertically in subtask cards */
+.epic_accordion li.wt-lp-datatree-item[wt-level="1"] .wt-lp-datatree-item-btns,
+.epic_accordion li.wt-lp-datatree-item[wt-level="2"] .wt-lp-datatree-item-btns,
+.epic_accordion li.wt-lp-datatree-item[wt-level="3"] .wt-lp-datatree-item-btns {
+    position: absolute !important;
+    right: 24px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
 }
 
 /* ===== EPIC CARD — PIXEL-CLOSE TO MOCKUP ===== */
@@ -127,14 +151,21 @@
     color: #999 !important;
 }
 
-/* ===== BUTTONS AREA ===== */
+/* ===== BUTTONS AREA - VERTICALLY CENTERED ===== */
 .epic_accordion .wt-lp-datatree-item-btns {
     grid-column: 2 / 3 !important;
     grid-row: 1 / 4 !important;
     display: flex !important;
     align-items: center !important;
-    justify-content: flex-end !important;
+    justify-content: center !important;
     position: static !important;
+}
+
+/* Center button vertically in subtasks too */
+.epic_accordion li.wt-lp-datatree-item .wt-lp-datatree-item-btns {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 /* ===== STATUS BADGE (FLOATER) ===== */

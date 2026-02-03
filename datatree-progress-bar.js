@@ -16,10 +16,13 @@ $(document).ready(function() {
     }
      
     /**
-     * Do not hide dates in subtasks - keep them visible
+     * Hide progress value (subheader2) in subtasks
      */
-    function hideItemText() {
-        // Dates should remain visible in subtasks - no hiding needed
+    function hideSubheader2InSubtasks() {
+        // Hide subheader2 in subtasks (level 1+) - CSS already handles this
+        $('li.wt-lp-datatree-item[wt-level="1"] .wt-lp-datatree-item-subheader2').hide();
+        $('li.wt-lp-datatree-item[wt-level="2"] .wt-lp-datatree-item-subheader2').hide();
+        $('li.wt-lp-datatree-item[wt-level="3"] .wt-lp-datatree-item-subheader2').hide();
     }
 
     /**
@@ -87,7 +90,7 @@ $(document).ready(function() {
      */
     function initializeAll() {
         removeButton();
-        hideItemText();
+        hideSubheader2InSubtasks();
         createProgressBar();
     }
 
