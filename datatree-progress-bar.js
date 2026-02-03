@@ -71,7 +71,7 @@ $(document).ready(function() {
                     'display': 'flex',
                     'flex-direction': 'column',
                     'align-items': 'flex-start',
-                    'gap': '4px',
+                    'gap': '6px',
                     'width': 'auto',
                     'height': 'auto',
                     'background': 'transparent',

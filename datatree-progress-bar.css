@@ -2,55 +2,54 @@
 
 /* Main progress container - vertical layout in subheader2 */
 .epic_accordion li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-subheader2 {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 4px !important;
-    width: auto !important;
-    height: auto !important;
-    background: transparent !important;
-    padding: 0 !important;
-    padding-bottom: 0.2em !important;
-    padding-left: 1em !important;
-    margin: 0 !important;
-    font-family: Roboto, Arial, sans-serif !important;
-    text-align: left !important;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    width: auto;
+    height: auto;
+    background: transparent;
+    padding: 0;
+    padding-bottom: 0.2em;
+    padding-left: 1em;
+    margin: 0;
+    font-family: Roboto, Arial, sans-serif;
+    text-align: left;
 }
 
-/* Progress percentage text - displayed above the bar, centered */
+/* Progress percentage text - displayed above the bar, left-aligned */
 .wt-progress-text {
-    display: block !important;
-    font-size: 13px !important;
-    color: #666666 !important;
-    font-weight: 400 !important;
-    white-space: nowrap !important;
-    width: 100% !important;
-    text-align: center !important;
-    margin-bottom: 4px !important;
+    display: block;
+    font-size: 12px;
+    color: #999999;
+    font-weight: 400;
+    white-space: nowrap;
+    text-align: left;
+    margin-bottom: 2px;
 }
 
 /* Progress bar background container - full width gray bar */
 .wt-progress-bar-container {
-    display: block !important;
-    position: relative !important;
-    width: 240px !important;
-    height: 8px !important;
-    background: #E0E0E0 !important;
-    border-radius: 4px !important;
-    overflow: hidden !important;
+    display: block;
+    position: relative;
+    width: 240px;
+    height: 6px;
+    background: #E0E0E0;
+    border-radius: 3px;
+    overflow: hidden;
 }
 
 /* Progress bar fill - orange gradient */
 .wt-progress-bar {
-    display: block !important;
-    position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
-    height: 100% !important;
-    width: 0 !important;
-    background: linear-gradient(90deg, #FF9800 0%, #F57C00 100%) !important;
-    border-radius: 4px !important;
-    transition: width 0.3s ease !important;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #FF9800 0%, #F57C00 100%);
+    border-radius: 3px;
+    transition: width 0.3s ease;
 }
 
 /* Keep dates visible everywhere - do not hide */
