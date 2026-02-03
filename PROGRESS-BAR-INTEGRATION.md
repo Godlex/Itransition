@@ -9,13 +9,14 @@ This solution provides custom CSS and JavaScript to display progress bars on Epi
 
 ## Features
 - ✨ Progress bars displayed only at Epic level (wt-level="0")
-- 🎨 Orange gradient progress bar (#FFA320 → #E26900)
-- 📊 Horizontal progress bar layout (percentage + bar side by side)
+- 🎨 Orange gradient progress bar (#FF9800 → #F57C00)
+- 📊 Compact horizontal progress bar layout (percentage + bar inline)
 - 🔄 Automatic initialization via MutationObserver
-- 🔘 Changes "Изменить" button to "Подробнее" with orange styling
+- 🗑️ Removes button completely from Epic items
 - 📋 Keeps "Подзадачи" (Task list) dropdown unchanged
 - 👁️ Hides progress bars in subtasks (level 1+)
-- 💳 Enhanced Epic card styling with shadows and borders
+- 🚫 Automatically hides Epic items with progress > 100% (value > 1)
+- 💳 Clean, compact Epic card styling matching reference design
 
 ## Integration Steps
 
@@ -45,31 +46,29 @@ Ensure jQuery is loaded first, then add the JS file:
 
 ### 3. Data Format
 The progress value should be stored as a decimal in the `wt-lp-datatree-item-text` element:
+- `0.4` = 40%
 - `0.5` = 50%
 - `1.0` = 100%
-- `2.0` = 200% (will display as 200%)
+- `2.0` = 200% (Epic item will be **hidden automatically**)
+
+**Important:** Epic items with progress > 100% (value > 1) are automatically hidden.
 
 Example in HTML:
 ```html
-<div class="wt-lp-datatree-item-text" wt-role="item-text">0.5</div>
+<div class="wt-lp-datatree-item-text" wt-role="item-text">0.4</div>
 ```
 
 After initialization, it becomes:
 ```html
-<div class="wt-lp-datatree-item-text" wt-role="item-text">
-    <div class="wt-progress-text">50%</div>
+<div class="wt-lp-datatree-item-text" wt-role="item-text" style="display: inline-flex;">
+    <div class="wt-progress-text">40%</div>
     <div class="wt-progress-bar-container">
-        <div class="wt-progress-bar" style="width: 50%;"></div>
+        <div class="wt-progress-bar" style="width: 40%;"></div>
     </div>
 </div>
 ```
 
-The "Изменить" button is automatically changed to:
-```html
-<button class="wt-lp-datatree-item-btn wt-lp-has-bg wt-details-btn" wt-role="item-btn">
-    Подробнее
-</button>
-```
+The button in Epic items is **automatically removed** (not changed, but deleted).
 
 ## Customization
 
@@ -87,40 +86,34 @@ Edit `datatree-progress-bar.css`:
 
 ```css
 .wt-progress-bar-container {
-    width: 240px;  /* Change width */
-    height: 8px;   /* Change height */
+    width: 200px !important;  /* Change width */
+    height: 4px !important;   /* Change height */
 }
 ```
 
-### Change Button Color
-Edit `datatree-progress-bar.css`:
-
-```css
-li.wt-lp-datatree-item[wt-level="0"] button[wt-role="item-btn"].wt-details-btn {
-    background: #YOUR_COLOR !important;
-}
-
-li.wt-lp-datatree-item[wt-level="0"] button[wt-role="item-btn"].wt-details-btn:hover {
-    background: #YOUR_HOVER_COLOR !important;
-}
-```
-
-### Change Button Text
-Edit `datatree-progress-bar.js`:
+### Show Items with Progress > 100%
+Comment out the hiding logic in `datatree-progress-bar.js`:
 
 ```javascript
-function updateButton() {
-    // ... existing code ...
-    $button.addClass('wt-details-btn').text('Your Custom Text');
+function createProgressBar() {
+    // ...
+    
+    // Comment out these lines to show items with >100% progress
+    // if (value > 1) {
+    //     $item.hide();
+    //     return;
+    // }
+    
+    // ...
 }
 ```
 
-### Disable Button Modification
-Comment out the function call in `datatree-progress-bar.js`:
+### Keep Button in Epic Items
+Comment out the removeButton call in `datatree-progress-bar.js`:
 
 ```javascript
 function initializeAll() {
-    // updateButton();  // <-- Comment this out
+    // removeButton();  // <-- Comment this out
     hideItemText();
     createProgressBar();
 }
@@ -172,9 +165,9 @@ The script expects this structure:
 - `.wt-progress-text` - Percentage label
 
 ### Key Functions
-- `updateButton()` - Changes "Изменить" to "Подробнее" button for Epic items
+- `removeButton()` - Removes buttons completely from Epic items
 - `hideItemText()` - Hides progress in subtasks
-- `createProgressBar()` - Initializes horizontal progress bars
+- `createProgressBar()` - Initializes compact inline progress bars and hides items >100%
 - `initializeAll()` - Runs all initialization functions
 
 ## License
