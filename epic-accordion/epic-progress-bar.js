@@ -61,13 +61,15 @@ $(document).ready(function() {
                 return;
             }
 
-            // Calculate percentage
+            // Calculate percentage (cap at 100%)
             let percent = Math.round(value * 100);
+            let barWidth = Math.min(percent, 100);
 
             // Clear any existing inline styles that might interfere
             $subheader2.attr('style', '');
             
             // Mark as initialized and replace subheader2 content with progress bar (vertical layout)
+            // Set bar width directly in the HTML to ensure it renders correctly
             $subheader2
                 .data('progress-initialized', true)
                 .css({
@@ -90,13 +92,9 @@ $(document).ready(function() {
                 .append(`
                     <div class="wt-progress-text">${percent}%</div>
                     <div class="wt-progress-bar-container">
-                        <div class="wt-progress-bar"></div>
+                        <div class="wt-progress-bar" style="width: ${barWidth}% !important;"></div>
                     </div>
                 `);
-
-            // Set progress bar width (cap at 100%)
-            let barWidth = Math.min(percent, 100);
-            $subheader2.find('.wt-progress-bar').css('width', barWidth + '%');
         });
     }
 
