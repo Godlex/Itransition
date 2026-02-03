@@ -16,11 +16,10 @@ $(document).ready(function() {
     }
      
     /**
-     * Hide item-text in subtasks (level 1 and deeper)
+     * Do not hide dates in subtasks - keep them visible
      */
     function hideItemText() {
-        // Hide progress in subtasks
-        $('li.wt-lp-datatree-item[wt-level="1"] .wt-lp-datatree-item-text').hide();
+        // Dates should remain visible in subtasks - no hiding needed
     }
 
     /**

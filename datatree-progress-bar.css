@@ -54,23 +54,18 @@
     transition: width 0.3s ease !important;
 }
 
-/* Hide dates/text in subtasks (level 1 and deeper) but keep buttons */
-.epic_accordion li.wt-lp-datatree-item[wt-level="1"] .wt-lp-datatree-item-text,
-.epic_accordion li.wt-lp-datatree-item[wt-level="2"] .wt-lp-datatree-item-text,
-.epic_accordion li.wt-lp-datatree-item[wt-level="3"] .wt-lp-datatree-item-text {
+/* Keep dates visible everywhere - do not hide */
+
+/* Hide "Изменить" button for Epic items only (level 0) */
+.epic_accordion li.wt-lp-datatree-item[wt-level="0"] button[wt-role="item-btn"] {
     display: none !important;
 }
 
-/* Ensure subtask buttons remain visible */
+/* Ensure subtask buttons are always visible */
 .epic_accordion li.wt-lp-datatree-item[wt-level="1"] button[wt-role="item-btn"],
 .epic_accordion li.wt-lp-datatree-item[wt-level="2"] button[wt-role="item-btn"],
 .epic_accordion li.wt-lp-datatree-item[wt-level="3"] button[wt-role="item-btn"] {
     display: inline-block !important;
-}
-
-/* Hide button for Epic items only (level 0) */
-.epic_accordion li.wt-lp-datatree-item[wt-level="0"] button[wt-role="item-btn"] {
-    display: none !important;
 }
 
 /* ===== EPIC CARD — PIXEL-CLOSE TO MOCKUP ===== */
