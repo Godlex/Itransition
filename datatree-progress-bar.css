@@ -1,0 +1,46 @@
+/* Progress bar styling for Epic data tree */
+
+/* Main progress container */
+.wt-lp-datatree-item-text {
+    position: relative;
+    width: 200px;
+    height: 16px;
+    background: #e5e5e5;
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: Roboto, Arial, sans-serif;
+}
+
+/* Progress bar fill */
+.wt-progress-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #FFA320 0%, #E26900 100%) !important;
+    border-radius: 8px;
+    transition: width 0.3s ease;
+}
+
+/* Progress percentage text */
+.wt-progress-text {
+    position: absolute;
+    top: -22px;
+    left: 0;
+    font-size: 12px;
+    color: #262626;
+    font-weight: 500;
+}
+
+/* Ensure progress bar container is visible at level 0 (Epic level) */
+li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-text {
+    display: block !important;
+}
+
+/* Hide progress bar in subtasks (level 1 and deeper) */
+li.wt-lp-datatree-item[wt-level="1"] .wt-lp-datatree-item-text,
+li.wt-lp-datatree-item[wt-level="2"] .wt-lp-datatree-item-text,
+li.wt-lp-datatree-item[wt-level="3"] .wt-lp-datatree-item-text {
+    display: none !important;
+}
