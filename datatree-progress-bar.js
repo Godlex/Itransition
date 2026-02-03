@@ -29,23 +29,28 @@ $(document).ready(function() {
     function createProgressBar() {
         $('li.wt-lp-datatree-item[wt-level="0"]').each(function () {
             let $item = $(this);
+            let $subheader2 = $item.find('.wt-lp-datatree-item-subheader2');
             let $text = $item.find('.wt-lp-datatree-item-text');
 
             // Skip if already initialized
             if ($text.data('progress-initialized')) return;
 
-            // Parse progress value
-            let value = parseFloat($text.text());
+            // Parse progress value from subheader2
+            let value = parseFloat($subheader2.text().trim());
             if (isNaN(value)) return;
 
             // If value > 1 (more than 100%), hide progress bar but keep Epic item
             if (value > 1) {
                 $text.data('progress-initialized', true).hide();
+                $subheader2.hide();
                 return;
             }
 
             // Calculate percentage
             let percent = Math.round(value * 100);
+
+            // Hide subheader2 since we're using its value for progress bar
+            $subheader2.hide();
 
             // Clear any existing inline styles that might interfere
             $text.attr('style', '');

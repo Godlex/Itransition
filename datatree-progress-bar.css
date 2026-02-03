@@ -1,7 +1,7 @@
 /* Progress bar styling for Epic data tree */
 
 /* Main progress container - horizontal layout inline with other content */
-li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-text {
+.epic_accordion li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-text {
     display: inline-flex !important;
     flex-direction: row !important;
     align-items: center !important;
@@ -61,48 +61,87 @@ li.wt-lp-datatree-item[wt-level="3"] .wt-lp-datatree-item-text {
     display: none !important;
 }
 
-/* Hide button for Epic items */
-li.wt-lp-datatree-item[wt-level="0"] button[wt-role="item-btn"] {
+/* Hide button for Epic items only (level 0) */
+.epic_accordion li.wt-lp-datatree-item[wt-level="0"] button[wt-role="item-btn"] {
     display: none !important;
 }
 
-/* Epic card styling */
-li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-container {
-    background: #F5F5F5 !important;
-    border: 1px solid #E0E0E0 !important;
-    border-radius: 6px !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+/* ===== EPIC CARD — PIXEL-CLOSE TO MOCKUP ===== */
+
+.epic_accordion .wt-lp-datatree-item-container {
+    position: relative !important;
+    padding: 16px 24px 48px 24px !important;
+    background: #f5f5f5 !important;
 }
 
-/* Status badge (floater) styling */
-li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-floater {
-    background-color: #2196F3 !important;
+/* Main grid layout */
+.epic_accordion .wt-lp-datatree-item-body {
+    display: grid !important;
+    grid-template-columns: 1fr 140px !important;
+    grid-template-rows: auto auto auto !important;
+    row-gap: 6px !important;
+    column-gap: 24px !important;
+    min-height: 8em !important;
+}
+
+/* ===== HEADER (TITLE) ===== */
+.epic_accordion .wt-lp-datatree-item-header {
+    grid-column: 1 / 2 !important;
+    grid-row: 1 / 2 !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #4176ea !important;
+    line-height: 1.3 !important;
+}
+
+/* ===== PROGRESS BAR (IN ITEM-TEXT) ===== */
+.epic_accordion .wt-lp-datatree-item-text {
+    grid-column: 1 / 2 !important;
+    grid-row: 2 / 3 !important;
+    font-size: 14px !important;
+    color: #666 !important;
+}
+
+/* ===== DATE + STATUS (SUBHEADERS ROW) ===== */
+.epic_accordion .wt-lp-datatree-item-subheaders-row {
+    grid-column: 1 / 2 !important;
+    grid-row: 3 / 4 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 24px !important;
+    font-size: 13px !important;
+    color: #999 !important;
+}
+
+/* Hide subheader2 (progress value) since we show it as progress bar */
+.epic_accordion .wt-lp-datatree-item-subheader2 {
+    display: none !important;
+}
+
+/* ===== BUTTONS AREA ===== */
+.epic_accordion .wt-lp-datatree-item-btns {
+    grid-column: 2 / 3 !important;
+    grid-row: 1 / 4 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    position: static !important;
+}
+
+/* ===== STATUS BADGE (FLOATER) ===== */
+.epic_accordion .wt-lp-datatree-floater {
+    position: static !important;
+    background: #4176ea !important;
     border-radius: 4px !important;
-    padding: 4px 12px !important;
-    font-size: 12px !important;
+    padding: 2px 8px !important;
+    height: auto !important;
+    margin-left: 12em !important;
+    margin-top: -4.3em !important;
 }
 
-/* Header styling for Epic items */
-li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-header {
-    color: #2196F3 !important;
-    font-size: 1em !important;
-    font-weight: 500 !important;
-    margin-bottom: 0.2em !important;
-}
-
-/* Subheader styling - more compact */
-li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-subheader1,
-li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-subheader2 {
-    color: #999999 !important;
-    font-size: 0.8em !important;
-}
-
-/* Make subheader block more compact */
-li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-subheader-block {
-    margin-bottom: 0.3em !important;
-}
-
-/* Content area should be inline */
-li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-content {
-    display: block !important;
+/* ===== TOGGLE SUBTASKS BUTTON ===== */
+.epic_accordion .wt-lp-datatree-toggle-children {
+    position: absolute !important;
+    left: 24px !important;
+    bottom: 12px !important;
 }
