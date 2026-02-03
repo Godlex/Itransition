@@ -1,14 +1,34 @@
 /* Progress bar styling for Epic data tree */
 
-/* Main progress container */
+/* Main progress container - horizontal layout */
 .wt-lp-datatree-item-text {
-    position: relative;
-    width: 200px;
-    height: 16px;
-    background: #e5e5e5;
-    border-radius: 8px;
-    overflow: hidden;
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+    width: auto !important;
+    height: auto !important;
+    background: transparent !important;
+    padding: 0 !important;
     font-family: Roboto, Arial, sans-serif;
+}
+
+/* Progress percentage text - displayed on the left */
+.wt-progress-text {
+    font-size: 14px;
+    color: #262626;
+    font-weight: 500;
+    white-space: nowrap;
+    min-width: 40px;
+}
+
+/* Progress bar background container */
+.wt-progress-bar-container {
+    position: relative;
+    width: 240px;
+    height: 8px;
+    background: #E5E5E5;
+    border-radius: 4px;
+    overflow: hidden;
 }
 
 /* Progress bar fill */
@@ -19,23 +39,13 @@
     height: 100%;
     width: 0;
     background: linear-gradient(90deg, #FFA320 0%, #E26900 100%) !important;
-    border-radius: 8px;
+    border-radius: 4px;
     transition: width 0.3s ease;
-}
-
-/* Progress percentage text */
-.wt-progress-text {
-    position: absolute;
-    top: -22px;
-    left: 0;
-    font-size: 12px;
-    color: #262626;
-    font-weight: 500;
 }
 
 /* Ensure progress bar container is visible at level 0 (Epic level) */
 li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-text {
-    display: block !important;
+    display: flex !important;
 }
 
 /* Hide progress bar in subtasks (level 1 and deeper) */
@@ -43,4 +53,37 @@ li.wt-lp-datatree-item[wt-level="1"] .wt-lp-datatree-item-text,
 li.wt-lp-datatree-item[wt-level="2"] .wt-lp-datatree-item-text,
 li.wt-lp-datatree-item[wt-level="3"] .wt-lp-datatree-item-text {
     display: none !important;
+}
+
+/* Style "Подробнее" button for Epic items */
+li.wt-lp-datatree-item[wt-level="0"] button[wt-role="item-btn"].wt-details-btn {
+    background: #FF9800 !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    padding: 10px 24px !important;
+    border-radius: 4px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+li.wt-lp-datatree-item[wt-level="0"] button[wt-role="item-btn"].wt-details-btn:hover {
+    background: #FB8C00 !important;
+}
+
+/* Epic card styling */
+li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-container {
+    background: #FFFFFF !important;
+    border: 1px solid #E0E0E0 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Status badge (floater) styling */
+li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-floater {
+    background-color: #2196F3 !important;
+    border-radius: 4px !important;
+    padding: 4px 12px !important;
+    font-size: 12px !important;
 }

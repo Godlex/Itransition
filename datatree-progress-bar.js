@@ -1,18 +1,24 @@
 /**
  * Data Tree Progress Bar Handler
- * Manages progress bar display and button removal for Epic items
+ * Manages progress bar display and button styling for Epic items
  */
 
 $(document).ready(function() {
     
     /**
-     * Remove "Изменить" button from Epic level items (level 0)
+     * Change "Изменить" button to "Подробнее" for Epic level items (level 0)
      */
-    function removeButton() {
-        $('li.wt-lp-datatree-item[wt-level="0"]')
-            .children('.wt-lp-datatree-item-container')
-            .find('button[wt-role="item-btn"]')
-            .remove();
+    function updateButton() {
+        $('li.wt-lp-datatree-item[wt-level="0"]').each(function() {
+            let $button = $(this)
+                .children('.wt-lp-datatree-item-container')
+                .find('button[wt-role="item-btn"]');
+            
+            // Update button if not already modified
+            if ($button.length && !$button.hasClass('wt-details-btn')) {
+                $button.addClass('wt-details-btn').text('Подробнее');
+            }
+        });
     }
      
     /**
@@ -47,13 +53,15 @@ $(document).ready(function() {
             // Calculate percentage
             let percent = Math.round(value * 100);
 
-            // Mark as initialized and update HTML
+            // Mark as initialized and update HTML with horizontal layout
             $text
                 .data('progress-initialized', true)
                 .empty()
                 .append(`
                     <div class="wt-progress-text">${percent}%</div>
-                    <div class="wt-progress-bar"></div>
+                    <div class="wt-progress-bar-container">
+                        <div class="wt-progress-bar"></div>
+                    </div>
                 `);
 
             // Set progress bar width
@@ -65,7 +73,7 @@ $(document).ready(function() {
      * Initialize all modifications
      */
     function initializeAll() {
-        removeButton();
+        updateButton();
         hideItemText();
         createProgressBar();
     }
