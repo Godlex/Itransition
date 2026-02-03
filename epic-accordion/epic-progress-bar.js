@@ -1,17 +1,14 @@
 /**
  * Epic Accordion Progress Bar
  * 
- * This script handles:
- * - Removing buttons from Epic level items (level 0)
- * - Hiding subheader2 in subtasks (level 1+)
- * - Creating and initializing progress bars for Epic level items
+ * Creates and styles progress bars for Epic level items (level 0)
  */
 $(document).ready(function() {
     
     /**
-     * Remove button from Epic level items (level 0)
+     * Remove "Изменить" button from Epic level items (level 0)
      */
-    function removeButton() {
+    function removeEpicButtons() {
         $('li.wt-lp-datatree-item[wt-level="0"]')
             .children('.wt-lp-datatree-item-container')
             .find('button[wt-role="item-btn"]')
@@ -19,100 +16,108 @@ $(document).ready(function() {
     }
      
     /**
-     * Hide subheader2 in subtasks and if value equals 2
+     * Hide subheader2 in subtasks (level 1+)
      */
-    function hideSubheader2() {
-        // Hide subheader2 in subtasks (level 1+)
+    function hideSubtaskSubheader2() {
         $('li.wt-lp-datatree-item[wt-level="1"] .wt-lp-datatree-item-subheader2').hide();
         $('li.wt-lp-datatree-item[wt-level="2"] .wt-lp-datatree-item-subheader2').hide();
         $('li.wt-lp-datatree-item[wt-level="3"] .wt-lp-datatree-item-subheader2').hide();
-        
-        // Hide subheader2 if numeric value equals 2 (200%)
-        $('li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-subheader2').each(function() {
-            let value = parseFloat($(this).text().trim());
-            if (!isNaN(value) && value === 2) {
-                $(this).hide();
-            }
-        });
     }
 
     /**
-     * Create and initialize progress bars for Epic level items
+     * Apply styles to progress bar element
      */
-    function createProgressBar() {
-        $('li.wt-lp-datatree-item[wt-level="0"]').each(function () {
-            let $item = $(this);
-            let $subheader2 = $item.find('.wt-lp-datatree-item-subheader2');
+    function styleProgressBar($bar, widthPercent) {
+        $bar.attr('style', [
+            'height: 100%',
+            'width: ' + widthPercent + '%',
+            'background: linear-gradient(90deg, #FFA726 0%, #FF9800 50%, #F57C00 100%)',
+            'border-radius: 4px',
+            'transition: width 0.3s ease'
+        ].join('; '));
+    }
 
-            // Check if progress bar structure already exists (from server-side rendering)
+    /**
+     * Apply styles to progress bar container
+     */
+    function styleProgressContainer($container) {
+        $container.attr('style', [
+            'width: 200px',
+            'height: 8px',
+            'background: #E0E0E0',
+            'border-radius: 4px',
+            'overflow: hidden',
+            'position: relative'
+        ].join('; '));
+    }
+
+    /**
+     * Create progress bar HTML
+     */
+    function createProgressBarHTML(percent) {
+        let barWidth = Math.min(percent, 100);
+        return `
+            <div class="wt-progress-wrapper" style="display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 200px; padding: 8px 0;">
+                <div class="wt-progress-text" style="font-size: 14px; font-weight: 500; color: #666666; text-align: center;">${percent}%</div>
+                <div class="wt-progress-bar-container" style="width: 200px; height: 8px; background: #E0E0E0; border-radius: 4px; overflow: hidden; position: relative;">
+                    <div class="wt-progress-bar" style="height: 100%; width: ${barWidth}%; background: linear-gradient(90deg, #FFA726 0%, #FF9800 50%, #F57C00 100%); border-radius: 4px;"></div>
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * Initialize progress bars for Epic level items
+     */
+    function initProgressBars() {
+        $('li.wt-lp-datatree-item[wt-level="0"]').each(function() {
+            let $subheader2 = $(this).find('.wt-lp-datatree-item-subheader2');
+            if ($subheader2.length === 0) return;
+
+            // Case 1: Progress bar already exists - just apply styles
             let $existingBar = $subheader2.find('.wt-progress-bar');
             if ($existingBar.length > 0) {
-                // Apply inline styles to existing progress bar elements
-                $subheader2.find('.wt-progress-bar-container').attr('style', 
-                    'display: block; position: relative; width: 200px; height: 8px; background: #E8E8E8; border-radius: 4px; overflow: hidden;'
-                );
-                $existingBar.each(function() {
-                    let $bar = $(this);
-                    // Get current width from existing style or default to 0
-                    let currentWidth = $bar.css('width') || $bar.attr('style')?.match(/width:\s*(\d+)%/)?.[1] + '%' || '0%';
-                    // Extract just the number
-                    let widthValue = parseInt(currentWidth) || 0;
-                    $bar.attr('style', 
-                        'display: block; position: absolute; left: 0; top: 0; height: 100%; width: ' + widthValue + '%; background: linear-gradient(90deg, #FFA726 0%, #FF9800 50%, #F57C00 100%); border-radius: 4px;'
-                    );
-                });
-                $subheader2.data('progress-initialized', true);
+                // Get width from existing inline style
+                let existingStyle = $existingBar.attr('style') || '';
+                let widthMatch = existingStyle.match(/width:\s*(\d+)/);
+                let widthPercent = widthMatch ? parseInt(widthMatch[1]) : 0;
+                
+                // Apply styles to container and bar
+                let $container = $subheader2.find('.wt-progress-bar-container');
+                styleProgressContainer($container);
+                styleProgressBar($existingBar, widthPercent);
                 return;
             }
 
-            // Skip if already initialized
-            if ($subheader2.data('progress-initialized')) return;
-
-            // Parse progress value from subheader2 ORIGINAL text
+            // Case 2: Need to create progress bar from value
+            // Skip if already has wrapper (fully initialized)
+            if ($subheader2.find('.wt-progress-wrapper').length > 0) return;
+            
+            // Get original text value
             let originalText = $subheader2.text().trim();
             let value = parseFloat(originalText);
+            
+            // Skip if not a valid number
             if (isNaN(value)) return;
-
-            // If value equals 2 (200%), hide and don't create progress bar
+            
+            // Hide if value is 2 (200% = hidden)
             if (value === 2) {
-                $subheader2.data('progress-initialized', true).hide();
+                $subheader2.hide();
                 return;
             }
 
-            // Calculate percentage (cap at 100%)
+            // Calculate percentage
             let percent = Math.round(value * 100);
-            let barWidth = Math.min(percent, 100);
-
-            // Clear any existing inline styles that might interfere
-            $subheader2.attr('style', '');
             
-            // Mark as initialized and replace subheader2 content with progress bar (vertical layout)
-            // Set bar width directly in the HTML to ensure it renders correctly
+            // Replace content with progress bar
             $subheader2
-                .data('progress-initialized', true)
+                .empty()
+                .append(createProgressBarHTML(percent))
                 .css({
                     'display': 'flex',
-                    'flex-direction': 'column',
                     'align-items': 'center',
-                    'justify-content': 'center',
-                    'gap': '4px',
-                    'width': 'auto',
-                    'min-width': '200px',
-                    'height': 'auto',
-                    'background': 'transparent',
-                    'padding': '8px 0',
-                    'padding-left': '1em',
-                    'margin': '0',
-                    'font-family': 'Roboto, Arial, sans-serif',
-                    'text-align': 'center'
-                })
-                .empty()
-                .append(`
-                    <div class="wt-progress-text">${percent}%</div>
-                    <div class="wt-progress-bar-container" style="display: block; position: relative; width: 200px; height: 8px; background: #E8E8E8; border-radius: 4px; overflow: hidden;">
-                        <div class="wt-progress-bar" style="display: block; position: absolute; left: 0; top: 0; height: 100%; width: ${barWidth}%; background: linear-gradient(90deg, #FFA726 0%, #FF9800 50%, #F57C00 100%); border-radius: 4px;"></div>
-                    </div>
-                `);
+                    'justify-content': 'center'
+                });
         });
     }
 
@@ -120,23 +125,21 @@ $(document).ready(function() {
      * Initialize all modifications
      */
     function initializeAll() {
-        removeButton();
-        hideSubheader2();
-        createProgressBar();
+        removeEpicButtons();
+        hideSubtaskSubheader2();
+        initProgressBars();
     }
 
-    // 1. Initial execution
+    // Run on page load
     initializeAll();
 
-    // 2. Setup MutationObserver to handle dynamic content changes
-    var observer = new MutationObserver(function(mutationsList) {
+    // Watch for dynamic content changes
+    var observer = new MutationObserver(function() {
         initializeAll();
     });
 
-    // Observe entire document body for changes
     observer.observe(document.body, { 
         childList: true, 
         subtree: true 
     });
-    
 });
