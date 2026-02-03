@@ -53,9 +53,24 @@ $(document).ready(function() {
             // Calculate percentage
             let percent = Math.round(value * 100);
 
+            // Clear any existing inline styles that might interfere
+            $text.attr('style', '');
+            
             // Mark as initialized and update HTML with horizontal layout
             $text
                 .data('progress-initialized', true)
+                .css({
+                    'display': 'flex',
+                    'flex-direction': 'row',
+                    'align-items': 'center',
+                    'gap': '10px',
+                    'width': 'auto',
+                    'height': 'auto',
+                    'background': 'transparent',
+                    'padding': '0',
+                    'padding-bottom': '0',
+                    'margin-top': '0.5em'
+                })
                 .empty()
                 .append(`
                     <div class="wt-progress-text">${percent}%</div>

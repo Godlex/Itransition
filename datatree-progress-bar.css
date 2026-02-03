@@ -1,54 +1,56 @@
 /* Progress bar styling for Epic data tree */
 
 /* Main progress container - horizontal layout */
-.wt-lp-datatree-item-text {
+li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-text {
     display: flex !important;
-    align-items: center;
-    gap: 8px;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
     width: auto !important;
     height: auto !important;
     background: transparent !important;
     padding: 0 !important;
+    padding-bottom: 0 !important;
     margin-top: 0.5em !important;
-    font-family: Roboto, Arial, sans-serif;
+    font-family: Roboto, Arial, sans-serif !important;
+    text-align: left !important;
 }
 
 /* Progress percentage text - displayed on the left */
 .wt-progress-text {
-    font-size: 13px;
-    color: #666666;
-    font-weight: 400;
-    white-space: nowrap;
-    min-width: 35px;
-    text-align: left;
+    display: inline-block !important;
+    font-size: 13px !important;
+    color: #666666 !important;
+    font-weight: 400 !important;
+    white-space: nowrap !important;
+    min-width: 35px !important;
+    text-align: left !important;
+    flex-shrink: 0 !important;
 }
 
 /* Progress bar background container */
 .wt-progress-bar-container {
-    position: relative;
-    flex: 1;
-    max-width: 400px;
-    height: 6px;
-    background: #E0E0E0;
-    border-radius: 3px;
-    overflow: hidden;
+    display: block !important;
+    position: relative !important;
+    flex: 1 !important;
+    max-width: 400px !important;
+    height: 6px !important;
+    background: #E0E0E0 !important;
+    border-radius: 3px !important;
+    overflow: hidden !important;
 }
 
 /* Progress bar fill */
 .wt-progress-bar {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 0;
+    display: block !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    height: 100% !important;
+    width: 0 !important;
     background: linear-gradient(90deg, #FF9800 0%, #F57C00 100%) !important;
-    border-radius: 3px;
-    transition: width 0.3s ease;
-}
-
-/* Ensure progress bar container is visible at level 0 (Epic level) */
-li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-text {
-    display: flex !important;
+    border-radius: 3px !important;
+    transition: width 0.3s ease !important;
 }
 
 /* Hide progress bar in subtasks (level 1 and deeper) */
