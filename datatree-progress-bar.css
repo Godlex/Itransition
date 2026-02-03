@@ -1,43 +1,44 @@
 /* Progress bar styling for Epic data tree */
 
-/* Main progress container - horizontal layout */
+/* Main progress container - horizontal layout inline with other content */
 li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-text {
-    display: flex !important;
+    display: inline-flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    gap: 10px !important;
+    gap: 8px !important;
     width: auto !important;
     height: auto !important;
     background: transparent !important;
     padding: 0 !important;
     padding-bottom: 0 !important;
-    margin-top: 0.5em !important;
+    margin: 0 !important;
     font-family: Roboto, Arial, sans-serif !important;
     text-align: left !important;
+    vertical-align: middle !important;
 }
 
 /* Progress percentage text - displayed on the left */
 .wt-progress-text {
     display: inline-block !important;
-    font-size: 13px !important;
-    color: #666666 !important;
+    font-size: 12px !important;
+    color: #999999 !important;
     font-weight: 400 !important;
     white-space: nowrap !important;
-    min-width: 35px !important;
+    min-width: 30px !important;
     text-align: left !important;
     flex-shrink: 0 !important;
 }
 
 /* Progress bar background container */
 .wt-progress-bar-container {
-    display: block !important;
+    display: inline-block !important;
     position: relative !important;
-    flex: 1 !important;
-    max-width: 400px !important;
-    height: 6px !important;
-    background: #E0E0E0 !important;
-    border-radius: 3px !important;
+    width: 200px !important;
+    height: 4px !important;
+    background: #E5E5E5 !important;
+    border-radius: 2px !important;
     overflow: hidden !important;
+    vertical-align: middle !important;
 }
 
 /* Progress bar fill */
@@ -49,7 +50,7 @@ li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-text {
     height: 100% !important;
     width: 0 !important;
     background: linear-gradient(90deg, #FF9800 0%, #F57C00 100%) !important;
-    border-radius: 3px !important;
+    border-radius: 2px !important;
     transition: width 0.3s ease !important;
 }
 
@@ -60,22 +61,9 @@ li.wt-lp-datatree-item[wt-level="3"] .wt-lp-datatree-item-text {
     display: none !important;
 }
 
-/* Style "Подробнее" button for Epic items */
-li.wt-lp-datatree-item[wt-level="0"] button[wt-role="item-btn"].wt-details-btn {
-    background: #FF9800 !important;
-    color: #FFFFFF !important;
-    border: none !important;
-    padding: 8px 24px !important;
-    border-radius: 4px !important;
-    font-size: 14px !important;
-    font-weight: 500 !important;
-    cursor: pointer;
-    transition: background 0.2s ease;
-    min-width: 120px;
-}
-
-li.wt-lp-datatree-item[wt-level="0"] button[wt-role="item-btn"].wt-details-btn:hover {
-    background: #FB8C00 !important;
+/* Hide button for Epic items */
+li.wt-lp-datatree-item[wt-level="0"] button[wt-role="item-btn"] {
+    display: none !important;
 }
 
 /* Epic card styling */
@@ -97,13 +85,24 @@ li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-floater {
 /* Header styling for Epic items */
 li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-header {
     color: #2196F3 !important;
-    font-size: 1.1em !important;
-    margin-bottom: 0.3em !important;
+    font-size: 1em !important;
+    font-weight: 500 !important;
+    margin-bottom: 0.2em !important;
 }
 
-/* Subheader styling */
+/* Subheader styling - more compact */
 li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-subheader1,
 li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-subheader2 {
     color: #999999 !important;
-    font-size: 0.85em !important;
+    font-size: 0.8em !important;
+}
+
+/* Make subheader block more compact */
+li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-subheader-block {
+    margin-bottom: 0.3em !important;
+}
+
+/* Content area should be inline */
+li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-content {
+    display: block !important;
 }

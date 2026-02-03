@@ -6,19 +6,13 @@
 $(document).ready(function() {
     
     /**
-     * Change "Изменить" button to "Подробнее" for Epic level items (level 0)
+     * Remove button from Epic level items (level 0)
      */
-    function updateButton() {
-        $('li.wt-lp-datatree-item[wt-level="0"]').each(function() {
-            let $button = $(this)
-                .children('.wt-lp-datatree-item-container')
-                .find('button[wt-role="item-btn"]');
-            
-            // Update button if not already modified
-            if ($button.length && !$button.hasClass('wt-details-btn')) {
-                $button.addClass('wt-details-btn').text('Подробнее');
-            }
-        });
+    function removeButton() {
+        $('li.wt-lp-datatree-item[wt-level="0"]')
+            .children('.wt-lp-datatree-item-container')
+            .find('button[wt-role="item-btn"]')
+            .remove();
     }
      
     /**
@@ -27,13 +21,6 @@ $(document).ready(function() {
     function hideItemText() {
         // Hide progress in subtasks
         $('li.wt-lp-datatree-item[wt-level="1"] .wt-lp-datatree-item-text').hide();
-        
-        // Hide items with specific text content
-        $('li.wt-lp-datatree-item .wt-lp-datatree-item-text').each(function() {
-            if ($(this).text().trim() === "2") {
-                $(this).hide();
-            }
-        });
     }
 
     /**
@@ -41,7 +28,8 @@ $(document).ready(function() {
      */
     function createProgressBar() {
         $('li.wt-lp-datatree-item[wt-level="0"]').each(function () {
-            let $text = $(this).find('.wt-lp-datatree-item-text');
+            let $item = $(this);
+            let $text = $item.find('.wt-lp-datatree-item-text');
 
             // Skip if already initialized
             if ($text.data('progress-initialized')) return;
@@ -50,26 +38,35 @@ $(document).ready(function() {
             let value = parseFloat($text.text());
             if (isNaN(value)) return;
 
+            // Hide entire Epic item if value > 1 (more than 100%)
+            if (value > 1) {
+                $item.hide();
+                return;
+            }
+
             // Calculate percentage
             let percent = Math.round(value * 100);
 
             // Clear any existing inline styles that might interfere
             $text.attr('style', '');
             
-            // Mark as initialized and update HTML with horizontal layout
+            // Mark as initialized and update HTML with horizontal inline layout
             $text
                 .data('progress-initialized', true)
                 .css({
-                    'display': 'flex',
+                    'display': 'inline-flex',
                     'flex-direction': 'row',
                     'align-items': 'center',
-                    'gap': '10px',
+                    'gap': '8px',
                     'width': 'auto',
                     'height': 'auto',
                     'background': 'transparent',
                     'padding': '0',
                     'padding-bottom': '0',
-                    'margin-top': '0.5em'
+                    'margin': '0',
+                    'font-family': 'Roboto, Arial, sans-serif',
+                    'text-align': 'left',
+                    'vertical-align': 'middle'
                 })
                 .empty()
                 .append(`
@@ -79,8 +76,9 @@ $(document).ready(function() {
                     </div>
                 `);
 
-            // Set progress bar width
-            $text.find('.wt-progress-bar').css('width', percent + '%');
+            // Set progress bar width (cap at 100%)
+            let barWidth = Math.min(percent, 100);
+            $text.find('.wt-progress-bar').css('width', barWidth + '%');
         });
     }
 
@@ -88,7 +86,7 @@ $(document).ready(function() {
      * Initialize all modifications
      */
     function initializeAll() {
-        updateButton();
+        removeButton();
         hideItemText();
         createProgressBar();
     }
