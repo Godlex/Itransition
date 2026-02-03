@@ -38,9 +38,9 @@ $(document).ready(function() {
             let value = parseFloat($text.text());
             if (isNaN(value)) return;
 
-            // Hide entire Epic item if value > 1 (more than 100%)
+            // If value > 1 (more than 100%), hide progress bar but keep Epic item
             if (value > 1) {
-                $item.hide();
+                $text.data('progress-initialized', true).hide();
                 return;
             }
 
