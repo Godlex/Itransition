@@ -6,39 +6,42 @@
 .epic_accordion li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-subheader2 {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
     width: auto;
+    min-width: 200px;
     height: auto;
     background: transparent;
-    padding: 0;
-    padding-bottom: 0.2em;
+    padding: 8px 0;
     padding-left: 1em;
     margin: 0;
     font-family: Roboto, Arial, sans-serif;
-    text-align: left;
+    text-align: center;
 }
 
-/* Progress percentage text - displayed above the bar, left-aligned */
+/* Progress percentage text - displayed above the bar, centered */
 .wt-progress-text {
     display: block;
-    font-size: 12px;
-    color: #999999;
-    font-weight: 400;
+    font-size: 13px;
+    color: #666666;
+    font-weight: 500;
     white-space: nowrap;
-    text-align: left;
-    margin-bottom: 2px;
+    text-align: center;
+    margin-bottom: 6px;
+    width: 100%;
 }
 
-/* Progress bar background container - full width gray bar */
+/* Progress bar background container - gray background bar */
 .wt-progress-bar-container {
     display: block;
     position: relative;
-    width: 240px;
-    height: 6px;
-    background: #E0E0E0;
-    border-radius: 3px;
+    width: 200px;
+    height: 8px;
+    background: #E8E8E8;
+    border-radius: 4px;
     overflow: hidden;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Progress bar fill - orange gradient */
@@ -49,9 +52,9 @@
     top: 0;
     height: 100%;
     width: 0;
-    background: linear-gradient(90deg, #FF9800 0%, #F57C00 100%);
-    border-radius: 3px;
-    transition: width 0.3s ease;
+    background: linear-gradient(90deg, #FFA726 0%, #FF9800 50%, #F57C00 100%);
+    border-radius: 4px;
+    transition: width 0.4s ease-out;
 }
 
 /* ========================================

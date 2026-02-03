@@ -73,17 +73,18 @@ $(document).ready(function() {
                 .css({
                     'display': 'flex',
                     'flex-direction': 'column',
-                    'align-items': 'flex-start',
-                    'gap': '6px',
+                    'align-items': 'center',
+                    'justify-content': 'center',
+                    'gap': '4px',
                     'width': 'auto',
+                    'min-width': '200px',
                     'height': 'auto',
                     'background': 'transparent',
-                    'padding': '0',
-                    'padding-bottom': '0.2em',
+                    'padding': '8px 0',
                     'padding-left': '1em',
                     'margin': '0',
                     'font-family': 'Roboto, Arial, sans-serif',
-                    'text-align': 'left'
+                    'text-align': 'center'
                 })
                 .empty()
                 .append(`
