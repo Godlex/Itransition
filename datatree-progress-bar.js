@@ -40,8 +40,8 @@ $(document).ready(function() {
             let value = parseFloat($subheader2.text().trim());
             if (isNaN(value)) return;
 
-            // If value > 1 (more than 100%), hide progress bar but keep Epic item
-            if (value > 1) {
+            // If value >= 2 (200% or more), hide progress bar but keep Epic item
+            if (value >= 2) {
                 $subheader2.data('progress-initialized', true).hide();
                 return;
             }
@@ -52,24 +52,23 @@ $(document).ready(function() {
             // Clear any existing inline styles that might interfere
             $subheader2.attr('style', '');
             
-            // Mark as initialized and replace subheader2 content with progress bar
+            // Mark as initialized and replace subheader2 content with progress bar (vertical layout)
             $subheader2
                 .data('progress-initialized', true)
                 .css({
-                    'display': 'inline-flex',
-                    'flex-direction': 'row',
-                    'align-items': 'center',
-                    'gap': '8px',
+                    'display': 'flex',
+                    'flex-direction': 'column',
+                    'align-items': 'flex-start',
+                    'gap': '4px',
                     'width': 'auto',
                     'height': 'auto',
                     'background': 'transparent',
                     'padding': '0',
-                    'padding-bottom': '0',
+                    'padding-bottom': '0.2em',
                     'padding-left': '1em',
                     'margin': '0',
                     'font-family': 'Roboto, Arial, sans-serif',
-                    'text-align': 'left',
-                    'vertical-align': 'middle'
+                    'text-align': 'left'
                 })
                 .empty()
                 .append(`

@@ -1,11 +1,11 @@
 /* Progress bar styling for Epic data tree */
 
-/* Main progress container - horizontal layout in subheader2 */
+/* Main progress container - vertical layout in subheader2 */
 .epic_accordion li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-subheader2 {
-    display: inline-flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 8px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
     width: auto !important;
     height: auto !important;
     background: transparent !important;
@@ -15,34 +15,32 @@
     margin: 0 !important;
     font-family: Roboto, Arial, sans-serif !important;
     text-align: left !important;
-    vertical-align: middle !important;
 }
 
-/* Progress percentage text - displayed on the left */
+/* Progress percentage text - displayed above the bar, centered */
 .wt-progress-text {
-    display: inline-block !important;
-    font-size: 12px !important;
-    color: #999999 !important;
+    display: block !important;
+    font-size: 13px !important;
+    color: #666666 !important;
     font-weight: 400 !important;
     white-space: nowrap !important;
-    min-width: 30px !important;
-    text-align: left !important;
-    flex-shrink: 0 !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-bottom: 4px !important;
 }
 
-/* Progress bar background container */
+/* Progress bar background container - full width gray bar */
 .wt-progress-bar-container {
-    display: inline-block !important;
+    display: block !important;
     position: relative !important;
-    width: 200px !important;
-    height: 4px !important;
-    background: #E5E5E5 !important;
-    border-radius: 2px !important;
+    width: 240px !important;
+    height: 8px !important;
+    background: #E0E0E0 !important;
+    border-radius: 4px !important;
     overflow: hidden !important;
-    vertical-align: middle !important;
 }
 
-/* Progress bar fill */
+/* Progress bar fill - orange gradient */
 .wt-progress-bar {
     display: block !important;
     position: absolute !important;
@@ -51,7 +49,7 @@
     height: 100% !important;
     width: 0 !important;
     background: linear-gradient(90deg, #FF9800 0%, #F57C00 100%) !important;
-    border-radius: 2px !important;
+    border-radius: 4px !important;
     transition: width 0.3s ease !important;
 }
 
