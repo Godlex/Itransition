@@ -44,12 +44,19 @@ $(document).ready(function() {
             // Skip if already initialized
             if ($subheader2.data('progress-initialized')) return;
             
-            // Skip if already hidden (by hideSubheader2 function)
-            if (!$subheader2.is(':visible')) return;
+            // Check if subheader2 contains wt-progress-text (already transformed)
+            if ($subheader2.find('.wt-progress-text').length > 0) return;
 
-            // Parse progress value from subheader2
-            let value = parseFloat($subheader2.text().trim());
+            // Parse progress value from subheader2 ORIGINAL text
+            let originalText = $subheader2.text().trim();
+            let value = parseFloat(originalText);
             if (isNaN(value)) return;
+
+            // If value equals 2 (200%), hide and don't create progress bar
+            if (value === 2) {
+                $subheader2.data('progress-initialized', true).hide();
+                return;
+            }
 
             // Calculate percentage
             let percent = Math.round(value * 100);
