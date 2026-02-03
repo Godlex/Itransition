@@ -16,15 +16,18 @@ $(document).ready(function() {
     }
      
     /**
-     * Hide subheader2 in subtasks and if text equals "2"
+     * Hide subheader2 in subtasks and if value equals 2
      */
     function hideSubheader2() {
         // Hide subheader2 in subtasks (level 1+)
         $('li.wt-lp-datatree-item[wt-level="1"] .wt-lp-datatree-item-subheader2').hide();
+        $('li.wt-lp-datatree-item[wt-level="2"] .wt-lp-datatree-item-subheader2').hide();
+        $('li.wt-lp-datatree-item[wt-level="3"] .wt-lp-datatree-item-subheader2').hide();
         
-        // Hide subheader2 if text content equals "2"
-        $('li.wt-lp-datatree-item .wt-lp-datatree-item-subheader2').each(function() {
-            if ($(this).text().trim() === "2") {
+        // Hide subheader2 if numeric value equals 2 (200%)
+        $('li.wt-lp-datatree-item[wt-level="0"] .wt-lp-datatree-item-subheader2').each(function() {
+            let value = parseFloat($(this).text().trim());
+            if (!isNaN(value) && value === 2) {
                 $(this).hide();
             }
         });
@@ -38,8 +41,10 @@ $(document).ready(function() {
             let $item = $(this);
             let $subheader2 = $item.find('.wt-lp-datatree-item-subheader2');
 
-            // Skip if already initialized or already hidden
+            // Skip if already initialized
             if ($subheader2.data('progress-initialized')) return;
+            
+            // Skip if already hidden (by hideSubheader2 function)
             if (!$subheader2.is(':visible')) return;
 
             // Parse progress value from subheader2
